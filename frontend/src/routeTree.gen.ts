@@ -227,17 +227,17 @@ export const routeTree = rootRoute
 {
   "routes": {
     "__root__": {
-      "filePath": "__root.jsx",
+      "filePath": "__root.tsx",
       "children": [
         "/",
         "/_layout"
       ]
     },
     "/": {
-      "filePath": "index.jsx"
+      "filePath": "index.tsx"
     },
     "/_layout": {
-      "filePath": "_layout.jsx",
+      "filePath": "_layout.tsx",
       "children": [
         "/_layout/collections/",
         "/_layout/collections/$collectionId/practice",
@@ -247,23 +247,23 @@ export const routeTree = rootRoute
       ]
     },
     "/_layout/collections/": {
-      "filePath": "_layout/collections/index.jsx",
+      "filePath": "_layout/collections/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/collections/$collectionId/practice": {
-      "filePath": "_layout/collections/$collectionId/practice.jsx",
+      "filePath": "_layout/collections/$collectionId/practice.tsx",
       "parent": "/_layout"
     },
     "/_layout/collections/$collectionId/": {
-      "filePath": "_layout/collections/$collectionId/index.jsx",
+      "filePath": "_layout/collections/$collectionId/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/collections/$collectionId/cards/$cardId": {
-      "filePath": "_layout/collections/$collectionId/cards/$cardId.jsx",
+      "filePath": "_layout/collections/$collectionId/cards/$cardId.tsx",
       "parent": "/_layout"
     },
     "/_layout/collections/$collectionId/cards/new": {
-      "filePath": "_layout/collections/$collectionId/cards/new.jsx",
+      "filePath": "_layout/collections/$collectionId/cards/new.tsx",
       "parent": "/_layout"
     }
   }
