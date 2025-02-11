@@ -1,4 +1,5 @@
 from sqlmodel import Session, select, func
+from datetime import datetime, timezone
 
 from .models import Card, Collection
 from .schemas import CollectionCreate, CardCreate, CollectionUpdate, CardUpdate
@@ -12,6 +13,7 @@ def get_collections(
     statement = (
         select(Collection)
         .where(Collection.user_id == user_id)
+        .order_by(Collection.updated_at.desc())
         .offset(skip)
         .limit(limit)
     )
@@ -39,6 +41,7 @@ def update_collection(
     collection_data = collection_in.model_dump(exclude_unset=True)
     for key, value in collection_data.items():
         setattr(collection, key, value)
+    collection.updated_at = datetime.now(timezone.utc)
     session.add(collection)
     session.commit()
     session.refresh(collection)
@@ -58,6 +61,7 @@ def get_cards(
     statement = (
         select(Card)
         .where(Card.collection_id == collection_id)
+        .order_by(Card.updated_at.desc())
         .offset(skip)
         .limit(limit)
     )
@@ -95,6 +99,7 @@ def update_card(session: Session, card: Card, card_in: CardUpdate) -> Card:
     card_data = card_in.model_dump(exclude_unset=True)
     for key, value in card_data.items():
         setattr(card, key, value)
+    card.updated_at = datetime.now(timezone.utc)
     session.add(card)
     session.commit()
     session.refresh(card)
@@ -104,3 +109,12 @@ def update_card(session: Session, card: Card, card_in: CardUpdate) -> Card:
 def delete_card(session: Session, card: Card) -> None:
     session.delete(card)
     session.commit()
+
+
+def check_collection_access(session: Session, collection_id: uuid.UUID, user_id: uuid.UUID) -> bool:
+    statement = select(Collection).where(
+        Collection.id == collection_id,
+        Collection.user_id == user_id
+    )
+    collection = session.exec(statement).first()
+    return collection is not None

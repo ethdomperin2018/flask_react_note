@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4baa12ccff54
+Revision ID: c8f918b058c6
 Revises: 
-Create Date: 2025-02-08 19:25:29.572500
+Create Date: 2025-02-10 22:58:32.846941
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel.sql.sqltypes
 
 
 # revision identifiers, used by Alembic.
-revision = '4baa12ccff54'
+revision = 'c8f918b058c6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_collection_name'), 'collection', ['name'], unique=False)
@@ -44,6 +45,7 @@ def upgrade():
     sa.Column('back', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('collection_id', sa.Uuid(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['collection_id'], ['collection.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

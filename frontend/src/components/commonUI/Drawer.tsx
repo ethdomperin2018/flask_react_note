@@ -1,3 +1,4 @@
+import Logo from "@/assets/Logo.svg";
 import { FlashcardsService } from "@/client";
 import {
 	DrawerBackdrop,
@@ -10,7 +11,6 @@ import {
 import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import Logo from "/public/assets/Logo.svg";
 
 function getCollectionsQueryOptions() {
 	return {

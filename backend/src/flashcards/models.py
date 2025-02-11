@@ -10,6 +10,7 @@ class Collection(SQLModel, table=True):
     user_id: uuid.UUID = Field(index=True)
     cards: list["Card"] = Relationship(back_populates="collection", cascade_delete=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class Card(SQLModel, table=True):
@@ -19,3 +20,4 @@ class Card(SQLModel, table=True):
     collection_id: uuid.UUID = Field(foreign_key="collection.id")
     collection: Collection = Relationship(back_populates="cards")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

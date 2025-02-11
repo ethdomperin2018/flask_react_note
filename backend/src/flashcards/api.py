@@ -88,6 +88,8 @@ def read_cards(
     skip: int = 0,
     limit: int = 100,
 ) -> Any:
+    if not services.check_collection_access(session, collection_id, current_user.id):
+        raise HTTPException(status_code=404, detail="Collection not found")
     cards, count = services.get_cards(
         session=session, collection_id=collection_id, skip=skip, limit=limit
     )
@@ -101,10 +103,7 @@ def create_card(
     collection_id: uuid.UUID,
     card_in: CardCreate,
 ) -> Any:
-    collection = services.get_collection(
-        session=session, id=collection_id, user_id=current_user.id
-    )
-    if not collection:
+    if not services.check_collection_access(session, collection_id, current_user.id):
         raise HTTPException(status_code=404, detail="Collection not found")
     return services.create_card(
         session=session, collection_id=collection_id, card_in=card_in
@@ -118,6 +117,8 @@ def read_card(
     collection_id: uuid.UUID,
     card_id: uuid.UUID,
 ) -> Any:
+    if not services.check_collection_access(session, collection_id, current_user.id):
+        raise HTTPException(status_code=404, detail="Collection not found")
     card = services.get_card_with_collection(session=session, card_id=card_id, user_id=current_user.id)
     if not card or card.collection_id != collection_id:
         raise HTTPException(status_code=404, detail="Card not found")
@@ -132,6 +133,8 @@ def update_card(
     card_id: uuid.UUID,
     card_in: CardUpdate,
 ) -> Any:
+    if not services.check_collection_access(session, collection_id, current_user.id):
+        raise HTTPException(status_code=404, detail="Collection not found")
     card = services.get_card_with_collection(session=session, card_id=card_id, user_id=current_user.id)
     if not card or card.collection_id != collection_id:
         raise HTTPException(status_code=404, detail="Card not found")
@@ -145,9 +148,9 @@ def delete_card(
     collection_id: uuid.UUID,
     card_id: uuid.UUID,
 ) -> None:
-    card = services.get_card_with_collection(
-        session=session, card_id=card_id, user_id=current_user.id
-    )
+    if not services.check_collection_access(session, collection_id, current_user.id):
+        raise HTTPException(status_code=404, detail="Collection not found")
+    card = services.get_card_with_collection(session=session, card_id=card_id, user_id=current_user.id)
     if not card or card.collection_id != collection_id:
         raise HTTPException(status_code=404, detail="Card not found")
     services.delete_card(session=session, card=card)

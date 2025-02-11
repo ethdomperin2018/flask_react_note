@@ -1,6 +1,6 @@
+import Logo from "@/assets/Logo.svg";
 import { Flex, IconButton, Image } from "@chakra-ui/react";
 import { useState } from "react";
-import Logo from "/public/assets/Logo.svg";
 import Drawer from "./Drawer";
 
 function Navbar() {

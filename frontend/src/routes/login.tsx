@@ -1,3 +1,4 @@
+import Logo from "@/assets/Logo.svg";
 import {
 	Button,
 	Container,
@@ -10,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import Logo from "/assets/Logo.svg";
 import type { Body_login_login_access_token as AccessToken } from "../client";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { emailPattern } from "../utils";
