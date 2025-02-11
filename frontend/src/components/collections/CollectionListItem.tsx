@@ -99,7 +99,7 @@ function CollectionListItem({
 				<CollectionKebabMenu
 					collectionId={collection.id}
 					onDelete={onDelete}
-					onEdit={handleEdit}
+					onRename={handleEdit}
 				/>
 			</Box>
 		</HStack>

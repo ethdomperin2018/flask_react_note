@@ -4,7 +4,7 @@ import {
 	MenuRoot,
 	MenuTrigger,
 } from "@/components/ui/menu";
-import { Box, IconButton } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -12,13 +12,13 @@ import { RiEdit2Fill } from "react-icons/ri";
 interface CollectionKebabMenuProps {
 	collectionId: string;
 	onDelete: (collectionId: string) => void;
-	onEdit: () => void;
+	onRename: () => void;
 }
 
 function CollectionKebabMenu({
 	collectionId,
 	onDelete,
-	onEdit,
+	onRename,
 }: CollectionKebabMenuProps) {
 	return (
 		<MenuRoot>
@@ -37,7 +37,7 @@ function CollectionKebabMenu({
 				</Box>
 			</MenuTrigger>
 			<MenuContent bg="bg.muted">
-				<MenuItem value="edit" onClick={onEdit}>
+				<MenuItem value="Rename" onClick={onRename}>
 					<RiEdit2Fill />
 					<Box flex="1">Rename</Box>
 				</MenuItem>
