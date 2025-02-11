@@ -34,12 +34,6 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 		}
 	};
 
-	const handleKeyPress = (e) => {
-		if (e.key === "Enter") {
-			handleSubmit();
-		}
-	};
-
 	return (
 		<DialogRoot
 			key="add-collection-dialog"
@@ -56,7 +50,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 						placeholder="Collection Name"
 						value={collectionName}
 						onChange={(e) => setCollectionName(e.target.value)}
-						onKeyDown={handleKeyPress}
+						onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
 					/>
 				</DialogBody>
 				<DialogFooter>
