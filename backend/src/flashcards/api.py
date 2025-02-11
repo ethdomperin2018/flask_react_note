@@ -67,6 +67,19 @@ def update_collection(
     )
 
 
+@router.delete("/collections/{collection_id}", status_code=204)
+def delete_collection(
+    session: SessionDep, current_user: CurrentUser, collection_id: uuid.UUID
+) -> None:
+    collection = services.get_collection(
+        session=session, id=collection_id, user_id=current_user.id
+    )
+    if not collection:
+        raise HTTPException(status_code=404, detail="Collection not found")
+    services.delete_collection(session=session, collection=collection)
+    return
+
+
 @router.get("/collections/{collection_id}/cards/", response_model=CardList)
 def read_cards(
     session: SessionDep,
@@ -109,3 +122,19 @@ def read_card(
     if not card or card.collection_id != collection_id:
         raise HTTPException(status_code=404, detail="Card not found")
     return card
+
+
+@router.delete("/collections/{collection_id}/cards/{card_id}", status_code=204)
+def delete_card(
+    session: SessionDep,
+    current_user: CurrentUser,
+    collection_id: uuid.UUID,
+    card_id: uuid.UUID,
+) -> None:
+    card = services.get_card_with_collection(
+        session=session, card_id=card_id, user_id=current_user.id
+    )
+    if not card or card.collection_id != collection_id:
+        raise HTTPException(status_code=404, detail="Card not found")
+    services.delete_card(session=session, card=card)
+    return

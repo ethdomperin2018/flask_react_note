@@ -1,9 +1,25 @@
 import { Box, HStack, Input, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import CollectionKebabMenu from "./CollectionKebabMenu";
 
-function CollectionListItem({ collection, onDelete, onRename }) {
+interface Collection {
+	id: string;
+	name: string;
+	cardsCount?: number;
+}
+
+interface CollectionListItemProps {
+	collection: Collection;
+	onDelete: (id: string) => void;
+	onRename: (id: string, newName: string) => void;
+}
+
+function CollectionListItem({
+	collection,
+	onDelete,
+	onRename,
+}: CollectionListItemProps) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedName, setEditedName] = useState(collection.name);
 

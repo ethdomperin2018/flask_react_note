@@ -6,13 +6,18 @@ import {
 	DrawerHeader,
 	DrawerRoot,
 } from "@/components/ui/drawer";
-import { useCollectionsQuery } from "@/hooks/useCollectionsQuery";
 import { Image, List, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import Logo from "../../assets/Logo.svg";
 
-function Drawer({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) {
-	const { collections } = useCollectionsQuery();
+function Drawer({
+	isOpen,
+	setIsOpen,
+}: { isOpen: boolean; setIsOpen: (open: boolean) => void }) {
+	const collections = [
+		{ id: "1", name: "Collection 1" },
+		{ id: "2", name: "Collection 2" },
+	];
 
 	const handleNavigate = () => {
 		setIsOpen(false);

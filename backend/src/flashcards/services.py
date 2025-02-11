@@ -45,6 +45,11 @@ def update_collection(
     return collection
 
 
+def delete_collection(session: Session, collection: Collection) -> None:
+    session.delete(collection)
+    session.commit()
+
+
 def get_cards(
     session: Session, collection_id: uuid.UUID, skip: int = 0, limit: int = 100
 ) -> tuple[list[Card], int]:
@@ -94,3 +99,8 @@ def update_card(session: Session, card: Card, card_in: CardUpdate) -> Card:
     session.commit()
     session.refresh(card)
     return card
+
+
+def delete_card(session: Session, card: Card) -> None:
+    session.delete(card)
+    session.commit()

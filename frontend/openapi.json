@@ -1,613 +1,677 @@
 {
-	"openapi": "3.1.0",
-	"info": { "title": "FlashCards", "version": "0.1.0" },
-	"paths": {
-		"/api/v1/login/access-token": {
-			"post": {
-				"tags": ["login"],
-				"summary": "Login Access Token",
-				"operationId": "login-login_access_token",
-				"requestBody": {
-					"content": {
-						"application/x-www-form-urlencoded": {
-							"schema": {
-								"$ref": "#/components/schemas/Body_login-login_access_token"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Token" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/users/me": {
-			"get": {
-				"tags": ["users"],
-				"summary": "Read User Me",
-				"description": "Get current user.",
-				"operationId": "users-read_user_me",
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/UserPublic" }
-							}
-						}
-					}
-				},
-				"security": [{ "OAuth2PasswordBearer": [] }]
-			}
-		},
-		"/api/v1/users/signup": {
-			"post": {
-				"tags": ["users"],
-				"summary": "Register User",
-				"description": "Create new user without the need to be logged in.",
-				"operationId": "users-register_user",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": { "$ref": "#/components/schemas/UserRegister" }
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/UserPublic" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/flashcards/collections/": {
-			"get": {
-				"tags": ["flashcards"],
-				"summary": "Read Collections",
-				"operationId": "flashcards-read_collections",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "skip",
-						"in": "query",
-						"required": false,
-						"schema": { "type": "integer", "default": 0, "title": "Skip" }
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"required": false,
-						"schema": { "type": "integer", "default": 100, "title": "Limit" }
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/CollectionList" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			},
-			"post": {
-				"tags": ["flashcards"],
-				"summary": "Create Collection",
-				"operationId": "flashcards-create_collection",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": { "$ref": "#/components/schemas/CollectionCreate" }
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Collection" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/flashcards/collections/{collection_id}": {
-			"get": {
-				"tags": ["flashcards"],
-				"summary": "Read Collection",
-				"operationId": "flashcards-read_collection",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"format": "uuid",
-							"title": "Collection Id"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Collection" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			},
-			"put": {
-				"tags": ["flashcards"],
-				"summary": "Update Collection",
-				"operationId": "flashcards-update_collection",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"format": "uuid",
-							"title": "Collection Id"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": { "$ref": "#/components/schemas/CollectionUpdate" }
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Collection" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/flashcards/collections/{collection_id}/cards/": {
-			"get": {
-				"tags": ["flashcards"],
-				"summary": "Read Cards",
-				"operationId": "flashcards-read_cards",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"format": "uuid",
-							"title": "Collection Id"
-						}
-					},
-					{
-						"name": "skip",
-						"in": "query",
-						"required": false,
-						"schema": { "type": "integer", "default": 0, "title": "Skip" }
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"required": false,
-						"schema": { "type": "integer", "default": 100, "title": "Limit" }
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/CardList" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			},
-			"post": {
-				"tags": ["flashcards"],
-				"summary": "Create Card",
-				"operationId": "flashcards-create_card",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"format": "uuid",
-							"title": "Collection Id"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": { "$ref": "#/components/schemas/CardCreate" }
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Card" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/v1/flashcards/collections/{collection_id}/cards/{card_id}": {
-			"get": {
-				"tags": ["flashcards"],
-				"summary": "Read Card",
-				"operationId": "flashcards-read_card",
-				"security": [{ "OAuth2PasswordBearer": [] }],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"format": "uuid",
-							"title": "Collection Id"
-						}
-					},
-					{
-						"name": "card_id",
-						"in": "path",
-						"required": true,
-						"schema": { "type": "string", "format": "uuid", "title": "Card Id" }
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/Card" }
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"components": {
-		"schemas": {
-			"Body_login-login_access_token": {
-				"properties": {
-					"grant_type": {
-						"anyOf": [
-							{ "type": "string", "pattern": "^password$" },
-							{ "type": "null" }
-						],
-						"title": "Grant Type"
-					},
-					"username": { "type": "string", "title": "Username" },
-					"password": { "type": "string", "title": "Password" },
-					"scope": { "type": "string", "title": "Scope", "default": "" },
-					"client_id": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Client Id"
-					},
-					"client_secret": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Client Secret"
-					}
-				},
-				"type": "object",
-				"required": ["username", "password"],
-				"title": "Body_login-login_access_token"
-			},
-			"Card": {
-				"properties": {
-					"front": { "type": "string", "title": "Front" },
-					"back": { "type": "string", "title": "Back" },
-					"id": { "type": "string", "format": "uuid", "title": "Id" },
-					"collection_id": {
-						"type": "string",
-						"format": "uuid",
-						"title": "Collection Id"
-					}
-				},
-				"type": "object",
-				"required": ["front", "back", "id", "collection_id"],
-				"title": "Card"
-			},
-			"CardCreate": {
-				"properties": {
-					"front": { "type": "string", "title": "Front" },
-					"back": { "type": "string", "title": "Back" }
-				},
-				"type": "object",
-				"required": ["front", "back"],
-				"title": "CardCreate"
-			},
-			"CardList": {
-				"properties": {
-					"data": {
-						"items": { "$ref": "#/components/schemas/Card" },
-						"type": "array",
-						"title": "Data"
-					},
-					"count": { "type": "integer", "title": "Count" }
-				},
-				"type": "object",
-				"required": ["data", "count"],
-				"title": "CardList"
-			},
-			"Collection": {
-				"properties": {
-					"name": { "type": "string", "title": "Name" },
-					"description": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Description"
-					},
-					"id": { "type": "string", "format": "uuid", "title": "Id" },
-					"user_id": { "type": "string", "format": "uuid", "title": "User Id" },
-					"cards": {
-						"items": { "$ref": "#/components/schemas/Card" },
-						"type": "array",
-						"title": "Cards"
-					}
-				},
-				"type": "object",
-				"required": ["name", "id", "user_id", "cards"],
-				"title": "Collection"
-			},
-			"CollectionCreate": {
-				"properties": {
-					"name": { "type": "string", "title": "Name" },
-					"description": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Description"
-					}
-				},
-				"type": "object",
-				"required": ["name"],
-				"title": "CollectionCreate"
-			},
-			"CollectionList": {
-				"properties": {
-					"data": {
-						"items": { "$ref": "#/components/schemas/Collection" },
-						"type": "array",
-						"title": "Data"
-					},
-					"count": { "type": "integer", "title": "Count" }
-				},
-				"type": "object",
-				"required": ["data", "count"],
-				"title": "CollectionList"
-			},
-			"CollectionUpdate": {
-				"properties": {
-					"name": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Name"
-					},
-					"description": {
-						"anyOf": [{ "type": "string" }, { "type": "null" }],
-						"title": "Description"
-					}
-				},
-				"type": "object",
-				"title": "CollectionUpdate"
-			},
-			"HTTPValidationError": {
-				"properties": {
-					"detail": {
-						"items": { "$ref": "#/components/schemas/ValidationError" },
-						"type": "array",
-						"title": "Detail"
-					}
-				},
-				"type": "object",
-				"title": "HTTPValidationError"
-			},
-			"Token": {
-				"properties": {
-					"access_token": { "type": "string", "title": "Access Token" },
-					"token_type": {
-						"type": "string",
-						"title": "Token Type",
-						"default": "bearer"
-					}
-				},
-				"type": "object",
-				"required": ["access_token"],
-				"title": "Token"
-			},
-			"UserPublic": {
-				"properties": {
-					"email": {
-						"type": "string",
-						"maxLength": 255,
-						"format": "email",
-						"title": "Email"
-					},
-					"is_active": {
-						"type": "boolean",
-						"title": "Is Active",
-						"default": true
-					},
-					"is_superuser": {
-						"type": "boolean",
-						"title": "Is Superuser",
-						"default": false
-					},
-					"full_name": {
-						"anyOf": [
-							{ "type": "string", "maxLength": 255 },
-							{ "type": "null" }
-						],
-						"title": "Full Name"
-					},
-					"id": { "type": "string", "format": "uuid", "title": "Id" }
-				},
-				"type": "object",
-				"required": ["email", "id"],
-				"title": "UserPublic"
-			},
-			"UserRegister": {
-				"properties": {
-					"email": {
-						"type": "string",
-						"maxLength": 255,
-						"format": "email",
-						"title": "Email"
-					},
-					"password": {
-						"type": "string",
-						"maxLength": 40,
-						"minLength": 8,
-						"title": "Password"
-					},
-					"full_name": {
-						"anyOf": [
-							{ "type": "string", "maxLength": 255 },
-							{ "type": "null" }
-						],
-						"title": "Full Name"
-					}
-				},
-				"type": "object",
-				"required": ["email", "password"],
-				"title": "UserRegister"
-			},
-			"ValidationError": {
-				"properties": {
-					"loc": {
-						"items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
-						"type": "array",
-						"title": "Location"
-					},
-					"msg": { "type": "string", "title": "Message" },
-					"type": { "type": "string", "title": "Error Type" }
-				},
-				"type": "object",
-				"required": ["loc", "msg", "type"],
-				"title": "ValidationError"
-			}
-		},
-		"securitySchemes": {
-			"OAuth2PasswordBearer": {
-				"type": "oauth2",
-				"flows": {
-					"password": { "scopes": {}, "tokenUrl": "/api/v1/login/access-token" }
-				}
-			}
-		}
-	}
+  "openapi": "3.1.0",
+  "info": { "title": "FlashCards", "version": "0.1.0" },
+  "paths": {
+    "/api/v1/login/access-token": {
+      "post": {
+        "tags": ["login"],
+        "summary": "Login Access Token",
+        "operationId": "login-login_access_token",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_login-login_access_token"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Token" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Read User Me",
+        "description": "Get current user.",
+        "operationId": "users-read_user_me",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserPublic" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/api/v1/users/signup": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Register User",
+        "description": "Create new user without the need to be logged in.",
+        "operationId": "users-register_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserRegister" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserPublic" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/collections/": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Read Collections",
+        "operationId": "flashcards-read_collections",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Skip" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100, "title": "Limit" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CollectionList" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["flashcards"],
+        "summary": "Create Collection",
+        "operationId": "flashcards-create_collection",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CollectionCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Collection" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/collections/{collection_id}": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Read Collection",
+        "operationId": "flashcards-read_collection",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Collection" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["flashcards"],
+        "summary": "Update Collection",
+        "operationId": "flashcards-update_collection",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CollectionUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Collection" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["flashcards"],
+        "summary": "Delete Collection",
+        "operationId": "flashcards-delete_collection",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/collections/{collection_id}/cards/": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Read Cards",
+        "operationId": "flashcards-read_cards",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Skip" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100, "title": "Limit" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CardList" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["flashcards"],
+        "summary": "Create Card",
+        "operationId": "flashcards-create_card",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CardCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Card" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/collections/{collection_id}/cards/{card_id}": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Read Card",
+        "operationId": "flashcards-read_card",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Card Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Card" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["flashcards"],
+        "summary": "Delete Card",
+        "operationId": "flashcards-delete_card",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Card Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_login-login_access_token": {
+        "properties": {
+          "grant_type": {
+            "anyOf": [
+              { "type": "string", "pattern": "^password$" },
+              { "type": "null" }
+            ],
+            "title": "Grant Type"
+          },
+          "username": { "type": "string", "title": "Username" },
+          "password": { "type": "string", "title": "Password" },
+          "scope": { "type": "string", "title": "Scope", "default": "" },
+          "client_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Secret"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "Body_login-login_access_token"
+      },
+      "Card": {
+        "properties": {
+          "front": { "type": "string", "title": "Front" },
+          "back": { "type": "string", "title": "Back" },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "collection_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Collection Id"
+          }
+        },
+        "type": "object",
+        "required": ["front", "back", "id", "collection_id"],
+        "title": "Card"
+      },
+      "CardCreate": {
+        "properties": {
+          "front": { "type": "string", "title": "Front" },
+          "back": { "type": "string", "title": "Back" }
+        },
+        "type": "object",
+        "required": ["front", "back"],
+        "title": "CardCreate"
+      },
+      "CardList": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/Card" },
+            "type": "array",
+            "title": "Data"
+          },
+          "count": { "type": "integer", "title": "Count" }
+        },
+        "type": "object",
+        "required": ["data", "count"],
+        "title": "CardList"
+      },
+      "Collection": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
+          "cards": {
+            "items": { "$ref": "#/components/schemas/Card" },
+            "type": "array",
+            "title": "Cards"
+          }
+        },
+        "type": "object",
+        "required": ["name", "id", "user_id", "cards"],
+        "title": "Collection"
+      },
+      "CollectionCreate": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "CollectionCreate"
+      },
+      "CollectionList": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/Collection" },
+            "type": "array",
+            "title": "Data"
+          },
+          "count": { "type": "integer", "title": "Count" }
+        },
+        "type": "object",
+        "required": ["data", "count"],
+        "title": "CollectionList"
+      },
+      "CollectionUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "title": "CollectionUpdate"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Token": {
+        "properties": {
+          "access_token": { "type": "string", "title": "Access Token" },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          }
+        },
+        "type": "object",
+        "required": ["access_token"],
+        "title": "Token"
+      },
+      "UserPublic": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 255,
+            "format": "email",
+            "title": "Email"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "is_superuser": {
+            "type": "boolean",
+            "title": "Is Superuser",
+            "default": false
+          },
+          "full_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Full Name"
+          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["email", "id"],
+        "title": "UserPublic"
+      },
+      "UserRegister": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 255,
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 8,
+            "title": "Password"
+          },
+          "full_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Full Name"
+          }
+        },
+        "type": "object",
+        "required": ["email", "password"],
+        "title": "UserRegister"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": { "scopes": {}, "tokenUrl": "/api/v1/login/access-token" }
+        }
+      }
+    }
+  }
 }

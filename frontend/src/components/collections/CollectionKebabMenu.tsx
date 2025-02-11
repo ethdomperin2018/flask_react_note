@@ -9,7 +9,17 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 
-function CollectionKebabMenu({ collectionId, onDelete, onEdit }) {
+interface CollectionKebabMenuProps {
+	collectionId: string;
+	onDelete: (collectionId: string) => void;
+	onEdit: () => void;
+}
+
+function CollectionKebabMenu({
+	collectionId,
+	onDelete,
+	onEdit,
+}: CollectionKebabMenuProps) {
 	return (
 		<MenuRoot>
 			<MenuTrigger asChild>

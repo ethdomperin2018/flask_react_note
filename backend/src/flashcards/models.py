@@ -8,7 +8,7 @@ class Collection(SQLModel, table=True):
     id: uuid.UUID | None = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str = Field(index=True)
     user_id: uuid.UUID = Field(index=True)
-    cards: list["Card"] = Relationship(back_populates="collection")
+    cards: list["Card"] = Relationship(back_populates="collection", cascade_delete=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 

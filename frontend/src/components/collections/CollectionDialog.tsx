@@ -12,14 +12,22 @@ import {
 import { Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
 
-const CollectionDialog = ({ onAdd, children }) => {
+interface CollectionDialogProps {
+	onAdd: (collectionData: { name: string }) => Promise<void>;
+	children: React.ReactNode;
+}
+
+const CollectionDialog: React.FC<CollectionDialogProps> = ({
+	onAdd,
+	children,
+}) => {
 	const [collectionName, setCollectionName] = useState("");
 
 	const handleSubmit = async () => {
 		if (!collectionName.trim()) return;
 
 		try {
-			await onAdd(collectionName);
+			await onAdd({ name: collectionName });
 			setCollectionName("");
 		} catch (error) {
 			console.error("Failed to create collection:", error);
