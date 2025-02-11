@@ -1,9 +1,14 @@
+import type { Card } from "@/client";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
-import React from "react";
 import { MdDelete } from "react-icons/md";
 
-function CardListItem({ card, onDelete }) {
+interface CardListItemProps {
+	card: Card;
+	onDelete: (id: string) => void;
+}
+
+function CardListItem({ card, onDelete }: CardListItemProps) {
 	return (
 		<HStack
 			bg="bg.muted"
@@ -15,7 +20,7 @@ function CardListItem({ card, onDelete }) {
 		>
 			<Box
 				as={Link}
-				to={`/collections/${card.collectionId}/cards/${card.id}`}
+				to={`/collections/${card.collection_id}/cards/${card.id}`}
 				p="1rem"
 				flex="1"
 				overflow="hidden"

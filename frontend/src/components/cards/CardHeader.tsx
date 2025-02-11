@@ -1,9 +1,14 @@
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
-import React from "react";
 import { FiRepeat } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
-function CardHeader({ label, onFlip, onClose, onDelete }) {
+interface CardHeaderProps {
+	label: string;
+	onFlip: () => void;
+	onClose: () => void;
+}
+
+function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 	return (
 		<Box
 			display="flex"
@@ -34,7 +39,7 @@ function CardHeader({ label, onFlip, onClose, onDelete }) {
 			>
 				{label}
 			</Text>
-			<HStack spacing={2}>
+			<HStack gap={2}>
 				<IconButton
 					colorPalette="teal"
 					size="sm"

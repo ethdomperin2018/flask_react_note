@@ -12,7 +12,6 @@ interface CardEditorProps {
 	currentSide: "front" | "back";
 	isFlipping: boolean;
 	onFlip: () => void;
-	onDelete: (() => void) | null;
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onClose: () => void;
 }
@@ -22,7 +21,6 @@ export default function CardEditor({
 	currentSide,
 	isFlipping,
 	onFlip,
-	onDelete,
 	onClose,
 	onChange,
 }: CardEditorProps) {
@@ -32,7 +30,6 @@ export default function CardEditor({
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={onFlip}
 				onClose={onClose}
-				onDelete={onDelete}
 			/>
 			<Box
 				opacity={isFlipping ? 0 : 1}
