@@ -30,12 +30,14 @@ function PracticeComponent() {
 
 	if (isLoading) return <LoadingState />;
 	if (!cards.length)
-		return <EmptyState title="No Cards" message="No cards available for practice" />;
+		return (
+			<EmptyState title="No Cards" message="No cards available for practice" />
+		);
 	if (isComplete)
 		return <PracticeComplete stats={progress} collectionId={collectionId} />;
 
 	return (
-		<VStack spacing={4} height="85dvh" width="100%">
+		<VStack gap={4} height="85dvh" width="100%">
 			<PracticeHeader currentCard={currentCard} progress={progress} />
 			<PracticeCard
 				card={currentCard}

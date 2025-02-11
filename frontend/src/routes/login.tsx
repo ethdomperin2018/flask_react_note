@@ -9,7 +9,6 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
-
 import { type SubmitHandler, useForm } from "react-hook-form";
 import Logo from "/assets/Logo.svg";
 import type { Body_login_login_access_token as AccessToken } from "../client";
@@ -74,7 +73,6 @@ function Login() {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Fieldset.Root maxW="sm">
 					<Stack gap={3}>
-						<Fieldset.Legend>Log In</Fieldset.Legend>
 						<Fieldset.HelperText>
 							Please enter your login details.
 						</Fieldset.HelperText>

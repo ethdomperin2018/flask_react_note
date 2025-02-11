@@ -24,11 +24,14 @@ export const Route = createFileRoute("/_layout/collections/")({
 function Collections() {
 	const queryClient = useQueryClient();
 
-	const { data, error, isLoading } = useQuery({
+	const {
+		data: collections,
+		error,
+		isLoading,
+	} = useQuery({
 		...getCollectionsQueryOptions(),
 		placeholderData: (prevData) => prevData,
 	});
-	const collections = data?.data ?? [];
 
 	const addCollection = async (collectionData: CollectionCreate) => {
 		try {
@@ -66,13 +69,13 @@ function Collections() {
 	return (
 		<>
 			<Stack gap={4}>
-				{collections.length === 0 ? (
+				{collections?.data.length === 0 ? (
 					<EmptyState
 						title="Ready to start learning?"
 						message="Create your first collection and begin your learning journey!"
 					/>
 				) : (
-					collections.map((collection) => (
+					collections?.data.map((collection) => (
 						<CollectionListItem
 							key={collection.id}
 							collection={collection}

@@ -1,13 +1,8 @@
+import type { Collection } from "@/client";
 import { Box, HStack, Input, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import CollectionKebabMenu from "./CollectionKebabMenu";
-
-interface Collection {
-	id: string;
-	name: string;
-	cardsCount?: number;
-}
 
 interface CollectionListItemProps {
 	collection: Collection;
@@ -90,8 +85,8 @@ function CollectionListItem({
 					)}
 				</Box>
 				<Text textStyle="xs" color="fg.muted" marginTop=".5rem">
-					{collection.cardsCount
-						? `Total cards: ${collection.cardsCount}`
+					{collection.cards.length > 0
+						? `Total cards: ${collection.cards.length}`
 						: "No cards added yet."}
 				</Text>
 			</Box>
