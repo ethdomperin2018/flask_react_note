@@ -514,10 +514,6 @@
       "Collection": {
         "properties": {
           "name": { "type": "string", "title": "Name" },
-          "description": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Description"
-          },
           "id": { "type": "string", "format": "uuid", "title": "Id" },
           "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
           "cards": {
@@ -531,13 +527,7 @@
         "title": "Collection"
       },
       "CollectionCreate": {
-        "properties": {
-          "name": { "type": "string", "title": "Name" },
-          "description": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Description"
-          }
-        },
+        "properties": { "name": { "type": "string", "title": "Name" } },
         "type": "object",
         "required": ["name"],
         "title": "CollectionCreate"
@@ -560,10 +550,6 @@
           "name": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
             "title": "Name"
-          },
-          "description": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Description"
           }
         },
         "type": "object",

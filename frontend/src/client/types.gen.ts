@@ -28,7 +28,6 @@ export type CardList = {
 
 export type Collection = {
   name: string
-  description?: string | null
   id: string
   user_id: string
   cards: Array<Card>
@@ -36,7 +35,6 @@ export type Collection = {
 
 export type CollectionCreate = {
   name: string
-  description?: string | null
 }
 
 export type CollectionList = {
@@ -46,7 +44,6 @@ export type CollectionList = {
 
 export type CollectionUpdate = {
   name?: string | null
-  description?: string | null
 }
 
 export type HTTPValidationError = {

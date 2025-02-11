@@ -1,32 +1,19 @@
-import {
-	type CollectionCreate,
-	type CollectionUpdate,
-	FlashcardsService,
-} from "@/client";
+import { type CollectionCreate, FlashcardsService } from "@/client";
 import CollectionDialog from "@/components/collections/CollectionDialog";
 import CollectionListItem from "@/components/collections/CollectionListItem";
 import EmptyState from "@/components/commonUI/EmptyState";
 import ErrorState from "@/components/commonUI/ErrorState";
 import FloatingActionButton from "@/components/commonUI/FloatingActionButton";
 import ListSkeleton from "@/components/commonUI/ListSkeleton";
-import { PaginationFooter } from "@/components/commonUI/PaginationFooter";
 import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { VscAdd } from "react-icons/vsc";
 
-const PER_PAGE = 10; // adjust as needed
-
-// Modify to accept page parameter
-function getCollectionsQueryOptions({ page }: { page: number }) {
+function getCollectionsQueryOptions() {
 	return {
-		queryFn: () =>
-			FlashcardsService.readCollections({
-				skip: (1 - 1) * PER_PAGE,
-				limit: PER_PAGE,
-			}),
-		queryKey: ["collections", { page }],
+		queryFn: () => FlashcardsService.readCollections(),
+		queryKey: ["collections"],
 	};
 }
 
@@ -36,50 +23,29 @@ export const Route = createFileRoute("/_layout/collections/")({
 
 function Collections() {
 	const queryClient = useQueryClient();
-	const { page } = Route.useSearch();
-	const navigate = useNavigate({ from: Route.fullPath });
-	const setPage = (page: number) =>
-		navigate({
-			search: (prev: { [key: string]: string }) => ({
-				...prev,
-				page: page.toString(),
-			}),
-		});
 
-	const { data, error, isLoading, isPlaceholderData } = useQuery({
-		...getCollectionsQueryOptions({ page }),
+	const { data, error, isLoading } = useQuery({
+		...getCollectionsQueryOptions(),
 		placeholderData: (prevData) => prevData,
 	});
 	const collections = data?.data ?? [];
 
-	const hasNextPage = !isPlaceholderData && collections.length === PER_PAGE;
-	const hasPreviousPage = page > 1;
-
-	useEffect(() => {
-		if (hasNextPage) {
-			queryClient.prefetchQuery(getCollectionsQueryOptions({ page: page + 1 }));
-		}
-	}, [page, queryClient, hasNextPage]);
-
 	const addCollection = async (collectionData: CollectionCreate) => {
 		try {
 			await FlashcardsService.createCollection({ requestBody: collectionData });
-			queryClient.invalidateQueries(["collections", { page }]);
+			queryClient.invalidateQueries({ queryKey: ["collections"] });
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-	const renameCollection = async (
-		collection: CollectionUpdate,
-		newName: string,
-	) => {
+	const renameCollection = async (collectionId: string, newName: string) => {
 		try {
 			await FlashcardsService.updateCollection({
-				collectionId: collection.id,
-				requestBody: { ...collection, name: newName },
+				collectionId: collectionId,
+				requestBody: { name: newName },
 			});
-			queryClient.invalidateQueries(["collections", { page }]);
+			queryClient.invalidateQueries({ queryKey: ["collections"] });
 		} catch (error) {
 			console.error(error);
 		}
@@ -88,7 +54,7 @@ function Collections() {
 	const deleteCollection = async (collectionId: string) => {
 		try {
 			await FlashcardsService.deleteCollection({ collectionId });
-			queryClient.invalidateQueries(["collections", { page }]);
+			queryClient.invalidateQueries({ queryKey: ["collections"] });
 		} catch (error) {
 			console.error(error);
 		}
@@ -122,12 +88,6 @@ function Collections() {
 					aria-label="Add Collection"
 				/>
 			</CollectionDialog>
-			<PaginationFooter
-				page={page}
-				onChangePage={setPage}
-				hasNextPage={hasNextPage}
-				hasPreviousPage={hasPreviousPage}
-			/>
 		</>
 	);
 }
