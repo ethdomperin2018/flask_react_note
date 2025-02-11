@@ -25,7 +25,7 @@ def get_collection(session: Session, id: uuid.UUID, user_id: uuid.UUID) -> Colle
 
 
 def create_collection(session: Session, collection_in: CollectionCreate, user_id: uuid.UUID) -> Collection:
-    collection = Collection.model_validate(collection_in)
+    collection = Collection.model_validate(collection_in,update={"user_id": user_id})
     collection.user_id = user_id
     session.add(collection)
     session.commit()

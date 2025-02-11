@@ -6,7 +6,6 @@ from sqlmodel import SQLModel
 
 class CollectionBase(SQLModel):
     name: str
-    description: Optional[str] = None
 
 
 class CollectionCreate(CollectionBase):
@@ -15,7 +14,6 @@ class CollectionCreate(CollectionBase):
 
 class CollectionUpdate(SQLModel):
     name: Optional[str] = None
-    description: Optional[str] = None
 
 
 class CardBase(SQLModel):
