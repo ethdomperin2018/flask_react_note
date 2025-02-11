@@ -40,6 +40,13 @@ function PracticeComponent() {
 	const [isTransitioning, setIsTransitioning] = useState(false);
 	const [progress, setProgress] = useState({ correct: 0, incorrect: 0 });
 
+	const resetPractice = useCallback(() => {
+		setCurrentIndex(0);
+		setIsFlipped(false);
+		setIsTransitioning(false);
+		setProgress({ correct: 0, incorrect: 0 });
+	}, []);
+
 	const cards = cardsResponse?.data ?? [];
 	const currentCard = cards[currentIndex];
 	const isComplete = currentIndex >= cards.length;
@@ -69,7 +76,13 @@ function PracticeComponent() {
 			<EmptyState title="No Cards" message="No cards available for practice" />
 		);
 	if (isComplete)
-		return <PracticeComplete stats={progress} collectionId={collectionId} />;
+		return (
+			<PracticeComplete
+				stats={progress}
+				collectionId={collectionId}
+				onReset={resetPractice}
+			/>
+		);
 
 	return (
 		<VStack gap={4} height="85dvh" width="100%">

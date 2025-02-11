@@ -9,16 +9,17 @@ interface PracticeStats {
 interface PracticeCompleteProps {
 	stats: PracticeStats;
 	collectionId: string;
+	onReset: () => void;
 }
 
-function PracticeComplete({ stats, collectionId }: PracticeCompleteProps) {
+function PracticeComplete({
+	stats,
+	collectionId,
+	onReset,
+}: PracticeCompleteProps) {
 	const router = useRouter();
 	const total = stats.correct + stats.incorrect;
 	const percentage = Math.round((stats.correct / total) * 100);
-
-	const forceReload = () => {
-		window.location.reload();
-	};
 
 	return (
 		<Center h="60dvh">
@@ -28,7 +29,7 @@ function PracticeComplete({ stats, collectionId }: PracticeCompleteProps) {
 					You got {stats.correct} out of {total} cards correct ({percentage}%)
 				</Text>
 				<HStack gap={4}>
-					<Button onClick={forceReload}>Practice Again</Button>
+					<Button onClick={onReset}>Practice Again</Button>
 					<Button variant="outline" onClick={() => router.history.back()}>
 						Back to Collection
 					</Button>
