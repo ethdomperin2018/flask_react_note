@@ -1,4 +1,0 @@
-
-{
-  "/collections/:id/cards": "/cards?collectionId=:id"
-}
