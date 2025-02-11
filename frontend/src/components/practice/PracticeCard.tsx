@@ -1,10 +1,5 @@
+import type { Card } from "@/client";
 import { Box, Text } from "@chakra-ui/react";
-
-interface Card {
-	front: string;
-	back: string;
-	id: string;
-}
 
 interface PracticeCardProps {
 	card: Card;

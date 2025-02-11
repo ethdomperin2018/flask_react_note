@@ -8,15 +8,10 @@ interface PracticeStats {
 
 interface PracticeCompleteProps {
 	stats: PracticeStats;
-	collectionId: string;
 	onReset: () => void;
 }
 
-function PracticeComplete({
-	stats,
-	collectionId,
-	onReset,
-}: PracticeCompleteProps) {
+function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 	const router = useRouter();
 	const total = stats.correct + stats.incorrect;
 	const percentage = Math.round((stats.correct / total) * 100);

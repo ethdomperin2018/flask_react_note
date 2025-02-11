@@ -2,7 +2,22 @@ import { HStack, IconButton, Text } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { RiEdit2Fill } from "react-icons/ri";
 
-function PracticeHeader({ currentCard, progress }) {
+interface Progress {
+	correct: number;
+	incorrect: number;
+}
+
+interface PracticeHeaderProps {
+	cardId: string;
+	progress: Progress;
+	collectionId: string;
+}
+
+function PracticeHeader({
+	cardId,
+	progress,
+	collectionId,
+}: PracticeHeaderProps) {
 	const navigate = useNavigate();
 	const total = progress.correct + progress.incorrect;
 
@@ -19,7 +34,7 @@ function PracticeHeader({ currentCard, progress }) {
 				variant="ghost"
 				onClick={() =>
 					navigate({
-						to: `/collections/${currentCard.collectionId}/cards/${currentCard.id}`,
+						to: `/collections/${collectionId}/cards/${cardId}`,
 					})
 				}
 				_hover={{

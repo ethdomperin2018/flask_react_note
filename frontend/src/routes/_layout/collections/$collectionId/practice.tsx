@@ -39,14 +39,6 @@ function PracticeComponent() {
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [isTransitioning, setIsTransitioning] = useState(false);
 	const [progress, setProgress] = useState({ correct: 0, incorrect: 0 });
-
-	const resetPractice = useCallback(() => {
-		setCurrentIndex(0);
-		setIsFlipped(false);
-		setIsTransitioning(false);
-		setProgress({ correct: 0, incorrect: 0 });
-	}, []);
-
 	const cards = cardsResponse?.data ?? [];
 	const currentCard = cards[currentIndex];
 	const isComplete = currentIndex >= cards.length;
@@ -69,6 +61,13 @@ function PracticeComponent() {
 		}, 300);
 	}, []);
 
+	const resetPractice = useCallback(() => {
+		setCurrentIndex(0);
+		setIsFlipped(false);
+		setIsTransitioning(false);
+		setProgress({ correct: 0, incorrect: 0 });
+	}, []);
+
 	if (isLoading) return <LoadingState />;
 	if (error) return <ErrorState error={error} />;
 	if (!cards.length)
@@ -76,17 +75,15 @@ function PracticeComponent() {
 			<EmptyState title="No Cards" message="No cards available for practice" />
 		);
 	if (isComplete)
-		return (
-			<PracticeComplete
-				stats={progress}
-				collectionId={collectionId}
-				onReset={resetPractice}
-			/>
-		);
+		return <PracticeComplete stats={progress} onReset={resetPractice} />;
 
 	return (
 		<VStack gap={4} height="85dvh" width="100%">
-			<PracticeHeader currentCard={currentCard} progress={progress} />
+			<PracticeHeader
+				cardId={currentCard.id}
+				progress={progress}
+				collectionId={collectionId}
+			/>
 			<PracticeCard
 				card={currentCard}
 				isFlipped={isFlipped}
