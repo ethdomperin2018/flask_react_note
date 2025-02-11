@@ -1,9 +1,17 @@
 import { Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
-import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 
-import { useCanGoBack, useRouter } from "@tanstack/react-router";
+interface PracticeStats {
+	correct: number;
+	incorrect: number;
+}
 
-function PracticeComplete({ stats, collectionId }) {
+interface PracticeCompleteProps {
+	stats: PracticeStats;
+	collectionId: string;
+}
+
+function PracticeComplete({ stats, collectionId }: PracticeCompleteProps) {
 	const router = useRouter();
 	const total = stats.correct + stats.incorrect;
 	const percentage = Math.round((stats.correct / total) * 100);
@@ -14,12 +22,12 @@ function PracticeComplete({ stats, collectionId }) {
 
 	return (
 		<Center h="60dvh">
-			<VStack spacing={6} p={8}>
+			<VStack gap={6} p={8}>
 				<Text fontSize="2xl">Practice Complete!</Text>
 				<Text fontSize="lg">
 					You got {stats.correct} out of {total} cards correct ({percentage}%)
 				</Text>
-				<HStack spacing={4}>
+				<HStack gap={4}>
 					<Button onClick={forceReload}>Practice Again</Button>
 					<Button variant="outline" onClick={() => router.history.back()}>
 						Back to Collection

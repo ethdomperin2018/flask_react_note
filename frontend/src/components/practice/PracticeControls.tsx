@@ -1,6 +1,16 @@
 import { Button, HStack } from "@chakra-ui/react";
 
-function PracticeControls({ isFlipped, onFlip, onAnswer }) {
+interface PracticeControlsProps {
+	isFlipped: boolean;
+	onFlip: () => void;
+	onAnswer: (correct: boolean) => void;
+}
+
+function PracticeControls({
+	isFlipped,
+	onFlip,
+	onAnswer,
+}: PracticeControlsProps) {
 	if (!isFlipped) {
 		return (
 			<Button colorPalette="blue" onClick={onFlip}>
@@ -10,7 +20,7 @@ function PracticeControls({ isFlipped, onFlip, onAnswer }) {
 	}
 
 	return (
-		<HStack spacing={4}>
+		<HStack gap={4}>
 			<Button colorPalette="red" onClick={() => onAnswer(false)}>
 				Don't Know
 			</Button>

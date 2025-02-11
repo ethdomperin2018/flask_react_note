@@ -1,6 +1,24 @@
 import { Box, Text } from "@chakra-ui/react";
 
-function PracticeCard({ card, isFlipped, onFlip, isTransitioning }) {
+interface Card {
+	front: string;
+	back: string;
+	id: string;
+}
+
+interface PracticeCardProps {
+	card: Card;
+	isFlipped: boolean;
+	isTransitioning: boolean;
+	onFlip: () => void;
+}
+
+function PracticeCard({
+	card,
+	isFlipped,
+	onFlip,
+	isTransitioning,
+}: PracticeCardProps) {
 	const content = isFlipped ? card.back : card.front;
 
 	return (
