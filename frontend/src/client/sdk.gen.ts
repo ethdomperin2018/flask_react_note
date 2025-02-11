@@ -20,6 +20,8 @@ import type {
   FlashcardsCreateCardResponse,
   FlashcardsReadCardData,
   FlashcardsReadCardResponse,
+  FlashcardsUpdateCardData,
+  FlashcardsUpdateCardResponse,
   FlashcardsDeleteCardData,
   FlashcardsDeleteCardResponse,
   LoginLoginAccessTokenData,
@@ -215,6 +217,33 @@ export class FlashcardsService {
         collection_id: data.collectionId,
         card_id: data.cardId,
       },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Update Card
+   * @param data The data for the request.
+   * @param data.collectionId
+   * @param data.cardId
+   * @param data.requestBody
+   * @returns Card Successful Response
+   * @throws ApiError
+   */
+  public static updateCard(
+    data: FlashcardsUpdateCardData,
+  ): CancelablePromise<FlashcardsUpdateCardResponse> {
+    return __request(OpenAPI, {
+      method: "PUT",
+      url: "/api/v1/flashcards/collections/{collection_id}/cards/{card_id}",
+      path: {
+        collection_id: data.collectionId,
+        card_id: data.cardId,
+      },
+      body: data.requestBody,
+      mediaType: "application/json",
       errors: {
         422: "Validation Error",
       },

@@ -410,6 +410,56 @@
           }
         }
       },
+      "put": {
+        "tags": ["flashcards"],
+        "summary": "Update Card",
+        "operationId": "flashcards-update_card",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Card Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CardUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Card" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": ["flashcards"],
         "summary": "Delete Card",
@@ -510,6 +560,20 @@
         "type": "object",
         "required": ["data", "count"],
         "title": "CardList"
+      },
+      "CardUpdate": {
+        "properties": {
+          "front": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Front"
+          },
+          "back": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Back"
+          }
+        },
+        "type": "object",
+        "title": "CardUpdate"
       },
       "Collection": {
         "properties": {

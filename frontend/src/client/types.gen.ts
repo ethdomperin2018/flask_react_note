@@ -26,6 +26,11 @@ export type CardList = {
   count: number
 }
 
+export type CardUpdate = {
+  front?: string | null
+  back?: string | null
+}
+
 export type Collection = {
   name: string
   id: string
@@ -128,6 +133,14 @@ export type FlashcardsReadCardData = {
 }
 
 export type FlashcardsReadCardResponse = Card
+
+export type FlashcardsUpdateCardData = {
+  cardId: string
+  collectionId: string
+  requestBody: CardUpdate
+}
+
+export type FlashcardsUpdateCardResponse = Card
 
 export type FlashcardsDeleteCardData = {
   cardId: string
