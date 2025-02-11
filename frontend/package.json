@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-client": "openapi-ts --input ./openapi.json --output ./src/client --client axios --exportSchemas true"
+    "generate-client": "openapi-ts",
+    "generate-client_old": "openapi-ts --input ./openapi.json --output ./src/client --client axios --exportSchemas true"
 
   },
   "dependencies": {
@@ -27,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@hey-api/openapi-ts": "^0.34.1",
+    "@hey-api/openapi-ts": "^0.57.0",
     "@tanstack/router-devtools": "^1.102.1",
     "@tanstack/router-plugin": "^1.102.1",
     "@types/node": "^22.13.1",

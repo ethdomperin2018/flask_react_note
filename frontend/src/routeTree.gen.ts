@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as LayoutCollectionsIndexImport } from './routes/_layout/collections/index'
@@ -20,6 +21,12 @@ import { Route as LayoutCollectionsCollectionIdCardsNewImport } from './routes/_
 import { Route as LayoutCollectionsCollectionIdCardsCardIdImport } from './routes/_layout/collections/$collectionId/cards/$cardId'
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
@@ -82,6 +89,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
     '/_layout/collections/': {
@@ -150,6 +164,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/collections/$collectionId': typeof LayoutCollectionsCollectionIdIndexRoute
@@ -160,6 +175,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/collections/$collectionId': typeof LayoutCollectionsCollectionIdIndexRoute
@@ -171,6 +187,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_layout': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRoute
   '/_layout/collections/': typeof LayoutCollectionsIndexRoute
   '/_layout/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/_layout/collections/$collectionId/': typeof LayoutCollectionsCollectionIdIndexRoute
@@ -183,6 +200,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/login'
     | '/collections'
     | '/collections/$collectionId/practice'
     | '/collections/$collectionId'
@@ -192,6 +210,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/login'
     | '/collections'
     | '/collections/$collectionId/practice'
     | '/collections/$collectionId'
@@ -201,6 +220,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_layout'
+    | '/login'
     | '/_layout/collections/'
     | '/_layout/collections/$collectionId/practice'
     | '/_layout/collections/$collectionId/'
@@ -212,11 +232,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LayoutRoute: typeof LayoutRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LayoutRoute: LayoutRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 
 export const routeTree = rootRoute
@@ -230,7 +252,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_layout"
+        "/_layout",
+        "/login"
       ]
     },
     "/": {
@@ -245,6 +268,9 @@ export const routeTree = rootRoute
         "/_layout/collections/$collectionId/cards/$cardId",
         "/_layout/collections/$collectionId/cards/new"
       ]
+    },
+    "/login": {
+      "filePath": "login.tsx"
     },
     "/_layout/collections/": {
       "filePath": "_layout/collections/index.tsx",
