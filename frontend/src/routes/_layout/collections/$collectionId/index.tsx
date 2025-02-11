@@ -1,12 +1,21 @@
+import { FlashcardsService } from "@/client";
 import CardListItem from "@/components/cards/CardIListtem";
 import EmptyState from "@/components/commonUI/EmptyState";
+import ErrorState from "@/components/commonUI/ErrorState";
 import FloatingActionButton from "@/components/commonUI/FloatingActionButton";
 import ListSkeleton from "@/components/commonUI/ListSkeleton";
-import { useCards } from "@/hooks/useCards";
 import { Stack } from "@chakra-ui/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { MdSchool } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
+
+function getCardsQueryOptions(collectionId: string) {
+	return {
+		queryFn: () => FlashcardsService.readCards({ collectionId }),
+		queryKey: ["collections", collectionId, "cards"],
+	};
+}
 
 export const Route = createFileRoute("/_layout/collections/$collectionId/")({
 	component: CollectionComponent,
@@ -14,10 +23,28 @@ export const Route = createFileRoute("/_layout/collections/$collectionId/")({
 
 function CollectionComponent() {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const { collectionId } = Route.useParams();
-	const { cards, deleteCard, isLoading } = useCards(collectionId);
+
+	const { data, error, isLoading } = useQuery({
+		...getCardsQueryOptions(collectionId),
+		placeholderData: (prevData) => prevData,
+	});
+	const cards = data?.data ?? [];
+
+	const deleteCard = async (cardId: string) => {
+		try {
+			await FlashcardsService.deleteCard({ collectionId, cardId });
+			queryClient.invalidateQueries({
+				queryKey: ["collections", collectionId, "cards"],
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	if (isLoading) return <ListSkeleton />;
+	if (error) return <ErrorState error={error} />;
 
 	return (
 		<>

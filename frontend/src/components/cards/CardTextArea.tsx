@@ -1,9 +1,12 @@
 import { Box, Textarea } from "@chakra-ui/react";
-import { Editable } from "@chakra-ui/react";
 
-import React from "react";
+interface CardTextAreaProps {
+	value: string;
+	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	side: "front" | "back";
+}
 
-function CardTextArea({ value, onChange, side }) {
+function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 	return (
 		<Box
 			w="100%"
@@ -15,13 +18,13 @@ function CardTextArea({ value, onChange, side }) {
 			height="80dvh"
 		>
 			<Textarea
-				value={value || ""}
+				value={value}
 				placeholder={
 					side === "front"
 						? "Enter your question or concept..."
 						: "Enter the answer or explanation..."
 				}
-				onChange={(e) => onChange(e.target.value)}
+				onChange={onChange}
 				variant="subtle"
 				borderWidth="0"
 				resize="none"
@@ -29,6 +32,10 @@ function CardTextArea({ value, onChange, side }) {
 				height="100%"
 				padding="0.5rem"
 				color="fg.DEFAULT"
+				_focus={{
+					borderWidth: 0,
+					boxShadow: "none",
+				}}
 			/>
 		</Box>
 	);
