@@ -28,7 +28,7 @@ function Collections() {
 
 	return (
 		<>
-			<Stack spacing={4}>
+			<Stack gap={4}>
 				{collections.length === 0 ? (
 					<EmptyState
 						title="Ready to start learning?"

@@ -1,11 +1,14 @@
 import { Button, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 
-function ErrorState({ error, onRetry }) {
+function ErrorState({
+	error,
+	onRetry,
+}: { error?: Error; onRetry?: () => void }) {
 	const navigate = useNavigate();
 
 	return (
-		<VStack spacing={4} p={8} textAlign="center">
+		<VStack gap={4} p={8} textAlign="center">
 			<Text color="red.500" fontSize="lg">
 				{error?.message || "Something went wrong"}
 			</Text>

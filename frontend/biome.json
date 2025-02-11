@@ -13,6 +13,7 @@
 	},
 	"linter": {
 	  "enabled": true,
+	  "ignore": ["src/components/ui"],
 	  "rules": {
 		"recommended": true,
 		"suspicious": {

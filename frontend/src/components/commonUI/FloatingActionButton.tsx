@@ -1,5 +1,12 @@
 import { IconButton } from "@chakra-ui/react";
-import React from "react";
+
+interface FloatingActionButtonProps {
+	icon: React.ReactNode;
+	onClick?: () => void;
+	position?: "right" | "left";
+	bgColor?: string;
+	"aria-label": string;
+}
 
 function FloatingActionButton({
 	icon,
@@ -7,7 +14,7 @@ function FloatingActionButton({
 	position = "right",
 	bgColor = "blue.600",
 	"aria-label": ariaLabel,
-}) {
+}: FloatingActionButtonProps) {
 	return (
 		<IconButton
 			position="fixed"
