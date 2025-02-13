@@ -40,15 +40,15 @@ const useAuth = () => {
 			//   "success",
 			// )
 		},
-		onError: (err: ApiError) => {
-			let errDetail = (err.body as any)?.detail;
+		// onError: (err: ApiError) => {
+		// 	let errDetail = (err.body as any)?.detail;
 
-			if (err instanceof AxiosError) {
-				errDetail = err.message;
-			}
+		// 	if (err instanceof AxiosError) {
+		// 		errDetail = err.message;
+		// 	}
 
-			// showToast("Something went wrong.", errDetail, "error")
-		},
+		// 	showToast("Something went wrong.", errDetail, "error")
+		// },
 		onSettled: () => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},

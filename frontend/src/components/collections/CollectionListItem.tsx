@@ -29,7 +29,7 @@ function CollectionListItem({
 		setIsEditing(false);
 	};
 
-	const handleKeyDown = (e) => {
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			handleSubmit();
 		}
@@ -50,7 +50,7 @@ function CollectionListItem({
 		>
 			<Box
 				as={isEditing ? "div" : Link}
-				to={isEditing ? undefined : `/collections/${collection.id}`}
+				{...(!isEditing && { to: `/collections/${collection.id}` })}
 				p="1.25rem"
 				flex="1"
 				overflow="hidden"

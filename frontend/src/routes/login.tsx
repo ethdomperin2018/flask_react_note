@@ -9,7 +9,7 @@ import {
 	Stack,
 	Text,
 } from "@chakra-ui/react";
-import { Link, createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
@@ -115,7 +115,7 @@ function Login() {
 					</Button>
 				</Fieldset.Root>
 			</form>
-			<Link to="/recover-password" color="blue.500">
+			{/* <Link to="/recover-password" color="blue.500">
 				Forgot password?
 			</Link>
 			<Text>
@@ -123,7 +123,7 @@ function Login() {
 				<Link to="/signup" color="blue.500">
 					Sign up
 				</Link>
-			</Text>
+			</Text> */}
 		</Container>
 	);
 }

@@ -64,9 +64,6 @@ function Drawer({
 								{collections.map((collection) => (
 									<List.Item
 										key={collection.id}
-										as={Link}
-										to={`/collections/${collection.id}`}
-										onClick={handleNavigate}
 										display="flex"
 										alignItems="center"
 										px={2}
@@ -76,14 +73,21 @@ function Drawer({
 										_hover={{ bg: "bg.subtle" }}
 										_active={{ bg: "bg.emphasized" }}
 									>
-										<Text
-											fontSize="15px"
-											fontWeight="500"
-											color="fg.DEFAULT"
-											truncate
+										<Link
+											to="/collections/$collectionId"
+											params={{ collectionId: collection.id }}
+											onClick={handleNavigate}
+											style={{ width: "100%" }}
 										>
-											{collection.name}
-										</Text>
+											<Text
+												fontSize="15px"
+												fontWeight="500"
+												color="fg.DEFAULT"
+												truncate
+											>
+												{collection.name}
+											</Text>
+										</Link>
 									</List.Item>
 								))}
 							</List.Root>

@@ -18,16 +18,15 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 			boxShadow="sm"
 			_hover={{ bg: "bg.subtle" }}
 		>
-			<Box
-				as={Link}
-				to={`/collections/${card.collection_id}/cards/${card.id}`}
-				p="1rem"
-				flex="1"
-				overflow="hidden"
-			>
-				<Text fontSize="md" color="fg.DEFAULT" truncate>
-					{card.front}
-				</Text>
+			<Box p="1rem" flex="1" overflow="hidden" asChild>
+				<Link
+					to="/collections/$collectionId/cards/$cardId"
+					params={{ collectionId: card.collection_id, cardId: card.id }}
+				>
+					<Text fontSize="md" color="fg.DEFAULT" truncate>
+						{card.front}
+					</Text>
+				</Link>
 			</Box>
 			<Box p=".75rem" borderLeft="1px" borderColor="bg.muted">
 				<IconButton
