@@ -6,7 +6,6 @@ import {
 	Fieldset,
 	Image,
 	Input,
-	Stack,
 	Text,
 } from "@chakra-ui/react";
 import { createFileRoute, redirect } from "@tanstack/react-router";
@@ -72,11 +71,6 @@ function Login() {
 			/>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Fieldset.Root maxW="sm">
-					<Stack gap={3}>
-						<Fieldset.HelperText>
-							Please enter your login details.
-						</Fieldset.HelperText>
-					</Stack>
 					<Fieldset.Content>
 						<Field.Root>
 							<Field.Label>Email</Field.Label>
