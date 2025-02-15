@@ -28,7 +28,7 @@ if (rootElement && !rootElement.innerHTML) {
 	root.render(
 		<StrictMode>
 			<ChakraProvider value={system}>
-				<ColorModeProvider>
+				<ColorModeProvider forcedTheme="dark">
 					<QueryClientProvider client={queryClient}>
 						<RouterProvider router={router} />
 					</QueryClientProvider>
