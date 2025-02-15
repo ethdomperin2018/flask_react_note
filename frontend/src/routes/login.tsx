@@ -118,6 +118,15 @@ function Login() {
 					Sign up
 				</Link>
 			</Text> */}
+			<Text
+				position="fixed"
+				bottom={2}
+				right={2}
+				fontSize="xs"
+				color="gray.500"
+			>
+				v0.0.2
+			</Text>
 		</Container>
 	);
 }

@@ -1,4 +1,4 @@
-import { Button, HStack, IconButton } from "@chakra-ui/react";
+import { Button, Flex, HStack, IconButton } from "@chakra-ui/react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
 interface PracticeControlsProps {
@@ -14,22 +14,24 @@ function PracticeControls({
 }: PracticeControlsProps) {
 	if (!isFlipped) {
 		return (
-			<Button colorPalette="blue" onClick={onFlip}>
-				Show Answer
-			</Button>
+			<Flex height="6rem" justifyContent="center" alignItems="center">
+				<Button colorPalette="blue" onClick={onFlip}>
+					Show Answer
+				</Button>
+			</Flex>
 		);
 	}
 
 	return (
-		<HStack gap={4}>
+		<HStack gap={20} height="6rem">
 			<IconButton
 				aria-label="Don't Know"
 				onClick={() => onAnswer(false)}
 				rounded="full"
-				size="md"
+				size="2xl"
 				bg="bg.subtle"
 				borderWidth="1px"
-				transition="all 0.2s"
+				transition="all 0.4s"
 				_hover={{
 					transform: "scale(1.1)",
 					bg: "bg.muted",
@@ -45,10 +47,10 @@ function PracticeControls({
 				aria-label="Know"
 				onClick={() => onAnswer(true)}
 				rounded="full"
-				size="md"
+				size="2xl"
 				bg="bg.subtle"
 				borderWidth="1px"
-				transition="all 0.2s"
+				transition="all 0.4s"
 				_hover={{
 					transform: "scale(1.1)",
 					bg: "bg.muted",

@@ -1,8 +1,8 @@
-import { useState, useCallback, useEffect } from "react";
 import { FlashcardsService } from "@/client";
-import { useDebounce } from "./useDebounce";
 import { toaster } from "@/components/ui/toaster";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "./useDebounce";
 
 interface CardData {
 	front: string;
@@ -36,22 +36,19 @@ export function useCard(collectionId: string, cardId?: string) {
 		async (cardData: CardData) => {
 			if (!cardData.front.trim() && !cardData.back.trim()) return;
 			try {
-				let savedCard: CardData;
 				if (cardData.id) {
 					await FlashcardsService.updateCard({
 						collectionId,
 						cardId: cardData.id,
 						requestBody: cardData,
 					});
-					savedCard = { ...cardData };
 				} else {
 					const response = await FlashcardsService.createCard({
 						collectionId,
 						requestBody: cardData,
 					});
-					savedCard = { ...cardData, id: response.id };
+					setCard((prev) => ({ ...prev, id: response.id }));
 				}
-				setCard(savedCard);
 				queryClient.invalidateQueries({
 					queryKey: ["collections", collectionId, "cards"],
 				});
@@ -68,11 +65,11 @@ export function useCard(collectionId: string, cardId?: string) {
 		(value: string) => {
 			setCard((prev) => {
 				const updatedCard = { ...prev, [currentSide]: value };
-				debouncedSave(updatedCard);
 				return updatedCard;
 			});
+			debouncedSave({ ...card, [currentSide]: value });
 		},
-		[currentSide, debouncedSave],
+		[currentSide, debouncedSave, card],
 	);
 
 	const flip = useCallback(() => {
