@@ -8,7 +8,7 @@ import {
 	Input,
 	Text,
 } from "@chakra-ui/react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
@@ -112,20 +112,17 @@ function Login() {
 			{/* <Link to="/recover-password" color="blue.500">
 				Forgot password?
 			</Link>
+			*/}
 			<Text>
 				Don't have an account?{" "}
-				<Link to="/signup" color="blue.500">
-					Sign up
+				<Link to="/signup">
+					<Text as="span" color="blue.500">
+						Sign up
+					</Text>
 				</Link>
-			</Text> */}
-			<Text
-				position="fixed"
-				bottom={2}
-				right={2}
-				fontSize="xs"
-				color="gray.500"
-			>
-				v0.0.2
+			</Text>
+			<Text position="fixed" bottom={2} left={2} fontSize="xs" color="gray.500">
+				v0.0.3
 			</Text>
 		</Container>
 	);

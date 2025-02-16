@@ -5,12 +5,15 @@ import {
 	DrawerBody,
 	DrawerCloseTrigger,
 	DrawerContent,
+	DrawerFooter,
 	DrawerHeader,
 	DrawerRoot,
 } from "@/components/ui/drawer";
-import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import useAuth from "@/hooks/useAuth";
+import { Button, Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { FiLogOut } from "react-icons/fi";
 
 function getCollectionsQueryOptions() {
 	return {
@@ -26,6 +29,11 @@ function Drawer({
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
 }) {
+	const { logout } = useAuth();
+	const queryClient = useQueryClient();
+	const currentUser = queryClient.getQueryData<{ email: string }>([
+		"currentUser",
+	]);
 	const { data, isLoading } = useQuery({
 		...getCollectionsQueryOptions(),
 		placeholderData: (prevData) => prevData,
@@ -33,6 +41,11 @@ function Drawer({
 	const collections = data?.data ?? [];
 
 	const handleNavigate = () => setIsOpen(false);
+
+	const handleLogout = async () => {
+		logout();
+		setIsOpen(false);
+	};
 
 	return (
 		<DrawerRoot
@@ -94,6 +107,25 @@ function Drawer({
 						)}
 					</VStack>
 				</DrawerBody>
+				<DrawerFooter borderTopWidth="1px" bg="bg.subtle">
+					<VStack width="100%" gap={2}>
+						{currentUser?.email && (
+							<Text fontSize="sm" color="fg.muted">
+								Logged in as: {currentUser.email}
+							</Text>
+						)}
+						<Button
+							width="100%"
+							// variant="ghost"
+							// colorScheme="dark"
+							bg="bg.secondary"
+							onClick={handleLogout}
+						>
+							<FiLogOut />
+							Log out
+						</Button>
+					</VStack>
+				</DrawerFooter>
 				<DrawerCloseTrigger />
 			</DrawerContent>
 		</DrawerRoot>

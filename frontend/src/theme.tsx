@@ -1,8 +1,4 @@
-import {
-	createSystem,
-	defaultConfig,
-	defineConfig,
-} from "@chakra-ui/react";
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
 const config = defineConfig({
 	theme: {
@@ -20,6 +16,9 @@ const config = defineConfig({
 					},
 					emphasized: {
 						value: { _light: "{colors.gray.200}", _dark: "#78727c" },
+					},
+					secondary: {
+						value: { _light: "{colors.gray.400}", _dark: "#f1f0f1" },
 					},
 				},
 				fg: {

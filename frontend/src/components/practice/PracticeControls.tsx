@@ -14,7 +14,7 @@ function PracticeControls({
 }: PracticeControlsProps) {
 	if (!isFlipped) {
 		return (
-			<Flex height="6rem" justifyContent="center" alignItems="center">
+			<Flex height="5rem" justifyContent="center" alignItems="center">
 				<Button colorPalette="blue" onClick={onFlip}>
 					Show Answer
 				</Button>
@@ -23,7 +23,7 @@ function PracticeControls({
 	}
 
 	return (
-		<HStack gap={20} height="6rem">
+		<HStack gap={20} height="5rem">
 			<IconButton
 				aria-label="Don't Know"
 				onClick={() => onAnswer(false)}
