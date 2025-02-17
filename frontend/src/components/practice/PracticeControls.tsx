@@ -1,6 +1,7 @@
-import { Button, Flex, HStack, IconButton } from "@chakra-ui/react";
+import { Flex, HStack, IconButton } from "@chakra-ui/react";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { BlueButton } from "../commonUI/DefaultButton";
+import { BlueButton } from "../commonUI/Buttons";
+
 interface PracticeControlsProps {
 	isFlipped: boolean;
 	onFlip: () => void;

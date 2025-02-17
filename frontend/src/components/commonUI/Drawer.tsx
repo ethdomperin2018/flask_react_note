@@ -14,7 +14,7 @@ import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { FiLogOut } from "react-icons/fi";
-import { DefaultButton } from "./DefaultButton";
+import { DefaultButton } from "./Buttons";
 function getCollectionsQueryOptions() {
 	return {
 		queryFn: () => FlashcardsService.readCollections(),
@@ -54,7 +54,7 @@ function Drawer({
 			placement="start"
 		>
 			<DrawerBackdrop />
-			<DrawerContent rounded="none" maxW="280px" bg="bg.drawer">
+			<DrawerContent rounded="none" maxW="280px" bg="bg.box">
 				<DrawerHeader display="flex" justifyContent="center" padding=".5rem">
 					<Link to="/" onClick={handleNavigate}>
 						<Image width="3rem" src={Logo} alt="logo" />

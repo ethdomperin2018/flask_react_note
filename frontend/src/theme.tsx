@@ -26,7 +26,7 @@ const config = defineConfig({
 					input: {
 						value: { _light: "{colors.gray.400}", _dark: "#2c2531" },
 					},
-					drawer: {
+					box: {
 						value: { _light: "#24292E", _dark: "#24292E" },
 					},
 				},

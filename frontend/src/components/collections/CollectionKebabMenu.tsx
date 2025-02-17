@@ -52,7 +52,7 @@ function CollectionKebabMenu({
 					borderRadius="md"
 					_hover={{ bg: "bg.50" }}
 				>
-					<MdDelete />
+					<MdDelete color="#DC2626" />
 					<Box flex="1">Delete</Box>
 				</MenuItem>
 			</MenuContent>

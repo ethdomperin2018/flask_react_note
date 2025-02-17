@@ -10,7 +10,7 @@ import {
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
-import { DefaultButton } from "../components/commonUI/DefaultButton";
+import { DefaultButton } from "../components/commonUI/Buttons";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { emailPattern } from "../utils";
 

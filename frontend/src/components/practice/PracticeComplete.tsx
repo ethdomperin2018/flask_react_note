@@ -1,6 +1,6 @@
 import { Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "@tanstack/react-router";
-import { BlueButton } from "../commonUI/DefaultButton";
+import { BlueButton } from "../commonUI/Buttons";
 interface PracticeStats {
 	correct: number;
 	incorrect: number;
