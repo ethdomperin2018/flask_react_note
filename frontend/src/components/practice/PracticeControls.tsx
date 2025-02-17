@@ -1,6 +1,6 @@
 import { Button, Flex, HStack, IconButton } from "@chakra-ui/react";
 import { FaCheck, FaTimes } from "react-icons/fa";
-
+import { BlueButton } from "../commonUI/DefaultButton";
 interface PracticeControlsProps {
 	isFlipped: boolean;
 	onFlip: () => void;
@@ -15,23 +15,7 @@ function PracticeControls({
 	if (!isFlipped) {
 		return (
 			<Flex height="5rem" justifyContent="center" alignItems="center">
-				<Button
-					onClick={onFlip}
-					borderRadius="sm"
-					borderWidth="1px"
-					boxShadow="sm"
-					borderColor="bg.50"
-					bg="bg.50"
-					color="gray"
-					_hover={{
-						bg: "bg.100",
-					}}
-					_active={{
-						bg: "bg.100",
-					}}
-				>
-					Show Answer
-				</Button>
+				<BlueButton onClick={onFlip}>Show Answer</BlueButton>
 			</Flex>
 		);
 	}
@@ -43,16 +27,18 @@ function PracticeControls({
 				onClick={() => onAnswer(false)}
 				rounded="full"
 				size="2xl"
-				bg="bg.50"
+				bg="bg.100"
 				borderWidth="1px"
-				transition="all 0.4s"
+				borderColor="bg.50"
 				_hover={{
-					transform: "scale(1.05)",
-					bg: "bg.100",
+					bg: "#57303A",
+					borderColor: "red",
+					borderWidth: "1px",
 				}}
 				_active={{
-					transform: "scale(1.05)",
-					bg: "bg.100",
+					bg: "#57303A",
+					borderColor: "red",
+					borderWidth: "1px",
 				}}
 			>
 				<FaTimes color="#eae9eb" />
@@ -62,16 +48,18 @@ function PracticeControls({
 				onClick={() => onAnswer(true)}
 				rounded="full"
 				size="2xl"
-				bg="bg.50"
+				bg="bg.100"
 				borderWidth="1px"
-				transition="all 0.4s"
+				borderColor="bg.50"
 				_hover={{
-					transform: "scale(1.05)",
-					bg: "bg.100",
+					bg: "#2E493F",
+					borderColor: "green",
+					borderWidth: "1px",
 				}}
 				_active={{
-					transform: "scale(1.05)",
-					bg: "bg.100",
+					bg: "green.600",
+					borderColor: "green",
+					borderWidth: "1px",
 				}}
 			>
 				<FaCheck color="#eae9eb" />

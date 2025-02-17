@@ -17,3 +17,25 @@ export const DefaultButton = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 DefaultButton.displayName = "DefaultButton";
+
+export const BlueButton = forwardRef<HTMLButtonElement, ButtonProps>(
+	(props, ref) => (
+		<Button
+			ref={ref}
+			borderRadius="sm"
+			borderWidth="1px"
+			color="#20B8CD"
+			boxShadow="sm"
+			bg="bg.100"
+			_hover={{
+				bg: "#204044",
+			}}
+			_active={{
+				bg: "#204044",
+			}}
+			{...props}
+		/>
+	),
+);
+
+BlueButton.displayName = "BlueButton";

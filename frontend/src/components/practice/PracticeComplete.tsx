@@ -1,6 +1,6 @@
 import { Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "@tanstack/react-router";
-
+import { BlueButton } from "../commonUI/DefaultButton";
 interface PracticeStats {
 	correct: number;
 	incorrect: number;
@@ -24,10 +24,24 @@ function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 					You got {stats.correct} out of {total} cards correct ({percentage}%)
 				</Text>
 				<HStack gap={4}>
-					<Button onClick={onReset}>Practice Again</Button>
-					<Button variant="outline" onClick={() => router.history.back()}>
+					<Button
+						onClick={() => router.history.back()}
+						borderRadius="sm"
+						borderWidth="1px"
+						borderColor="bg.50"
+						color="#eae9eb"
+						boxShadow="sm"
+						bg="bg.50"
+						_hover={{
+							bg: "bg.100",
+						}}
+						_active={{
+							bg: "bg.100",
+						}}
+					>
 						Back to Collection
 					</Button>
+					<BlueButton onClick={onReset}>Practice Again</BlueButton>
 				</HStack>
 			</VStack>
 		</Center>
