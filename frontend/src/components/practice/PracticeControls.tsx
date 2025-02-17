@@ -15,7 +15,21 @@ function PracticeControls({
 	if (!isFlipped) {
 		return (
 			<Flex height="5rem" justifyContent="center" alignItems="center">
-				<Button colorPalette="blue" onClick={onFlip}>
+				<Button
+					onClick={onFlip}
+					borderRadius="sm"
+					borderWidth="1px"
+					boxShadow="sm"
+					borderColor="bg.50"
+					bg="bg.50"
+					color="gray"
+					_hover={{
+						bg: "bg.100",
+					}}
+					_active={{
+						bg: "bg.100",
+					}}
+				>
 					Show Answer
 				</Button>
 			</Flex>
@@ -29,38 +43,38 @@ function PracticeControls({
 				onClick={() => onAnswer(false)}
 				rounded="full"
 				size="2xl"
-				bg="bg.subtle"
+				bg="bg.50"
 				borderWidth="1px"
 				transition="all 0.4s"
 				_hover={{
-					transform: "scale(1.1)",
-					bg: "bg.muted",
+					transform: "scale(1.05)",
+					bg: "bg.100",
 				}}
 				_active={{
-					transform: "scale(1.1)",
-					bg: "bg.muted",
+					transform: "scale(1.05)",
+					bg: "bg.100",
 				}}
 			>
-				<FaTimes color="#FAFAFA" />
+				<FaTimes color="#eae9eb" />
 			</IconButton>
 			<IconButton
 				aria-label="Know"
 				onClick={() => onAnswer(true)}
 				rounded="full"
 				size="2xl"
-				bg="bg.subtle"
+				bg="bg.50"
 				borderWidth="1px"
 				transition="all 0.4s"
 				_hover={{
-					transform: "scale(1.1)",
-					bg: "bg.muted",
+					transform: "scale(1.05)",
+					bg: "bg.100",
 				}}
 				_active={{
-					transform: "scale(1.1)",
-					bg: "bg.muted",
+					transform: "scale(1.05)",
+					bg: "bg.100",
 				}}
 			>
-				<FaCheck color="#FAFAFA" />
+				<FaCheck color="#eae9eb" />
 			</IconButton>
 		</HStack>
 	);

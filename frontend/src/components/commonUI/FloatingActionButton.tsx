@@ -24,8 +24,7 @@ function FloatingActionButton({
 			bgColor={bgColor}
 			rounded="full"
 			size="2xl"
-			boxShadow="lg"
-			transition="all 0.2s"
+			transition="all 0.4s"
 			_hover={{
 				transform: "scale(1.1)",
 				bgColor: bgColor.replace("600", "500"),

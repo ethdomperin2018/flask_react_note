@@ -41,12 +41,12 @@ function CollectionListItem({
 
 	return (
 		<HStack
-			bg="bg.muted"
-			borderRadius="md"
 			justifyContent="space-between"
+			borderRadius="sm"
 			borderWidth="1px"
 			boxShadow="sm"
-			_hover={{ bg: "bg.subtle" }}
+			borderColor="bg.50"
+			_hover={{ bg: "bg.100" }}
 		>
 			<Box
 				as={isEditing ? "div" : Link}
@@ -67,10 +67,15 @@ function CollectionListItem({
 							fontWeight="semibold"
 							borderRadius="sm"
 							color="fg.DEFAULT"
-							_focus={{
-								borderWidth: "0px",
-								borderColor: "bg.DEFAULT",
-								borderRadius: "md",
+							bg="bg.input"
+							css={{
+								"&:focus": {
+									outline: "none",
+									borderColor: "bg.50",
+								},
+								"&::selection": {
+									backgroundColor: "bg.100",
+								},
 							}}
 						/>
 					) : (

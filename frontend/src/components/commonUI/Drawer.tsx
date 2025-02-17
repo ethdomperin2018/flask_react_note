@@ -10,11 +10,11 @@ import {
 	DrawerRoot,
 } from "@/components/ui/drawer";
 import useAuth from "@/hooks/useAuth";
-import { Button, Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { FiLogOut } from "react-icons/fi";
-
+import { DefaultButton } from "./DefaultButton";
 function getCollectionsQueryOptions() {
 	return {
 		queryFn: () => FlashcardsService.readCollections(),
@@ -54,19 +54,13 @@ function Drawer({
 			placement="start"
 		>
 			<DrawerBackdrop />
-			<DrawerContent rounded="none" maxW="280px">
-				<DrawerHeader
-					display="flex"
-					justifyContent="center"
-					padding=".5rem"
-					borderBottomWidth="1px"
-					bg="bg.subtle"
-				>
+			<DrawerContent rounded="none" maxW="280px" bg="bg.drawer">
+				<DrawerHeader display="flex" justifyContent="center" padding=".5rem">
 					<Link to="/" onClick={handleNavigate}>
 						<Image width="3rem" src={Logo} alt="logo" />
 					</Link>
 				</DrawerHeader>
-				<DrawerBody py={2} px={2} bg="bg.muted">
+				<DrawerBody py={2} px={1}>
 					<VStack align="stretch">
 						{isLoading ? (
 							<VStack py={4}>
@@ -79,12 +73,12 @@ function Drawer({
 										key={collection.id}
 										display="flex"
 										alignItems="center"
-										px={2}
+										px={3}
 										py={2}
 										borderRadius="lg"
-										transition="all 0.2s"
-										_hover={{ bg: "bg.subtle" }}
-										_active={{ bg: "bg.emphasized" }}
+										transition="all 0.4s"
+										_hover={{ bg: "bg.100" }}
+										_active={{ bg: "bg.100" }}
 									>
 										<Link
 											to="/collections/$collectionId"
@@ -92,12 +86,7 @@ function Drawer({
 											onClick={handleNavigate}
 											style={{ width: "100%" }}
 										>
-											<Text
-												fontSize="15px"
-												fontWeight="500"
-												color="fg.DEFAULT"
-												truncate
-											>
+											<Text fontSize="15px" color="fg.DEFAULT" truncate>
 												{collection.name}
 											</Text>
 										</Link>
@@ -107,23 +96,17 @@ function Drawer({
 						)}
 					</VStack>
 				</DrawerBody>
-				<DrawerFooter borderTopWidth="1px" bg="bg.subtle">
+				<DrawerFooter>
 					<VStack width="100%" gap={2}>
 						{currentUser?.email && (
 							<Text fontSize="sm" color="fg.muted">
 								Logged in as: {currentUser.email}
 							</Text>
 						)}
-						<Button
-							width="100%"
-							// variant="ghost"
-							// colorScheme="dark"
-							bg="bg.secondary"
-							onClick={handleLogout}
-						>
-							<FiLogOut />
+						<DefaultButton onClick={handleLogout} width="100%" color="white">
+							<FiLogOut size={20} />
 							Log out
-						</Button>
+						</DefaultButton>
 					</VStack>
 				</DrawerFooter>
 				<DrawerCloseTrigger />

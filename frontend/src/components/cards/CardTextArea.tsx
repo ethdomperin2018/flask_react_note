@@ -13,7 +13,7 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 			p={2}
 			borderWidth="1px"
 			borderRadius="lg"
-			bg={side === "front" ? "bg.subtle" : "bg.DEFAULT"}
+			bg="bg.DEFAULT"
 			boxShadow="md"
 			height="80dvh"
 		>
@@ -25,16 +25,21 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 						: "Enter the answer or explanation..."
 				}
 				onChange={onChange}
+				bg="bg.input"
 				variant="subtle"
 				borderWidth="0"
 				resize="none"
 				width="100%"
 				height="100%"
 				padding="0.5rem"
-				color="fg.DEFAULT"
-				_focus={{
-					borderWidth: 0,
-					boxShadow: "none",
+				fontSize={{ base: "2xl", md: "md" }}
+				css={{
+					"&:focus": {
+						outline: "none",
+					},
+					"&::selection": {
+						backgroundColor: "bg.100",
+					},
 				}}
 			/>
 		</Box>

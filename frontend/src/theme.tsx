@@ -6,30 +6,36 @@ const config = defineConfig({
 			colors: {
 				bg: {
 					DEFAULT: {
-						value: { _light: "{colors.white}", _dark: "#312a37" },
+						value: { _light: "#F3F3EE", _dark: "#312a37" },
 					},
-					subtle: {
-						value: { _light: "{colors.gray.50}", _dark: "#47414d" },
+					400: {
+						value: { _light: "#a8a89a", _dark: "#eae9eb" },
 					},
-					muted: {
-						value: { _light: "{colors.gray.100}", _dark: "#5f5964" },
+					300: {
+						value: { _light: "#bdbdad", _dark: "#c1bfc3" },
 					},
-					emphasized: {
-						value: { _light: "{colors.gray.200}", _dark: "#78727c" },
+					200: {
+						value: { _light: "#d3d3c1", _dark: "#78727c" },
 					},
-					secondary: {
-						value: { _light: "{colors.gray.400}", _dark: "#f1f0f1" },
+					100: {
+						value: { _light: "#deded0", _dark: "#2F363D" },
+					},
+					50: {
+						value: { _light: "#e8e8df", _dark: "#453f4b" },
+					},
+					input: {
+						value: { _light: "{colors.gray.400}", _dark: "#2c2531" },
+					},
+					drawer: {
+						value: { _light: "#24292E", _dark: "#24292E" },
 					},
 				},
 				fg: {
 					DEFAULT: {
-						value: { _light: "{colors.black}", _dark: "{colors.gray.50}" },
+						value: { _light: "#726051", _dark: "{colors.gray.200}" },
 					},
 					muted: {
-						value: { _light: "{colors.gray.600}", _dark: "{colors.gray.400}" },
-					},
-					subtle: {
-						value: { _light: "{colors.gray.400}", _dark: "{colors.gray.500}" },
+						value: { _light: "#a8a89a", _dark: "{colors.gray.400}" },
 					},
 				},
 			},

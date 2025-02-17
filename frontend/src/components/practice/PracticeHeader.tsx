@@ -39,7 +39,7 @@ function PracticeHeader({
 				}
 				_hover={{
 					transform: "scale(1.05)",
-					bg: "bg.subtle",
+					bg: "bg.50",
 				}}
 			>
 				<RiEdit2Fill />

@@ -19,7 +19,7 @@ function PracticeCard({
 	return (
 		<Box
 			onClick={onFlip}
-			bg="bg.subtle"
+			bg="bg.50"
 			borderRadius="lg"
 			borderWidth="1px"
 			boxShadow="sm"

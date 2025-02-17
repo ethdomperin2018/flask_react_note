@@ -11,12 +11,12 @@ interface CardListItemProps {
 function CardListItem({ card, onDelete }: CardListItemProps) {
 	return (
 		<HStack
-			bg="bg.muted"
-			borderRadius="md"
 			justifyContent="space-between"
+			borderRadius="sm"
 			borderWidth="1px"
 			boxShadow="sm"
-			_hover={{ bg: "bg.subtle" }}
+			borderColor="bg.50"
+			_hover={{ bg: "bg.100" }}
 		>
 			<Box p="1rem" flex="1" overflow="hidden" asChild>
 				<Link
@@ -28,7 +28,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 					</Text>
 				</Link>
 			</Box>
-			<Box p=".75rem" borderLeft="1px" borderColor="bg.muted">
+			<Box p=".75rem" borderLeft="1px" borderColor="bg.100">
 				<IconButton
 					aria-label="Delete card"
 					variant="ghost"
@@ -36,6 +36,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 					onClick={() => onDelete(card.id)}
 					_hover={{
 						color: "red.600",
+						bg: "bg.50",
 					}}
 				>
 					<MdDelete />

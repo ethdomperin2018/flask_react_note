@@ -1,6 +1,5 @@
 import Logo from "@/assets/Logo.svg";
 import {
-	Button,
 	Container,
 	Field,
 	Fieldset,
@@ -11,6 +10,7 @@ import {
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
+import { DefaultButton } from "../components/commonUI/DefaultButton";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { emailPattern } from "../utils";
 
@@ -75,7 +75,16 @@ function Login() {
 						<Field.Root>
 							<Field.Label>Email</Field.Label>
 							<Input
+								bg="bg.input"
 								placeholder="Email"
+								css={{
+									"&:focus": {
+										borderColor: "bg.50",
+									},
+									"&::selection": {
+										backgroundColor: "bg.100",
+									},
+								}}
 								type="email"
 								{...register("username", {
 									required: "Username is required",
@@ -90,8 +99,17 @@ function Login() {
 							<Field.Root>
 								<Field.Label>Password</Field.Label>
 								<Input
-									placeholder="Password"
 									type="password"
+									bg="bg.input"
+									placeholder="Password"
+									css={{
+										"&:focus": {
+											borderColor: "bg.50",
+										},
+										"&::selection": {
+											backgroundColor: "bg.100",
+										},
+									}}
 									{...register("password", {
 										required: "Password is required",
 									})}
@@ -104,15 +122,11 @@ function Login() {
 							</Field.Root>
 						</Field.Root>
 					</Fieldset.Content>
-					<Button type="submit" loading={isSubmitting}>
+					<DefaultButton type="submit" loading={isSubmitting} color="white">
 						Log In
-					</Button>
+					</DefaultButton>
 				</Fieldset.Root>
 			</form>
-			{/* <Link to="/recover-password" color="blue.500">
-				Forgot password?
-			</Link>
-			*/}
 			<Text>
 				Don't have an account?{" "}
 				<Link to="/signup">

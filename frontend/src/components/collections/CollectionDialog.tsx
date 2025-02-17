@@ -41,7 +41,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 			motionPreset="slide-in-bottom"
 		>
 			<DialogTrigger asChild>{children}</DialogTrigger>
-			<DialogContent bg="bg.subtle">
+			<DialogContent bg="bg.50">
 				<DialogHeader>
 					<DialogTitle color="fg.DEFAULT">Add New Collection</DialogTitle>
 				</DialogHeader>

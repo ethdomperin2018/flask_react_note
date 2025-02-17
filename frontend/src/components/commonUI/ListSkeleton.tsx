@@ -7,7 +7,7 @@ export default function ListSkeleton({ count = 7 }) {
 			{[...Array(count)].map((_, index) => (
 				// biome-ignore lint/suspicious/noArrayIndexKey:
 				<Stack flex="1" key={`skeleton-${index}`} width="100%">
-					<Skeleton height="3rem" />
+					<Skeleton height="3rem" bg="bg.100" />
 				</Stack>
 			))}
 		</VStack>

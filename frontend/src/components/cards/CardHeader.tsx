@@ -24,16 +24,15 @@ function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 				variant="ghost"
 				_hover={{
 					transform: "scale(1.05)",
-					bg: "bg.subtle",
+					bg: "bg.50",
 				}}
 			>
 				<FiRepeat />
 			</IconButton>
-
 			<Text
+				fontSize="md"
+				color="fg.DEFAULT"
 				fontWeight="semibold"
-				fontSize="sm"
-				color="fg.muted"
 				textTransform="uppercase"
 				letterSpacing="wide"
 			>
@@ -48,7 +47,7 @@ function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 					onClick={onClose}
 					_hover={{
 						transform: "scale(1.05)",
-						bg: "bg.subtle",
+						bg: "bg.50",
 					}}
 				>
 					<IoClose />

@@ -21,7 +21,7 @@ function CardComponent() {
 	if (isLoading) {
 		return (
 			<Container width="100%" mt="2rem">
-				<Skeleton height="80dvh" width="100%" />
+				<Skeleton height="80dvh" width="100%" bg="bg.100" />
 			</Container>
 		);
 	}

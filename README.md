@@ -1,6 +1,3 @@
-## Challenge
-[Read the challenge details](./challenge.md)
-
 ## Technology Stack and Features
 
 - **Backend:**
