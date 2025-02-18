@@ -26,12 +26,12 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 
 	const frontCardStyles = {
 		...commonCardStyles,
-		bg: "bg.box",
+		bg: "bg.100",
 	};
 
 	const backCardStyles = {
 		...commonCardStyles,
-		bg: "bg.100",
+		bg: "bg.box",
 		transform: "rotateY(180deg)",
 	};
 

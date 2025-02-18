@@ -10,6 +10,7 @@ import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo } from "react";
 
 function getCardsQueryOptions(collectionId: string) {
 	return {
@@ -36,6 +37,12 @@ function PracticeComponent() {
 	});
 
 	const cards = cardsResponse?.data ?? [];
+
+	const shuffledCards = useMemo(
+		() => [...cards].sort(() => Math.random() - 0.5),
+		[cards],
+	);
+
 	const {
 		currentIndex,
 		isFlipped,
@@ -44,9 +51,9 @@ function PracticeComponent() {
 		handleFlip,
 		handleAnswer,
 		reset,
-	} = usePracticeSession(cards.length);
+	} = usePracticeSession(shuffledCards.length);
 
-	const currentCard = cards[currentIndex];
+	const currentCard = shuffledCards[currentIndex];
 
 	if (isLoading) return <LoadingState />;
 	if (error) return <ErrorState error={error} />;
