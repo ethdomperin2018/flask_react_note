@@ -10,12 +10,16 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 	return (
 		<Box
 			w="100%"
-			p={2}
-			borderWidth="1px"
-			borderRadius="lg"
-			bg="bg.DEFAULT"
-			boxShadow="md"
 			height="80dvh"
+			borderRadius="lg"
+			borderWidth="1px"
+			borderColor="bg.200"
+			boxShadow="sm"
+			p={4}
+			display="flex"
+			alignItems="center"
+			justifyContent="center"
+			bg={side === "front" ? "bg.100" : "bg.box"}
 		>
 			<Textarea
 				value={value}
@@ -25,7 +29,7 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 						: "Enter the answer or explanation..."
 				}
 				onChange={onChange}
-				bg="bg.input"
+				bg={side === "front" ? "bg.100" : "bg.box"}
 				variant="subtle"
 				borderWidth="0"
 				resize="none"
@@ -38,8 +42,8 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 						outline: "none",
 					},
 					"&::selection": {
-						backgroundColor: "bg.100",
-						color: "#20B8CD",
+						backgroundColor: "bg.50",
+						color: "accent.blue",
 					},
 				}}
 			/>

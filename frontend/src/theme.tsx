@@ -38,6 +38,20 @@ const config = defineConfig({
 						value: { _light: "#a8a89a", _dark: "{colors.gray.400}" },
 					},
 				},
+				accent: {
+					blue: {
+						value: "#20B8CD",
+					},
+					"blue.dark": {
+						value: "#204044",
+					},
+					"red.dark": {
+						value: "#57303A",
+					},
+					"green.dark": {
+						value: "#2E493F",
+					},
+				},
 			},
 		},
 	},

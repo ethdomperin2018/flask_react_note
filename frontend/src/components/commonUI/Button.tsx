@@ -24,14 +24,14 @@ export const BlueButton = forwardRef<HTMLButtonElement, ButtonProps>(
 			ref={ref}
 			borderRadius="sm"
 			borderWidth="1px"
-			color="#20B8CD"
+			color="accent.blue"
 			boxShadow="sm"
 			bg="bg.100"
 			_hover={{
-				bg: "#204044",
+				bg: "accent.blue.dark",
 			}}
 			_active={{
-				bg: "#204044",
+				bg: "accent.blue.dark",
 			}}
 			{...props}
 		/>
@@ -50,10 +50,10 @@ export const RedButton = forwardRef<HTMLButtonElement, ButtonProps>(
 			boxShadow="sm"
 			bg="bg.100"
 			_hover={{
-				bg: "#403838",
+				bg: "accent.red.dark",
 			}}
 			_active={{
-				bg: "#403838",
+				bg: "accent.red.dark",
 			}}
 			{...props}
 		/>

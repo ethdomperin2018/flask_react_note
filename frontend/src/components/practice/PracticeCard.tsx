@@ -51,6 +51,7 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 				<Text
 					fontSize={card.front.length < 50 ? "3xl" : "lg"}
 					textAlign={card.front.length < 50 ? "center" : "start"}
+					whiteSpace="pre-wrap"
 				>
 					{card.front}
 				</Text>
@@ -61,6 +62,7 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 				<Text
 					fontSize={card.back.length < 50 ? "3xl" : "lg"}
 					textAlign={card.back.length < 50 ? "center" : "start"}
+					whiteSpace="pre-wrap"
 				>
 					{card.back}
 				</Text>

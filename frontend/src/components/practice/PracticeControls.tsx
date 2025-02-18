@@ -32,12 +32,12 @@ function PracticeControls({
 				borderWidth="1px"
 				borderColor="bg.50"
 				_hover={{
-					bg: "#57303A",
+					bg: "accent.red.dark",
 					borderColor: "red",
 					borderWidth: "1px",
 				}}
 				_active={{
-					bg: "#57303A",
+					bg: "accent.red.dark",
 					borderColor: "red",
 					borderWidth: "1px",
 				}}
@@ -53,12 +53,12 @@ function PracticeControls({
 				borderWidth="1px"
 				borderColor="bg.50"
 				_hover={{
-					bg: "#2E493F",
+					bg: "accent.green.dark",
 					borderColor: "green",
 					borderWidth: "1px",
 				}}
 				_active={{
-					bg: "green.600",
+					bg: "accent.green.dark",
 					borderColor: "green",
 					borderWidth: "1px",
 				}}

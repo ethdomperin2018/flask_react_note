@@ -5,12 +5,12 @@ import {
 	Field,
 	Fieldset,
 	Image,
-	Input,
 	Text,
 } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { UserRegister } from "../client";
+import { DefaultInput } from "../components/commonUI/Input";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { confirmPasswordRules, emailPattern, passwordRules } from "../utils";
 
@@ -73,7 +73,7 @@ function SignUp() {
 					<Fieldset.Content>
 						<Field.Root>
 							<Field.Label>Full Name</Field.Label>
-							<Input
+							<DefaultInput
 								placeholder="Full Name"
 								type="text"
 								minLength={3}
@@ -90,7 +90,7 @@ function SignUp() {
 
 						<Field.Root>
 							<Field.Label>Email</Field.Label>
-							<Input
+							<DefaultInput
 								placeholder="Email"
 								type="email"
 								{...register("email", {
@@ -107,7 +107,7 @@ function SignUp() {
 
 						<Field.Root>
 							<Field.Label>Password</Field.Label>
-							<Input
+							<DefaultInput
 								placeholder="Password"
 								type="password"
 								{...register("password", passwordRules())}
@@ -121,7 +121,7 @@ function SignUp() {
 
 						<Field.Root>
 							<Field.Label>Confirm Password</Field.Label>
-							<Input
+							<DefaultInput
 								placeholder="Repeat Password"
 								type="password"
 								{...register(

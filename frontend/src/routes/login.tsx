@@ -1,16 +1,10 @@
 import Logo from "@/assets/Logo.svg";
-import {
-	Container,
-	Field,
-	Fieldset,
-	Image,
-	Input,
-	Text,
-} from "@chakra-ui/react";
+import { Container, Field, Fieldset, Image, Text } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
 import { DefaultButton } from "../components/commonUI/Button";
+import { DefaultInput } from "../components/commonUI/Input";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { emailPattern } from "../utils";
 
@@ -74,18 +68,8 @@ function Login() {
 					<Fieldset.Content>
 						<Field.Root>
 							<Field.Label>Email</Field.Label>
-							<Input
-								bg="bg.input"
+							<DefaultInput
 								placeholder="Email"
-								css={{
-									"&:focus": {
-										borderColor: "bg.50",
-									},
-									"&::selection": {
-										backgroundColor: "bg.100",
-										color: "#20B8CD",
-									},
-								}}
 								type="email"
 								{...register("username", {
 									required: "Username is required",
@@ -99,19 +83,9 @@ function Login() {
 							)}
 							<Field.Root>
 								<Field.Label>Password</Field.Label>
-								<Input
+								<DefaultInput
 									type="password"
-									bg="bg.input"
 									placeholder="Password"
-									css={{
-										"&:focus": {
-											borderColor: "bg.50",
-										},
-										"&::selection": {
-											backgroundColor: "bg.100",
-											color: "#20B8CD",
-										},
-									}}
 									{...register("password", {
 										required: "Password is required",
 									})}

@@ -9,10 +9,9 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@chakra-ui/react";
 import { useState } from "react";
-import { BlueButton } from "../commonUI/Button";
-import { RedButton } from "../commonUI/Button";
+import { BlueButton, RedButton } from "../commonUI/Button";
+import { DefaultInput } from "../commonUI/Input";
 
 interface CollectionDialogProps {
 	onAdd: (collectionData: { name: string }) => Promise<void>;
@@ -48,24 +47,11 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 					<DialogTitle color="fg.DEFAULT">Add New Collection</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
-					<Input
+					<DefaultInput
 						placeholder="Collection Name"
 						value={collectionName}
 						onChange={(e) => setCollectionName(e.target.value)}
 						onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-						borderRadius="sm"
-						color="fg.DEFAULT"
-						bg="bg.input"
-						css={{
-							"&:focus": {
-								outline: "none",
-								borderColor: "bg.50",
-							},
-							"&::selection": {
-								backgroundColor: "bg.100",
-								color: "#20B8CD",
-							},
-						}}
 					/>
 				</DialogBody>
 				<DialogFooter>

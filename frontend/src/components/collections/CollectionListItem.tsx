@@ -1,7 +1,8 @@
 import type { Collection } from "@/client";
-import { Box, HStack, Input, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { DefaultInput } from "../commonUI/Input";
 import CollectionKebabMenu from "./CollectionKebabMenu";
 
 interface CollectionListItemProps {
@@ -57,7 +58,7 @@ function CollectionListItem({
 			>
 				<Box height="8">
 					{isEditing ? (
-						<Input
+						<DefaultInput
 							autoFocus={true}
 							value={editedName}
 							onChange={(e) => setEditedName(e.target.value)}
@@ -65,19 +66,6 @@ function CollectionListItem({
 							onKeyDown={handleKeyDown}
 							size="sm"
 							fontWeight="semibold"
-							borderRadius="sm"
-							color="fg.DEFAULT"
-							bg="bg.input"
-							css={{
-								"&:focus": {
-									outline: "none",
-									borderColor: "bg.50",
-								},
-								"&::selection": {
-									backgroundColor: "bg.100",
-									color: "#20B8CD",
-								},
-							}}
 						/>
 					) : (
 						<Text
