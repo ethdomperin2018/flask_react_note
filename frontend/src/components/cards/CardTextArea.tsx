@@ -37,6 +37,7 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 				height="100%"
 				padding="0.5rem"
 				fontSize={{ base: "2xl", md: "md" }}
+				lineHeight={1.5}
 				css={{
 					"&:focus": {
 						outline: "none",

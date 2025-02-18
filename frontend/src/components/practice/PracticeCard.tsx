@@ -63,6 +63,7 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 					fontSize={card.back.length < 50 ? "3xl" : "lg"}
 					textAlign={card.back.length < 50 ? "center" : "start"}
 					whiteSpace="pre-wrap"
+					visibility={isFlipped ? "visible" : "hidden"}
 				>
 					{card.back}
 				</Text>

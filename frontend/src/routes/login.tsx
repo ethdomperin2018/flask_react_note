@@ -13,7 +13,7 @@ export const Route = createFileRoute("/login")({
 	beforeLoad: async () => {
 		if (isLoggedIn()) {
 			throw redirect({
-				to: "/",
+				to: "/collections",
 			});
 		}
 	},
@@ -57,7 +57,7 @@ function Login() {
 		>
 			<Image
 				src={Logo}
-				alt="FastAPI logo"
+				alt="Logo"
 				height="auto"
 				maxW="2xs"
 				alignSelf="center"
@@ -110,9 +110,6 @@ function Login() {
 						Sign up
 					</Text>
 				</Link>
-			</Text>
-			<Text position="fixed" bottom={2} left={2} fontSize="xs" color="gray.500">
-				v0.0.4
 			</Text>
 		</Container>
 	);

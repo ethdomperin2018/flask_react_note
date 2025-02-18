@@ -19,20 +19,13 @@ export function usePracticeSession(totalCards: number) {
 
   const handleAnswer = useCallback((isCorrect: boolean) => {
     setState(prev => ({
-      ...prev,
+      currentIndex: prev.currentIndex + 1,
+      isFlipped: false,
       progress: {
         correct: prev.progress.correct + (isCorrect ? 1 : 0),
         incorrect: prev.progress.incorrect + (isCorrect ? 0 : 1),
       }
     }));
-
-    setTimeout(() => {
-      setState(prev => ({
-        ...prev,
-        currentIndex: prev.currentIndex + 1,
-        isFlipped: false,
-      }));
-    }, 300);
   }, []);
 
   const reset = useCallback(() => {

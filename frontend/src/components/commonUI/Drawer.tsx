@@ -51,12 +51,12 @@ function Drawer({
 		<DrawerRoot
 			open={isOpen}
 			onOpenChange={(e) => setIsOpen(e.open)}
-			placement="start"
+			placement="end"
 		>
 			<DrawerBackdrop />
 			<DrawerContent rounded="none" maxW="280px" bg="bg.box">
 				<DrawerHeader display="flex" justifyContent="center" padding=".5rem">
-					<Link to="/" onClick={handleNavigate}>
+					<Link to="/collections" onClick={handleNavigate}>
 						<Image width="3rem" src={Logo} alt="logo" />
 					</Link>
 				</DrawerHeader>

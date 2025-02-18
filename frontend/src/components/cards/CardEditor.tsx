@@ -24,8 +24,15 @@ export default function CardEditor({
 	onClose,
 	onChange,
 }: CardEditorProps) {
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Escape") {
+			e.preventDefault();
+			onClose();
+		}
+	};
+
 	return (
-		<Box width="100%">
+		<Box width="100%" onKeyDown={handleKeyDown} tabIndex={0}>
 			<CardHeader
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={onFlip}

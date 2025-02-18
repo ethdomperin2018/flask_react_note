@@ -4,6 +4,7 @@ import EmptyState from "@/components/commonUI/EmptyState";
 import ErrorState from "@/components/commonUI/ErrorState";
 import FloatingActionButton from "@/components/commonUI/FloatingActionButton";
 import ListSkeleton from "@/components/commonUI/ListSkeleton";
+import ScrollableContainer from "@/components/commonUI/ScrollableContainer";
 import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -48,18 +49,20 @@ function CollectionComponent() {
 
 	return (
 		<>
-			<Stack>
-				{cards.length === 0 ? (
-					<EmptyState
-						title="This collection is empty"
-						message="Add your first flashcard using the blue button below and start mastering new concepts!"
-					/>
-				) : (
-					cards.map((card) => (
-						<CardListItem key={card.id} card={card} onDelete={deleteCard} />
-					))
-				)}
-			</Stack>
+			<ScrollableContainer>
+				<Stack gap="4">
+					{cards.length === 0 ? (
+						<EmptyState
+							title="This collection is empty"
+							message="Add your first flashcard using the blue button below and start mastering new concepts!"
+						/>
+					) : (
+						cards.map((card) => (
+							<CardListItem key={card.id} card={card} onDelete={deleteCard} />
+						))
+					)}
+				</Stack>
+			</ScrollableContainer>
 
 			{cards.length > 0 && (
 				<FloatingActionButton

@@ -15,7 +15,7 @@ function ErrorState({
 			{onRetry ? (
 				<Button onClick={onRetry}>Try Again</Button>
 			) : (
-				<Button onClick={() => navigate({ to: "/" })}>Go Home</Button>
+				<Button onClick={() => navigate({ to: "/login" })}>Go Home</Button>
 			)}
 		</VStack>
 	);

@@ -5,6 +5,7 @@ import EmptyState from "@/components/commonUI/EmptyState";
 import ErrorState from "@/components/commonUI/ErrorState";
 import FloatingActionButton from "@/components/commonUI/FloatingActionButton";
 import ListSkeleton from "@/components/commonUI/ListSkeleton";
+import ScrollableContainer from "@/components/commonUI/ScrollableContainer";
 import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -68,23 +69,25 @@ function Collections() {
 
 	return (
 		<>
-			<Stack gap={4}>
-				{collections?.data.length === 0 ? (
-					<EmptyState
-						title="Ready to start learning?"
-						message="Create your first collection and begin your learning journey!"
-					/>
-				) : (
-					collections?.data.map((collection) => (
-						<CollectionListItem
-							key={collection.id}
-							collection={collection}
-							onDelete={deleteCollection}
-							onRename={renameCollection}
+			<ScrollableContainer>
+				<Stack gap={4}>
+					{collections?.data.length === 0 ? (
+						<EmptyState
+							title="Ready to start learning?"
+							message="Create your first collection and begin your learning journey!"
 						/>
-					))
-				)}
-			</Stack>
+					) : (
+						collections?.data.map((collection) => (
+							<CollectionListItem
+								key={collection.id}
+								collection={collection}
+								onDelete={deleteCollection}
+								onRename={renameCollection}
+							/>
+						))
+					)}
+				</Stack>
+			</ScrollableContainer>
 			<CollectionDialog onAdd={addCollection}>
 				<FloatingActionButton
 					icon={<VscAdd color="white" />}
