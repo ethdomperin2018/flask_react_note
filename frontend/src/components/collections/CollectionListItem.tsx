@@ -75,6 +75,7 @@ function CollectionListItem({
 								},
 								"&::selection": {
 									backgroundColor: "bg.100",
+									color: "#20B8CD",
 								},
 							}}
 						/>

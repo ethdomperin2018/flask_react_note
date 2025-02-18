@@ -10,7 +10,7 @@ import {
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { Body_login_login_access_token as AccessToken } from "../client";
-import { DefaultButton } from "../components/commonUI/Buttons";
+import { DefaultButton } from "../components/commonUI/Button";
 import useAuth, { isLoggedIn } from "../hooks/useAuth";
 import { emailPattern } from "../utils";
 
@@ -83,6 +83,7 @@ function Login() {
 									},
 									"&::selection": {
 										backgroundColor: "bg.100",
+										color: "#20B8CD",
 									},
 								}}
 								type="email"
@@ -108,6 +109,7 @@ function Login() {
 										},
 										"&::selection": {
 											backgroundColor: "bg.100",
+											color: "#20B8CD",
 										},
 									}}
 									{...register("password", {
@@ -136,7 +138,7 @@ function Login() {
 				</Link>
 			</Text>
 			<Text position="fixed" bottom={2} left={2} fontSize="xs" color="gray.500">
-				v0.0.3
+				v0.0.4
 			</Text>
 		</Container>
 	);

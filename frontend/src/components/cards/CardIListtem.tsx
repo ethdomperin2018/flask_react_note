@@ -35,11 +35,10 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 					size="sm"
 					onClick={() => onDelete(card.id)}
 					_hover={{
-						color: "red.600",
 						bg: "bg.50",
 					}}
 				>
-					<MdDelete />
+					<MdDelete color="red" />
 				</IconButton>
 			</Box>
 		</HStack>

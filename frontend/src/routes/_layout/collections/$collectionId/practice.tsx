@@ -39,7 +39,6 @@ function PracticeComponent() {
 	const {
 		currentIndex,
 		isFlipped,
-		isTransitioning,
 		progress,
 		isComplete,
 		handleFlip,
@@ -67,7 +66,6 @@ function PracticeComponent() {
 			<PracticeCard
 				card={currentCard}
 				isFlipped={isFlipped}
-				isTransitioning={isTransitioning}
 				onFlip={handleFlip}
 			/>
 			<PracticeControls

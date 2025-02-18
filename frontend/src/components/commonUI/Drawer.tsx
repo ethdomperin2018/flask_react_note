@@ -14,7 +14,7 @@ import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { FiLogOut } from "react-icons/fi";
-import { DefaultButton } from "./Buttons";
+import { DefaultButton } from "./Button";
 function getCollectionsQueryOptions() {
 	return {
 		queryFn: () => FlashcardsService.readCollections(),

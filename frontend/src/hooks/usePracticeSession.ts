@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react';
 interface PracticeState {
   currentIndex: number;
   isFlipped: boolean;
-  isTransitioning: boolean;
   progress: { correct: number; incorrect: number };
 }
 
@@ -11,7 +10,6 @@ export function usePracticeSession(totalCards: number) {
   const [state, setState] = useState<PracticeState>({
     currentIndex: 0,
     isFlipped: false,
-    isTransitioning: false,
     progress: { correct: 0, incorrect: 0 },
   });
 
@@ -22,7 +20,6 @@ export function usePracticeSession(totalCards: number) {
   const handleAnswer = useCallback((isCorrect: boolean) => {
     setState(prev => ({
       ...prev,
-      isTransitioning: true,
       progress: {
         correct: prev.progress.correct + (isCorrect ? 1 : 0),
         incorrect: prev.progress.incorrect + (isCorrect ? 0 : 1),
@@ -34,7 +31,6 @@ export function usePracticeSession(totalCards: number) {
         ...prev,
         currentIndex: prev.currentIndex + 1,
         isFlipped: false,
-        isTransitioning: false,
       }));
     }, 300);
   }, []);
@@ -43,7 +39,6 @@ export function usePracticeSession(totalCards: number) {
     setState({
       currentIndex: 0,
       isFlipped: false,
-      isTransitioning: false,
       progress: { correct: 0, incorrect: 0 },
     });
   }, []);

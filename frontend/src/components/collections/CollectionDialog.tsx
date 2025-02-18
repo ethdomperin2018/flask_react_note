@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@chakra-ui/react";
 import { useState } from "react";
-import { BlueButton } from "../commonUI/Buttons";
-import { RedButton } from "../commonUI/Buttons";
+import { BlueButton } from "../commonUI/Button";
+import { RedButton } from "../commonUI/Button";
 
 interface CollectionDialogProps {
 	onAdd: (collectionData: { name: string }) => Promise<void>;
@@ -63,6 +63,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 							},
 							"&::selection": {
 								backgroundColor: "bg.100",
+								color: "#20B8CD",
 							},
 						}}
 					/>
