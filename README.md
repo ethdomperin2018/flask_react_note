@@ -1,6 +1,6 @@
-<table style="border-collapse: collapse; border: none;">
-<tr style="border: none;">
-<td width="35%" valign="top" style="border: none;">
+<table style="border-collapse: collapse; border: 0;">
+<tr style="border: 0;">
+<td width="35%" valign="top" style="border: 0;">
 <img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
 
 # Learn Better with FlashNotes
@@ -9,7 +9,7 @@ A simple flashcard app that helps you learn. Create cards, practice regularly, a
 [![Let's Study!](https://img.shields.io/badge/Let's_Study!-2D3748?style=for-the-badge&logo=bookstack&logoColor=white)](https://flash-notes.com)
 
 </td>
-<td width="65%" align="right" style="border: none;">
+<td width="30%" align="right" style="border: 0;">
 <img src="preview.gif" alt="Preview" width="240"/>
 </td>
 </tr>
