@@ -2,9 +2,10 @@
 <img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
 
 # Learn Better with FlashNotes
-#### A simple flashcard app that helps you learn. Create cards, practice regularly, and remember what matters.
 
-[![Let's Study!](https://img.shields.io/badge/Let's_Study!-2D3748?style=for-the-badge&logo=bookstack&logoColor=white)](https://flash-notes.com)
+#### A simple flashcard app focused on quick card creation and distraction-free practice.
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-2D3748?style=for-the-badge&logo=firefox&logoColor=white)](https://flash-notes.com)
 
 </div>
 
