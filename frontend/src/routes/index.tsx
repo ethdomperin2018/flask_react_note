@@ -75,7 +75,7 @@ function LandingPage() {
 							muted
 							style={{
 								width: "100%",
-								maxWidth: "18rem",
+								maxWidth: "30rem",
 								borderRadius: "12px",
 								border: "1px solid #565158",
 								boxShadow:
