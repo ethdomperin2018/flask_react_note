@@ -10,7 +10,7 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 	return (
 		<Box
 			w="100%"
-			height="80dvh"
+			h="calc(100vh - 12rem)"
 			borderRadius="lg"
 			borderWidth="1px"
 			borderColor="bg.200"
