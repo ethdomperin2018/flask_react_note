@@ -1,4 +1,5 @@
 import { BlueButton, DefaultButton } from "@/components/commonUI/Button";
+import { Footer } from "@/components/commonUI/Footer";
 import {
 	Center,
 	Container,
@@ -108,15 +109,7 @@ function LandingPage() {
 						/>
 					</Stack>
 				</VStack>
-				<Text
-					position="fixed"
-					bottom={2}
-					left={2}
-					fontSize="xs"
-					color="gray.500"
-				>
-					0.8
-				</Text>
+				<Footer version="0.0.9" />
 			</Container>
 		</Center>
 	);

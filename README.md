@@ -125,10 +125,35 @@ pnpm install
 pnpm run dev
 ```
 
+### Generate Frontend API Client
+
+The frontend uses a generated TypeScript client to communicate with the backend API. To update the client after making changes to the backend:
+
+1. Activate the backend virtual environment:
+```bash
+cd backend
+source .venv/bin/activate  # For Unix/Linux
+# OR
+.venv\Scripts\activate     # For Windows
+```
+
+2. Run the client generation script from the project root:
+```bash
+./scripts/generate_client.sh
+```
+
+This script will:
+- Generate OpenAPI specification from the backend
+- Move it to the frontend directory
+- Generate the TypeScript client
+- Format the generated code
+
 ## API Documentation
 Once the backend is running, access the interactive API documentation at:
 - ReDoc: http://127.0.0.1:8000/redoc
 - Swagger UI: http://127.0.0.1:8000/docs
+
+<img src="api_docs.png" alt="API Documentation" width="50%"/>
 
 ## Contributing
 1. Fork the repository

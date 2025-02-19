@@ -6,11 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
-    "generate-client": "openapi-ts",
-    "generate-client_old": "openapi-ts --input ./openapi.json --output ./src/client --client axios --exportSchemas true"
-
+    "generate-client": "openapi-ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.8.0",
