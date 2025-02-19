@@ -2,7 +2,7 @@
 <img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
 
 # Learn Better with FlashNotes
-### A simple flashcard app that helps you learn. Create cards, practice regularly, and remember what matters.
+#### A simple flashcard app that helps you learn. Create cards, practice regularly, and remember what matters.
 
 [![Let's Study!](https://img.shields.io/badge/Let's_Study!-2D3748?style=for-the-badge&logo=bookstack&logoColor=white)](https://flash-notes.com)
 
@@ -10,7 +10,7 @@
 
 ## Technology Stack and Features
 
-<img src="preview.gif" alt="Preview" width="350" align="right" style="margin-right: 8rem; margin-top: 2rem; margin-bottom: 2rem"/>
+<img src="preview.gif" alt="Preview" width="300" align="right"/>
 
 - **Backend:**
     - [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
