@@ -1,3 +1,20 @@
+<table border="0">
+<tr>
+<td width="35%" valign="top">
+<img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
+
+# Learn Better with FlashNotes
+A simple flashcard app that helps you learn. Create cards, practice regularly, and remember what matters.
+
+[![Let's Study!](https://img.shields.io/badge/Let's_Study!-2D3748?style=for-the-badge&logo=bookstack&logoColor=white)](https://flash-notes.com)
+
+</td>
+<td width="65%" align="right">
+<img src="preview.gif" alt="Preview" width="240"/>
+</td>
+</tr>
+</table>
+
 ## Technology Stack and Features
 
 - **Backend:**
@@ -16,25 +33,109 @@
 
 Explore the API documentation at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
-<img src="preview.gif" alt="Preview">
-
 ## How to Run it!
 
-### Backend
-
+## Project Structure
 ```
+.
+├── backend/
+│   ├── src/
+│   │   ├── auth/         # Authentication logic
+│   │   ├── core/         # Core configurations
+│   │   ├── flashcards/   # Flashcard related endpoints
+│   │   ├── users/        # User management
+│   │   └── main.py       # Application entry point
+│   └── tests/            # Backend tests
+└── frontend/
+    ├── src/
+    │   ├── components/   # Reusable UI components
+    │   ├── hooks/        # Custom React hooks
+    │   ├── routes/       # Application routes
+    │   └── client/       # Generated API client
+    └── public/           # Static assets
+```
+
+## Setup Instructions
+
+### Backend Setup
+
+1. Create a PostgreSQL database:
+```bash
 createdb <dbname>
-# Set the environment variables in the .env file
-cd backend
-poetry install
-# Run ./prestart.sh to run db migrations
-poetry run ./prestart.sh 
-poetry run uvicorn src.main:app --reload
 ```
 
-### Frontend
+2. Set up environment variables in `backend/.env`:
+```env
+PROJECT_NAME=FlashNotes
+DOMAIN=localhost
+POSTGRES_SERVER=localhost
+POSTGRES_USER=<your-username>
+POSTGRES_PASSWORD=<your-password>
+POSTGRES_DB=<dbname>
+FIRST_SUPERUSER=admin@example.com
+FIRST_SUPERUSER_PASSWORD=<admin-password>
+USERS_OPEN_REGISTRATION=true
 ```
+
+3. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+4. Make the prestart script executable:
+```bash
+chmod +x prestart.sh
+```
+
+5. Choose one of the following setup options:
+
+#### Option 1: Quick Setup with uv
+```bash
+# Install dependencies and run migrations
+uv run ./prestart.sh # Run ./prestart.sh to run db migrations
+
+# Start the development server
+uv run uvicorn src.main:app --reload
+```
+
+#### Option 2: Traditional Virtual Environment Setup
+```bash
+# Create and activate virtual environment
+uv venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+uv sync
+
+# Run migrations
+./prestart.sh
+
+# Start the development server
+uvicorn src.main:app --reload
+```
+
+The backend server will be available at `http://127.0.0.1:8000`
+
+### Frontend Setup
+
+1. Install dependencies and start the development server:
+```bash
 cd frontend
 pnpm install
 pnpm run dev
 ```
+
+## API Documentation
+Once the backend is running, access the interactive API documentation at:
+- ReDoc: http://127.0.0.1:8000/redoc
+- Swagger UI: http://127.0.0.1:8000/docs
+
+## Contributing
+1. Fork the repository
+2. Create a new branch for your feature
+3. Commit your changes
+4. Push to your branch
+5. Create a Pull Request
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.

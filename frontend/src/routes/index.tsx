@@ -75,7 +75,7 @@ function LandingPage() {
 							muted
 							style={{
 								width: "100%",
-								maxWidth: "30rem",
+								maxWidth: "18rem",
 								borderRadius: "12px",
 								border: "1px solid #565158",
 								boxShadow:
@@ -115,7 +115,7 @@ function LandingPage() {
 					fontSize="xs"
 					color="gray.500"
 				>
-					0.7
+					0.8
 				</Text>
 			</Container>
 		</Center>
