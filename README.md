@@ -1,4 +1,3 @@
-<div align="left">
 <img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
 
 # Learn Better with FlashNotes
@@ -7,11 +6,9 @@
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-2D3748?style=for-the-badge&logo=firefox&logoColor=white)](https://flash-notes.com)
 
-</div>
-
 ## Technology Stack and Features
 
-<img src="preview.gif" alt="Preview" width="300" align="right"/>
+
 
 - **Backend:**
     - [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
@@ -144,12 +141,12 @@ This script will:
 - Generate the TypeScript client
 - Format the generated code
 
+<img src="preview.gif" alt="Preview" width="300" align="center"/>
+
 ## API Documentation
 Once the backend is running, access the interactive API documentation at:
 - ReDoc: http://127.0.0.1:8000/redoc
 - Swagger UI: http://127.0.0.1:8000/docs
-
-<img src="api_docs.png" alt="API Documentation" width="50%"/>
 
 ## Contributing
 1. Fork the repository
@@ -159,4 +156,4 @@ Once the backend is running, access the interactive API documentation at:
 5. Create a Pull Request
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
