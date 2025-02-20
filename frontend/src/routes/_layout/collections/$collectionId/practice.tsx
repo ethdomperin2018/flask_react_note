@@ -64,7 +64,7 @@ function PracticeComponent() {
 	if (isComplete) return <PracticeComplete stats={progress} onReset={reset} />;
 
 	return (
-		<VStack gap={4} h="calc(100vh - 8rem)" width="100%">
+		<VStack gap={4} h="calc(100dvh - 8rem)" width="100%">
 			<PracticeHeader
 				cardId={currentCard.id}
 				progress={progress}

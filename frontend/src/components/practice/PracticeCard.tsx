@@ -1,5 +1,6 @@
 import type { Card } from "@/client";
 import { Box, Text } from "@chakra-ui/react";
+import { calculateFontSize, getTextAlignment, getContainerAlignment } from "@/utils/textSizing";
 
 interface PracticeCardProps {
 	card: Card;
@@ -8,6 +9,9 @@ interface PracticeCardProps {
 }
 
 function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
+	const frontAlignment = getContainerAlignment(card.front.length);
+	const backAlignment = getContainerAlignment(card.back.length);
+
 	const commonCardStyles = {
 		position: "absolute" as const,
 		width: "100%",
@@ -18,21 +22,17 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 		boxShadow: "sm",
 		p: 4,
 		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
 		borderColor: "bg.200",
 		cursor: "pointer",
+		overflow: "auto",
 	};
 
-	const frontCardStyles = {
-		...commonCardStyles,
-		bg: "bg.100",
-	};
-
-	const backCardStyles = {
-		...commonCardStyles,
-		bg: "bg.box",
-		transform: "rotateY(180deg)",
+	const textStyles = {
+		width: "100%",
+		whiteSpace: "pre-wrap" as const,
+		overflowWrap: "break-word",
+		wordBreak: "break-word",
+		py: 2,
 	};
 
 	return (
@@ -46,23 +46,26 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 			transformStyle="preserve-3d"
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
-			{/* Front of card */}
-			<Box {...frontCardStyles}>
+			<Box {...commonCardStyles} {...frontAlignment} bg="bg.100">
 				<Text
-					fontSize={card.front.length < 50 ? "3xl" : "lg"}
-					textAlign={card.front.length < 50 ? "center" : "start"}
-					whiteSpace="pre-wrap"
+					{...textStyles}
+					fontSize={calculateFontSize(card.front.length, false)}
+					textAlign={getTextAlignment(card.front.length)}
 				>
 					{card.front}
 				</Text>
 			</Box>
 
-			{/* Back of card */}
-			<Box {...backCardStyles}>
+			<Box
+				{...commonCardStyles}
+				{...backAlignment}
+				bg="bg.box"
+				transform="rotateY(180deg)"
+			>
 				<Text
-					fontSize={card.back.length < 50 ? "3xl" : "lg"}
-					textAlign={card.back.length < 50 ? "center" : "start"}
-					whiteSpace="pre-wrap"
+					{...textStyles}
+					fontSize={calculateFontSize(card.back.length, false)}
+					textAlign={getTextAlignment(card.back.length)}
 					visibility={isFlipped ? "visible" : "hidden"}
 				>
 					{card.back}

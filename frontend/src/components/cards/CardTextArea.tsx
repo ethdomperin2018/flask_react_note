@@ -1,4 +1,5 @@
 import { Box, Textarea } from "@chakra-ui/react";
+import { calculateFontSize, getContainerAlignment } from "@/utils/textSizing";
 
 interface CardTextAreaProps {
 	value: string;
@@ -7,19 +8,21 @@ interface CardTextAreaProps {
 }
 
 function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
+	const containerAlignment = getContainerAlignment(value.length);
+
 	return (
 		<Box
 			w="100%"
-			h="calc(100vh - 12rem)"
+			h="calc(100dvh - 12rem)"
 			borderRadius="lg"
 			borderWidth="1px"
 			borderColor="bg.200"
 			boxShadow="sm"
 			p={4}
 			display="flex"
-			alignItems="center"
-			justifyContent="center"
+			{...containerAlignment}
 			bg={side === "front" ? "bg.100" : "bg.box"}
+			overflow="hidden"
 		>
 			<Textarea
 				value={value}
@@ -36,8 +39,10 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 				width="100%"
 				height="100%"
 				padding="0.5rem"
-				fontSize={{ base: "2xl", md: "md" }}
+				fontSize={calculateFontSize(value.length)}
 				lineHeight={1.5}
+				overflowY="auto"
+				wordBreak="break-word"
 				css={{
 					"&:focus": {
 						outline: "none",
@@ -45,6 +50,16 @@ function CardTextArea({ value, onChange, side }: CardTextAreaProps) {
 					"&::selection": {
 						backgroundColor: "bg.50",
 						color: "accent.blue",
+					},
+					"&::-webkit-scrollbar": {
+						width: "8px",
+					},
+					"&::-webkit-scrollbar-track": {
+						background: "transparent",
+					},
+					"&::-webkit-scrollbar-thumb": {
+						background: "var(--chakra-colors-gray-300)",
+						borderRadius: "4px",
 					},
 				}}
 			/>
