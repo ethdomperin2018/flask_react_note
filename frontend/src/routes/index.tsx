@@ -109,7 +109,7 @@ function LandingPage() {
 						/>
 					</Stack>
 				</VStack>
-				<Footer version="0.0.10" />
+				<Footer version="0.0.11" />
 			</Container>
 		</Center>
 	);

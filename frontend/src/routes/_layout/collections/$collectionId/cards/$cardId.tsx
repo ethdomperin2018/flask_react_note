@@ -1,6 +1,7 @@
 import CardEditor from "@/components/cards/CardEditor";
+import CardHeader from "@/components/cards/CardHeader";
 import { useCard } from "@/hooks/useCard";
-import { Container, Skeleton } from "@chakra-ui/react";
+import { Container, Skeleton, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
 
@@ -15,7 +16,7 @@ function CardComponent() {
 	const params = Route.useParams();
 	const { collectionId, cardId } = params;
 
-	const { card, isLoading, currentSide, isFlipping, updateContent, flip } =
+	const { card, isLoading, currentSide, isFlipped, updateContent, flip } =
 		useCard(collectionId, cardId);
 
 	if (isLoading) {
@@ -30,14 +31,31 @@ function CardComponent() {
 		router.history.back();
 	};
 
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Escape") {
+			e.preventDefault();
+			handleClose();
+		}
+	};
+
 	return (
-		<CardEditor
-			card={card}
-			currentSide={currentSide}
-			isFlipping={isFlipping}
-			onFlip={flip}
-			onClose={handleClose}
-			onChange={(e) => updateContent(e.target.value)}
-		/>
+		<VStack
+			h="calc(100dvh - 12rem)"
+			width="100%"
+			gap={4}
+			onKeyDown={handleKeyDown}
+		>
+			<CardHeader
+				label={currentSide === "front" ? "Front" : "Back"}
+				onFlip={flip}
+				onClose={handleClose}
+			/>
+			<CardEditor
+				value={currentSide === "front" ? card.front : card.back}
+				onChange={updateContent}
+				side={currentSide}
+				isFlipped={isFlipped}
+			/>
+		</VStack>
 	);
 }

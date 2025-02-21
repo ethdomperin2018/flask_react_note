@@ -1,4 +1,4 @@
-import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
+import { HStack, IconButton, Text } from "@chakra-ui/react";
 import { FiRepeat } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
@@ -10,12 +10,7 @@ interface CardHeaderProps {
 
 function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 	return (
-		<Box
-			display="flex"
-			justifyContent="space-between"
-			alignItems="center"
-			mb={2}
-		>
+		<HStack w="100%" justifyContent="space-between" alignItems="center">
 			<IconButton
 				colorPalette="teal"
 				size="sm"
@@ -38,22 +33,20 @@ function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 			>
 				{label}
 			</Text>
-			<HStack gap={2}>
-				<IconButton
-					colorPalette="teal"
-					size="sm"
-					aria-label="close"
-					variant="ghost"
-					onClick={onClose}
-					_hover={{
-						transform: "scale(1.05)",
-						bg: "bg.50",
-					}}
-				>
-					<IoClose />
-				</IconButton>
-			</HStack>
-		</Box>
+			<IconButton
+				colorPalette="teal"
+				size="sm"
+				aria-label="close"
+				variant="ghost"
+				onClick={onClose}
+				_hover={{
+					transform: "scale(1.05)",
+					bg: "bg.50",
+				}}
+			>
+				<IoClose />
+			</IconButton>
+		</HStack>
 	);
 }
 

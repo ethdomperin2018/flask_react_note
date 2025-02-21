@@ -1,0 +1,124 @@
+.tiptap-editor {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    word-break: break-word;
+}
+
+.tiptap-editor::selection,
+.tiptap-editor *::selection {
+    background-color: #21808D;
+    color: white;
+}
+
+.tiptap-editor::-moz-selection,
+.tiptap-editor *::-moz-selection {
+    background-color: #21808D;
+    color: white;
+}
+
+.tiptap-editor:focus {
+    outline: none;
+}
+
+.tiptap-editor p {
+    margin: 0.5em 0;
+}
+
+.tiptap-editor h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
+}
+
+.tiptap-editor h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0.83em 0;
+}
+
+.tiptap-editor h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+    margin: 1em 0;
+}
+
+.tiptap-editor ul,
+.tiptap-editor ol {
+    padding-left: 1.2em;
+    margin: 0.5em 0;
+}
+
+.tiptap-editor ul {
+    list-style-type: disc;
+}
+
+.tiptap-editor ol {
+    list-style-type: decimal;
+}
+
+.tiptap-editor blockquote {
+    border-left: 3px solid var(--chakra-colors-bg-200);
+    margin: 1em 0;
+    padding-left: 1em;
+    color: var(--chakra-colors-gray-600);
+    font-style: italic;
+}
+
+.tiptap-editor code {
+    background: var(--chakra-colors-bg-50);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.tiptap-editor pre {
+    background: var(--chakra-colors-bg-50);
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.tiptap-editor pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.tiptap-editor strong {
+    font-weight: bold;
+}
+
+.tiptap-editor em {
+    font-style: italic;
+}
+
+.tiptap-editor u {
+    text-decoration: underline;
+}
+
+.tiptap-editor s {
+    text-decoration: line-through;
+}
+
+.tiptap-editor hr {
+    border: none;
+    border-top: 2px solid var(--chakra-colors-bg-200);
+    margin: 1em 0;
+}
+
+.tiptap-editor::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tiptap-editor::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tiptap-editor::-webkit-scrollbar-thumb {
+    background: var(--chakra-colors-gray-300);
+    border-radius: 4px;
+} 

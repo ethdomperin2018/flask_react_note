@@ -71,6 +71,7 @@ function PracticeComponent() {
 				collectionId={collectionId}
 			/>
 			<PracticeCard
+				key={currentCard.id}
 				card={currentCard}
 				isFlipped={isFlipped}
 				onFlip={handleFlip}

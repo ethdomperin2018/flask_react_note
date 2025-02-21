@@ -1,4 +1,5 @@
 import type { Card } from "@/client";
+import { stripHtml } from "@/utils/text";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { MdDelete } from "react-icons/md";
@@ -24,7 +25,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 					params={{ collectionId: card.collection_id, cardId: card.id }}
 				>
 					<Text fontSize="md" color="fg.DEFAULT" truncate>
-						{card.front}
+						{stripHtml(card.front)}
 					</Text>
 				</Link>
 			</Box>

@@ -1,6 +1,6 @@
 import type { Card } from "@/client";
-import { Box, Text } from "@chakra-ui/react";
-import { calculateFontSize, getTextAlignment, getContainerAlignment } from "@/utils/textSizing";
+import { Box } from "@chakra-ui/react";
+import RichTextContent from "./RichTextContent/RichTextContent";
 
 interface PracticeCardProps {
 	card: Card;
@@ -9,10 +9,8 @@ interface PracticeCardProps {
 }
 
 function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
-	const frontAlignment = getContainerAlignment(card.front.length);
-	const backAlignment = getContainerAlignment(card.back.length);
-
 	const commonCardStyles = {
+		p: 4,
 		position: "absolute" as const,
 		width: "100%",
 		height: "100%",
@@ -20,19 +18,8 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 		borderRadius: "lg",
 		borderWidth: "1px",
 		boxShadow: "sm",
-		p: 4,
-		display: "flex",
 		borderColor: "bg.200",
 		cursor: "pointer",
-		overflow: "auto",
-	};
-
-	const textStyles = {
-		width: "100%",
-		whiteSpace: "pre-wrap" as const,
-		overflowWrap: "break-word",
-		wordBreak: "break-word",
-		py: 2,
 	};
 
 	return (
@@ -46,30 +33,14 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 			transformStyle="preserve-3d"
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
-			<Box {...commonCardStyles} {...frontAlignment} bg="bg.100">
-				<Text
-					{...textStyles}
-					fontSize={calculateFontSize(card.front.length, false)}
-					textAlign={getTextAlignment(card.front.length)}
-				>
-					{card.front}
-				</Text>
+			<Box {...commonCardStyles} bg="bg.100">
+				<RichTextContent content={card.front} />
 			</Box>
 
-			<Box
-				{...commonCardStyles}
-				{...backAlignment}
-				bg="bg.box"
-				transform="rotateY(180deg)"
-			>
-				<Text
-					{...textStyles}
-					fontSize={calculateFontSize(card.back.length, false)}
-					textAlign={getTextAlignment(card.back.length)}
-					visibility={isFlipped ? "visible" : "hidden"}
-				>
-					{card.back}
-				</Text>
+			<Box {...commonCardStyles} bg="bg.box" transform="rotateY(180deg)">
+				<Box visibility={isFlipped ? "visible" : "hidden"}>
+					<RichTextContent content={card.back} />
+				</Box>
 			</Box>
 		</Box>
 	);

@@ -14,7 +14,7 @@ export function useCard(collectionId: string, cardId?: string) {
 	const queryClient = useQueryClient();
 	const [card, setCard] = useState<CardData>({ front: "", back: "" });
 	const [currentSide, setCurrentSide] = useState<"front" | "back">("front");
-	const [isFlipping, setIsFlipping] = useState(false);
+	const [isFlipped, setIsFlipped] = useState(false);
 	const [isLoading, setIsLoading] = useState(!!cardId);
 
 	useEffect(() => {
@@ -73,10 +73,9 @@ export function useCard(collectionId: string, cardId?: string) {
 	);
 
 	const flip = useCallback(() => {
-		setIsFlipping(true);
+		setIsFlipped(prev => !prev);
 		setTimeout(() => {
 			setCurrentSide((side) => (side === "front" ? "back" : "front"));
-			setIsFlipping(false);
 		}, 200);
 	}, []);
 
@@ -84,7 +83,7 @@ export function useCard(collectionId: string, cardId?: string) {
 		card,
 		isLoading,
 		currentSide,
-		isFlipping,
+		isFlipped,
 		updateContent,
 		flip,
 	};
