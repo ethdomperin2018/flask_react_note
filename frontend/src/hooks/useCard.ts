@@ -74,9 +74,7 @@ export function useCard(collectionId: string, cardId?: string) {
 
 	const flip = useCallback(() => {
 		setIsFlipped(prev => !prev);
-		setTimeout(() => {
-			setCurrentSide((side) => (side === "front" ? "back" : "front"));
-		}, 200);
+		setCurrentSide((side) => (side === "front" ? "back" : "front"));
 	}, []);
 
 	return {
