@@ -43,17 +43,17 @@ export default function CardEditor({
 	};
 
 	const commonBoxStyles = {
-		position: "absolute" as const,
-		w: "100%",
-		h: "100%",
-		p: 4,
 		onClick: handleContainerClick,
-		cursor: "text",
-		boxShadow: "sm",
-		borderWidth: "1px",
-		borderRadius: "lg",
-		borderColor: "bg.200",
+		padding: "1rem",
+		position: "absolute" as const,
+		width: "100%",
+		height: "100%",
 		backfaceVisibility: "hidden" as const,
+		borderRadius: "lg",
+		borderWidth: "1px",
+		boxShadow: "sm",
+		borderColor: "bg.200",
+		cursor: "pointer",
 	};
 
 	return (
@@ -70,10 +70,13 @@ export default function CardEditor({
 				{side === "front" && <RichTextEditor editor={editor} />}
 			</Box>
 
-			<Box {...commonBoxStyles} bg="bg.box" transform="rotateY(180deg)">
-				<Box visibility={isFlipped ? "visible" : "hidden"}>
-					{side === "back" && <RichTextEditor editor={editor} />}
-				</Box>
+			<Box
+				{...commonBoxStyles}
+				bg="bg.box"
+				transform="rotateY(180deg)"
+				visibility={isFlipped ? "visible" : "hidden"}
+			>
+				{side === "back" && <RichTextEditor editor={editor} />}
 			</Box>
 		</Box>
 	);

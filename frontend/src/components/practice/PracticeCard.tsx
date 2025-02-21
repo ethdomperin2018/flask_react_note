@@ -10,7 +10,7 @@ interface PracticeCardProps {
 
 function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 	const commonCardStyles = {
-		p: 4,
+		padding: "1rem",
 		position: "absolute" as const,
 		width: "100%",
 		height: "100%",
@@ -34,13 +34,11 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
 			<Box {...commonCardStyles} bg="bg.100">
-				<RichTextContent content={card.front} />
+				<RichTextContent content={card.front} isVisible={!isFlipped} />
 			</Box>
 
 			<Box {...commonCardStyles} bg="bg.box" transform="rotateY(180deg)">
-				<Box visibility={isFlipped ? "visible" : "hidden"}>
-					<RichTextContent content={card.back} />
-				</Box>
+				<RichTextContent content={card.back} isVisible={isFlipped} />
 			</Box>
 		</Box>
 	);

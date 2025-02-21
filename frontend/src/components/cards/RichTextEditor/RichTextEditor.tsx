@@ -10,7 +10,7 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ editor }: RichTextEditorProps) {
 	return (
-		<Box className="tiptap-content" height="100%" overflow="auto">
+		<Box className="tiptap-editor" height="100%" overflow="auto">
 			<EditorContent editor={editor} />
 		</Box>
 	);
