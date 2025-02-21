@@ -54,7 +54,6 @@ export default function CardEditor({
 		borderRadius: "lg",
 		borderColor: "bg.200",
 		backfaceVisibility: "hidden" as const,
-		transition: "transform 0.6s, opacity 0.3s",
 	};
 
 	return (
@@ -63,21 +62,18 @@ export default function CardEditor({
 			height="100%"
 			width="100%"
 			style={{ perspective: "1000px" }}
-			transition="transform 0.6s"
+			transition="transform 0.3s ease"
 			transformStyle="preserve-3d"
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
-			<Box {...commonBoxStyles} bg="bg.100" opacity={!isFlipped ? 1 : 0}>
-				<RichTextEditor editor={editor} />
+			<Box {...commonBoxStyles} bg="bg.100">
+				{side === "front" && <RichTextEditor editor={editor} />}
 			</Box>
 
-			<Box
-				{...commonBoxStyles}
-				bg="bg.box"
-				transform="rotateY(180deg)"
-				opacity={isFlipped ? 1 : 0}
-			>
-				<RichTextEditor editor={editor} />
+			<Box {...commonBoxStyles} bg="bg.box" transform="rotateY(180deg)">
+				<Box visibility={isFlipped ? "visible" : "hidden"}>
+					{side === "back" && <RichTextEditor editor={editor} />}
+				</Box>
 			</Box>
 		</Box>
 	);
