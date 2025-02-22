@@ -1,6 +1,7 @@
-import { Box } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { EditorContent } from "@tiptap/react";
 import type { Editor } from "@tiptap/react";
+import EditorToolbar from "./EditorToolbar";
 
 import "./RichTextEditor.styles.css";
 
@@ -10,8 +11,9 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ editor }: RichTextEditorProps) {
 	return (
-		<Box className="tiptap-editor" height="100%" overflow="auto">
-			<EditorContent editor={editor} />
-		</Box>
+		<VStack height="100%" overflow="auto" gap={0} align="stretch">
+			<EditorContent editor={editor} className="tiptap-editor" />
+			<EditorToolbar editor={editor} />
+		</VStack>
 	);
 }
