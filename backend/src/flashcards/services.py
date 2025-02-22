@@ -188,8 +188,11 @@ def create_practice_session(
 ) -> PracticeSession:
     existing_session = _get_uncompleted_session(session, collection_id, user_id)
     if existing_session:
-        session.delete(existing_session)
-        session.commit()
+        if existing_session.cards_practiced == 0:
+            session.delete(existing_session)
+            session.commit()
+        else:
+            return existing_session
 
     cards = _get_collection_cards(session, collection_id)
     if not cards:
