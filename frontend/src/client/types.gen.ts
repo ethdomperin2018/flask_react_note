@@ -55,6 +55,40 @@ export type HTTPValidationError = {
   detail?: Array<ValidationError>
 }
 
+export type PracticeCard = {
+  card_id: string
+  id: string
+  session_id: string
+  is_correct: boolean | null
+  is_practiced: boolean
+  created_at: string
+  updated_at: string
+}
+
+export type PracticeCardResponse = {
+  card: Card
+  is_practiced: boolean
+  is_correct: boolean | null
+}
+
+export type PracticeSession = {
+  collection_id: string
+  id: string
+  user_id: string
+  is_completed: boolean
+  total_cards: number
+  cards_practiced: number
+  correct_answers: number
+  created_at: string
+  updated_at: string
+  practice_cards: Array<PracticeCard>
+}
+
+export type PracticeSessionList = {
+  data: Array<PracticeSession>
+  count: number
+}
+
 export type Token = {
   access_token: string
   token_type?: string
@@ -148,6 +182,39 @@ export type FlashcardsDeleteCardData = {
 }
 
 export type FlashcardsDeleteCardResponse = void
+
+export type FlashcardsStartPracticeSessionData = {
+  collectionId: string
+}
+
+export type FlashcardsStartPracticeSessionResponse = PracticeSession
+
+export type FlashcardsGetPracticeSessionStatusData = {
+  practiceSessionId: string
+}
+
+export type FlashcardsGetPracticeSessionStatusResponse = PracticeSession
+
+export type FlashcardsGetNextPracticeCardData = {
+  practiceSessionId: string
+}
+
+export type FlashcardsGetNextPracticeCardResponse = PracticeCardResponse
+
+export type FlashcardsSubmitPracticeResultData = {
+  cardId: string
+  isCorrect: boolean
+  practiceSessionId: string
+}
+
+export type FlashcardsSubmitPracticeResultResponse = PracticeCardResponse
+
+export type FlashcardsListPracticeSessionsData = {
+  limit?: number
+  skip?: number
+}
+
+export type FlashcardsListPracticeSessionsResponse = PracticeSessionList
 
 export type LoginLoginAccessTokenData = {
   formData: Body_login_login_access_token
