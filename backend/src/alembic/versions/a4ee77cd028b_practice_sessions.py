@@ -1,8 +1,8 @@
-"""Add practice session tables
+"""Practice sessions
 
-Revision ID: 68900486b18c
+Revision ID: a4ee77cd028b
 Revises: c8f918b058c6
-Create Date: 2025-02-22 13:58:31.844603
+Create Date: 2025-02-22 22:43:36.414607
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel.sql.sqltypes
 
 
 # revision identifiers, used by Alembic.
-revision = '68900486b18c'
+revision = 'a4ee77cd028b'
 down_revision = 'c8f918b058c6'
 branch_labels = None
 depends_on = None

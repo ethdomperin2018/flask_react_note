@@ -1,8 +1,10 @@
+import random
 import uuid
 from datetime import datetime, timezone
 
 from sqlmodel import Session, func, select
 
+from .exceptions import EmptyCollectionError
 from .models import Card, Collection, PracticeCard, PracticeSession
 from .schemas import CardCreate, CardUpdate, CollectionCreate, CollectionUpdate
 
@@ -153,32 +155,57 @@ def get_practice_session(
     return session.exec(statement).first()
 
 
-def create_practice_session(
+def _get_uncompleted_session(
     session: Session, collection_id: uuid.UUID, user_id: uuid.UUID
-) -> PracticeSession:
-    # Get all cards from the collection
-    cards_statement = select(Card).where(Card.collection_id == collection_id)
-    cards = session.exec(cards_statement).all()
-
-    # Create practice session
-    practice_session = PracticeSession(
-        collection_id=collection_id,
-        user_id=user_id,
-        total_cards=len(cards),
+) -> PracticeSession | None:
+    statement = select(PracticeSession).where(
+        PracticeSession.collection_id == collection_id,
+        PracticeSession.user_id == user_id,
+        PracticeSession.is_completed == False,  # noqa: E712
     )
-    session.add(practice_session)
+    return session.exec(statement).first()
 
-    # Create practice cards in random order
-    import random
 
+def _get_collection_cards(session: Session, collection_id: uuid.UUID) -> list[Card]:
+    statement = select(Card).where(Card.collection_id == collection_id)
+    return session.exec(statement).all()
+
+
+def _create_practice_cards(
+    session: Session, practice_session: PracticeSession, cards: list[Card]
+) -> None:
     random_cards = random.sample(cards, len(cards))
-
     for card in random_cards:
         practice_card = PracticeCard(
             session_id=practice_session.id,
             card_id=card.id,
         )
         session.add(practice_card)
+
+
+def create_practice_session(
+    session: Session, collection_id: uuid.UUID, user_id: uuid.UUID
+) -> PracticeSession:
+    existing_session = _get_uncompleted_session(session, collection_id, user_id)
+    if existing_session:
+        session.delete(existing_session)
+        session.commit()
+
+    cards = _get_collection_cards(session, collection_id)
+    if not cards:
+        raise EmptyCollectionError(
+            "Cannot create practice session for empty collection"
+        )
+
+    practice_session = PracticeSession(
+        collection_id=collection_id,
+        user_id=user_id,
+        total_cards=len(cards),
+    )
+    session.add(practice_session)
+    session.flush()  # Get practice_session.id without committing
+
+    _create_practice_cards(session, practice_session, cards)
 
     session.commit()
     session.refresh(practice_session)
@@ -218,20 +245,17 @@ def submit_card_result(
     practice_card: PracticeCard,
     is_correct: bool,
 ) -> PracticeCard:
-    # Update practice card
     practice_card.is_correct = is_correct
     practice_card.is_practiced = True
     practice_card.updated_at = datetime.now(timezone.utc)
     session.add(practice_card)
 
-    # Update practice session statistics
     practice_session = session.get(PracticeSession, practice_card.session_id)
     if practice_session:
         practice_session.cards_practiced += 1
         if is_correct:
             practice_session.correct_answers += 1
 
-        # Check if session is completed
         if practice_session.cards_practiced == practice_session.total_cards:
             practice_session.is_completed = True
 

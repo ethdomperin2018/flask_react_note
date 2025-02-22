@@ -24,6 +24,9 @@ class Card(SQLModel, table=True):
     collection: Collection = Relationship(back_populates="cards")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    practice_cards: list["PracticeCard"] = Relationship(
+        back_populates="card", sa_relationship_kwargs={"cascade": "all, delete"}
+    )
 
 
 class PracticeSession(SQLModel, table=True):
@@ -51,4 +54,4 @@ class PracticeCard(SQLModel, table=True):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     session: PracticeSession = Relationship(back_populates="practice_cards")
-    card: Card = Relationship()
+    card: Card = Relationship(back_populates="practice_cards")

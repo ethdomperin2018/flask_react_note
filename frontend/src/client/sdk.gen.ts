@@ -41,6 +41,7 @@ import type {
   UsersRegisterUserResponse,
 } from "./types.gen"
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class FlashcardsService {
   /**
    * Read Collections
@@ -408,6 +409,7 @@ export class FlashcardsService {
   }
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class LoginService {
   /**
    * Login Access Token
@@ -431,6 +433,7 @@ export class LoginService {
   }
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class UsersService {
   /**
    * Read User Me

@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException
 from src.auth.services import CurrentUser, SessionDep
 
 from . import services
+from .exceptions import EmptyCollectionError
 from .schemas import (
     Card,
     CardCreate,
@@ -177,11 +178,14 @@ def start_practice_session(
     if not services.check_collection_access(session, collection_id, current_user.id):
         raise HTTPException(status_code=404, detail="Collection not found")
 
-    return services.create_practice_session(
-        session=session,
-        collection_id=collection_id,
-        user_id=current_user.id,
-    )
+    try:
+        return services.create_practice_session(
+            session=session,
+            collection_id=collection_id,
+            user_id=current_user.id,
+        )
+    except EmptyCollectionError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/practice/{practice_session_id}", response_model=PracticeSession)
@@ -274,12 +278,8 @@ def submit_practice_result(
         is_correct=is_correct,
     )
 
-    card = services.get_card_by_id(session=session, card_id=card_id)
-    if not card:
-        raise HTTPException(status_code=404, detail="Card not found")
-
     return PracticeCardResponse(
-        card=card,
+        card=practice_card.card,
         is_practiced=practice_card.is_practiced,
         is_correct=practice_card.is_correct,
     )
