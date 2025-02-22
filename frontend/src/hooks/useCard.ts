@@ -16,6 +16,7 @@ export function useCard(collectionId: string, cardId?: string) {
 	const [currentSide, setCurrentSide] = useState<"front" | "back">("front");
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [isLoading, setIsLoading] = useState(!!cardId);
+	const [isSaving, setIsSaving] = useState(false);
 
 	useEffect(() => {
 		if (!cardId) return;
@@ -59,7 +60,14 @@ export function useCard(collectionId: string, cardId?: string) {
 		[collectionId, queryClient],
 	);
 
-	const debouncedSave = useDebounce(saveCard, 250);
+	const debouncedSave = useDebounce((cardData: CardData) => {
+		setIsSaving(true);
+		saveCard(cardData).finally(() => {
+			setTimeout(() => {
+				setIsSaving(false);
+			}, 500);
+		});
+	}, 400);
 
 	const updateContent = useCallback(
 		(value: string) => {
@@ -84,5 +92,6 @@ export function useCard(collectionId: string, cardId?: string) {
 		isFlipped,
 		updateContent,
 		flip,
+		isSaving,
 	};
 }

@@ -16,8 +16,15 @@ function CardComponent() {
 	const params = Route.useParams();
 	const { collectionId, cardId } = params;
 
-	const { card, isLoading, currentSide, isFlipped, updateContent, flip } =
-		useCard(collectionId, cardId);
+	const {
+		card,
+		isLoading,
+		currentSide,
+		isFlipped,
+		updateContent,
+		flip,
+		isSaving,
+	} = useCard(collectionId, cardId);
 
 	if (isLoading) {
 		return (
@@ -49,6 +56,7 @@ function CardComponent() {
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={flip}
 				onClose={handleClose}
+				isSaving={isSaving}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
