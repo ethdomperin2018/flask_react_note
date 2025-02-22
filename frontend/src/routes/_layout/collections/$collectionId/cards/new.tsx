@@ -13,7 +13,7 @@ export const Route = createFileRoute(
 function NewCard() {
 	const navigate = useNavigate();
 	const { collectionId } = Route.useParams();
-	const { card, currentSide, isFlipped, updateContent, flip } =
+	const { card, currentSide, isFlipped, updateContent, flip, isSaving } =
 		useCard(collectionId);
 
 	const handleClose = () => {
@@ -26,6 +26,7 @@ function NewCard() {
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={flip}
 				onClose={handleClose}
+				isSaving={isSaving}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
