@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional
+from datetime import datetime
 
 from sqlmodel import SQLModel
 
@@ -13,7 +13,7 @@ class CollectionCreate(CollectionBase):
 
 
 class CollectionUpdate(SQLModel):
-    name: Optional[str] = None
+    name: str | None = None
 
 
 class CardBase(SQLModel):
@@ -26,8 +26,8 @@ class CardCreate(CardBase):
 
 
 class CardUpdate(CardBase):
-    front: Optional[str] = None
-    back: Optional[str] = None
+    front: str | None = None
+    back: str | None = None
 
 
 class Card(CardBase):
@@ -49,3 +49,60 @@ class CollectionList(SQLModel):
 class CardList(SQLModel):
     data: list[Card]
     count: int
+
+
+class PracticeSessionBase(SQLModel):
+    collection_id: uuid.UUID
+
+
+class PracticeSessionCreate(PracticeSessionBase):
+    pass
+
+
+class PracticeSessionUpdate(SQLModel):
+    is_completed: bool | None = None
+
+
+class PracticeCardBase(SQLModel):
+    card_id: uuid.UUID
+
+
+class PracticeCardCreate(PracticeCardBase):
+    pass
+
+
+class PracticeCardUpdate(SQLModel):
+    is_correct: bool | None = None
+    is_practiced: bool | None = None
+
+
+class PracticeCard(PracticeCardBase):
+    id: uuid.UUID
+    session_id: uuid.UUID
+    is_correct: bool | None
+    is_practiced: bool
+    created_at: datetime
+    updated_at: datetime
+
+
+class PracticeSession(PracticeSessionBase):
+    id: uuid.UUID
+    user_id: uuid.UUID
+    is_completed: bool
+    total_cards: int
+    cards_practiced: int
+    correct_answers: int
+    created_at: datetime
+    updated_at: datetime
+    practice_cards: list[PracticeCard]
+
+
+class PracticeSessionList(SQLModel):
+    data: list[PracticeSession]
+    count: int
+
+
+class PracticeCardResponse(SQLModel):
+    card: Card
+    is_practiced: bool
+    is_correct: bool | None
