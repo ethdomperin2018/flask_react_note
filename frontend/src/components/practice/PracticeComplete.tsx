@@ -1,6 +1,8 @@
 import { Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useRouter } from "@tanstack/react-router";
 import { BlueButton } from "../commonUI/Button";
+
 interface PracticeStats {
 	correct: number;
 	incorrect: number;
@@ -15,14 +17,14 @@ interface PracticeCompleteProps {
 function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 	const router = useRouter();
 	const total = stats.total;
-	const percentage = Math.round((stats.correct / total) * 100);
 
 	return (
 		<Center h="60dvh">
 			<VStack gap={6} p={8}>
+				<DotLottieReact src="/src/assets/animation_starts.json" autoplay />
 				<Text fontSize="2xl">Practice Complete!</Text>
 				<Text fontSize="lg">
-					You got {stats.correct} out of {total} cards correct ({percentage}%)
+					You got {stats.correct} out of {total} cards correct
 				</Text>
 				<HStack gap={4}>
 					<Button
