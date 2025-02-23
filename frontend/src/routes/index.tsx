@@ -29,7 +29,7 @@ function LandingPage() {
 					justify="center"
 				>
 					<VStack gap={8} align={{ base: "center", lg: "flex-start" }} flex={1}>
-						<Image src="/Logo.svg" alt="FlashNotes Logo" w="100px" />
+						<Image src="/favicon.svg" alt="FlashNotes favicon" w="100px" />
 						<Heading
 							as="h1"
 							size="2xl"
@@ -109,7 +109,7 @@ function LandingPage() {
 						/>
 					</Stack>
 				</VStack>
-				<Footer version="0.0.14" />
+				<Footer version="0.0.15" />
 			</Container>
 		</Center>
 	);
