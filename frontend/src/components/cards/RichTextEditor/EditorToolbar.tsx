@@ -4,7 +4,6 @@ import {
 	RiBold,
 	RiCodeBoxLine,
 	RiCodeLine,
-	RiDoubleQuotesL,
 	RiH1,
 	RiH2,
 	RiH3,
@@ -50,11 +49,6 @@ const toolbarButtons: ToolbarButton[] = [
 		icon: <RiCodeBoxLine size={20} />,
 		command: "codeBlock",
 		tooltip: "Code Block",
-	},
-	{
-		icon: <RiDoubleQuotesL size={20} />,
-		command: "blockquote",
-		tooltip: "Quote",
 	},
 ];
 
@@ -109,14 +103,26 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 
 	return (
 		<HStack
-			gap={1}
-			p={1}
+			gap={{ base: 0.5, md: 1 }}
+			p={{ base: 0.5, md: 1 }}
 			bg="bg.50"
 			borderTopRadius="md"
 			mb={1}
 			overflowX="auto"
 			flexWrap="nowrap"
 			overflowY="hidden"
+			css={{
+				"&::-webkit-scrollbar": {
+					height: "4px",
+				},
+				"&::-webkit-scrollbar-track": {
+					background: "transparent",
+				},
+				"&::-webkit-scrollbar-thumb": {
+					background: "var(--chakra-colors-bg-200)",
+					borderRadius: "2px",
+				},
+			}}
 		>
 			{toolbarButtons.map((button) => (
 				<Box key={button.command} title={button.tooltip}>
@@ -126,11 +132,19 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 						display="inline-flex"
 						alignItems="center"
 						justifyContent="center"
-						size="sm"
+						size={{ base: "md", md: "sm" }}
 						variant="ghost"
 						colorScheme={isActive(button.command) ? "teal" : "gray"}
 						onClick={() => toggleFormat(button.command)}
 						_hover={{ bg: "bg.100" }}
+						minW={{ base: "40px", md: "32px" }}
+						h={{ base: "40px", md: "32px" }}
+						bg={isActive(button.command) ? "bg.100" : "transparent"}
+						borderWidth={isActive(button.command) ? "1px" : "0"}
+						_active={{
+							bg: "bg.100",
+							transform: "scale(0.95)",
+						}}
 					>
 						{button.icon}
 					</IconButton>

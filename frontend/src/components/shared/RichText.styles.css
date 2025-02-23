@@ -39,7 +39,7 @@
 .tiptap-content h1 {
     font-size: 2em;
     font-weight: bold;
-    margin: 0.67em 0;
+    margin: 0.4em 0;
 }
 
 .tiptap-editor h2,
@@ -156,4 +156,67 @@
 /* Content specific styles */
 .tiptap-content {
     user-select: text;
+}
+
+/* Mobile Optimizations */
+@media screen and (max-width: 768px) {
+    .tiptap-editor,
+    .tiptap-content {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .tiptap-editor h1,
+    .tiptap-content h1 {
+        font-size: 1.75em;
+        margin: 0.3em 0;
+    }
+
+    .tiptap-editor h2,
+    .tiptap-content h2 {
+        font-size: 1.35em;
+        margin: 0.6em 0;
+    }
+
+    .tiptap-editor h3,
+    .tiptap-content h3 {
+        font-size: 1.1em;
+        margin: 0.7em 0;
+    }
+
+    .tiptap-editor blockquote,
+    .tiptap-content blockquote {
+        margin: 0.75em 0;
+        padding-left: 0.75em;
+    }
+
+    .tiptap-editor ul,
+    .tiptap-editor ol,
+    .tiptap-content ul,
+    .tiptap-content ol {
+        padding-left: 1em;
+    }
+
+    .tiptap-editor pre,
+    .tiptap-content pre {
+        padding: 0.5em 0.75em;
+        font-size: 0.85em;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Enhance touch targets */
+    .tiptap-editor p,
+    .tiptap-content p {
+        min-height: 2.5em;
+        padding: 0.3em 0;
+    }
+
+    /* Improve touch selection experience */
+    .tiptap-editor::selection,
+    .tiptap-editor *::selection,
+    .tiptap-content::selection,
+    .tiptap-content *::selection {
+        background-color: rgba(33, 128, 141, 0.3);
+    }
 } 
