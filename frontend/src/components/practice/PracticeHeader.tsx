@@ -52,7 +52,7 @@ function PracticeHeader({
 					<Box
 						h="100%"
 						w={`${((progress.correct + progress.incorrect) * 100) / total}%`}
-						bg="bg.300"
+						bg="bg.200"
 						borderRadius="full"
 						transition="width 0.3s ease-in-out"
 					/>

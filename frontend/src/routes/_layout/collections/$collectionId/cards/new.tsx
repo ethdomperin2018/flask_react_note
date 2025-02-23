@@ -1,7 +1,7 @@
 import CardEditor from "@/components/cards/CardEditor";
 import CardHeader from "@/components/cards/CardHeader";
 import { useCard } from "@/hooks/useCard";
-import { VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
@@ -26,14 +26,24 @@ function NewCard() {
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={flip}
 				onClose={handleClose}
-				isSaving={isSaving}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}
 				side={currentSide}
 				isFlipped={isFlipped}
+				isSaving={isSaving}
 			/>
+			<Text
+				fontSize="sm"
+				color="fg.muted"
+				fontWeight="normal"
+				opacity={isSaving ? 1 : 0}
+				transition="opacity 0.2s"
+				pointerEvents="none"
+			>
+				Saving...
+			</Text>
 		</VStack>
 	);
 }

@@ -1,7 +1,7 @@
 import CardEditor from "@/components/cards/CardEditor";
 import CardHeader from "@/components/cards/CardHeader";
 import { useCard } from "@/hooks/useCard";
-import { Container, Skeleton, VStack } from "@chakra-ui/react";
+import { Container, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
 
@@ -64,6 +64,16 @@ function CardComponent() {
 				isFlipped={isFlipped}
 				isSaving={isSaving}
 			/>
+			<Text
+				fontSize="sm"
+				color="fg.muted"
+				fontWeight="normal"
+				opacity={isSaving ? 1 : 0}
+				transition="opacity 0.2s"
+				pointerEvents="none"
+			>
+				Saving...
+			</Text>
 		</VStack>
 	);
 }

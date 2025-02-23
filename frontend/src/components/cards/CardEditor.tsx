@@ -69,19 +69,6 @@ export default function CardEditor({
 		>
 			<Box {...commonBoxStyles} bg="bg.100">
 				{side === "front" && <RichTextEditor editor={editor} />}
-				<Text
-					position="absolute"
-					bottom="2"
-					right={{ base: "2", md: "10" }}
-					fontSize="sm"
-					color="fg.muted"
-					fontWeight="normal"
-					opacity={isSaving ? 1 : 0}
-					transition="opacity 0.2s"
-					pointerEvents="none"
-				>
-					Saving...
-				</Text>
 			</Box>
 
 			<Box
@@ -91,19 +78,6 @@ export default function CardEditor({
 				visibility={isFlipped ? "visible" : "hidden"}
 			>
 				{side === "back" && <RichTextEditor editor={editor} />}
-				<Text
-					position="absolute"
-					bottom="2"
-					right={{ base: "2", md: "10" }}
-					fontSize="sm"
-					color="fg.muted"
-					fontWeight="normal"
-					opacity={isSaving ? 1 : 0}
-					transition="opacity 0.2s"
-					pointerEvents="none"
-				>
-					Saving...
-				</Text>
 			</Box>
 		</Box>
 	);

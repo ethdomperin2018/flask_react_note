@@ -149,7 +149,7 @@
 
 .tiptap-editor::-webkit-scrollbar-thumb,
 .tiptap-content::-webkit-scrollbar-thumb {
-    background: var(--chakra-colors-gray-300);
+    background: var(--chakra-colors-bg-200);
     border-radius: 4px;
 }
 
