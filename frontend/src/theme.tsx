@@ -29,6 +29,9 @@ const config = defineConfig({
 					box: {
 						value: { _light: "#24292E", _dark: "#24292E" },
 					},
+					code: {
+						value: { _light: "#191919", _dark: "#202429" },
+					},
 				},
 				fg: {
 					DEFAULT: {

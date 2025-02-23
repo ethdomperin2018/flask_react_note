@@ -3,6 +3,7 @@ import type { Editor } from "@tiptap/react";
 import {
 	RiBold,
 	RiCodeBoxLine,
+	RiCodeLine,
 	RiDoubleQuotesL,
 	RiH1,
 	RiH2,
@@ -44,7 +45,12 @@ const toolbarButtons: ToolbarButton[] = [
 		command: "orderedList",
 		tooltip: "Numbered List",
 	},
-	{ icon: <RiCodeBoxLine size={20} />, command: "code", tooltip: "Code" },
+	{ icon: <RiCodeLine size={20} />, command: "code", tooltip: "Inline Code" },
+	{
+		icon: <RiCodeBoxLine size={20} />,
+		command: "codeBlock",
+		tooltip: "Code Block",
+	},
 	{
 		icon: <RiDoubleQuotesL size={20} />,
 		command: "blockquote",
@@ -74,6 +80,9 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 			case "orderedList":
 				editor.chain().focus().toggleOrderedList().run();
 				break;
+			case "codeBlock":
+				editor.chain().focus().toggleCodeBlock().run();
+				break;
 			default:
 				editor.chain().focus().toggleMark(command).run();
 		}
@@ -91,6 +100,8 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 				return editor.isActive("bulletList");
 			case "orderedList":
 				return editor.isActive("orderedList");
+			case "codeBlock":
+				return editor.isActive("codeBlock");
 			default:
 				return editor.isActive(command);
 		}
@@ -101,9 +112,7 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 			gap={1}
 			p={1}
 			bg="bg.50"
-			borderRadius="md"
-			borderWidth="1px"
-			borderColor="bg.200"
+			borderTopRadius="md"
 			mb={1}
 			overflowX="auto"
 			flexWrap="nowrap"

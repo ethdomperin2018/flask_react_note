@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useRef, useState } from "react";
-import "./RichTextContent.styles.css";
+import "@/components/shared/RichText.styles.css";
 
 interface RichTextContentProps {
 	content: string;

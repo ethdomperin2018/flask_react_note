@@ -56,13 +56,13 @@ function CardComponent() {
 				label={currentSide === "front" ? "Front" : "Back"}
 				onFlip={flip}
 				onClose={handleClose}
-				isSaving={isSaving}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}
 				side={currentSide}
 				isFlipped={isFlipped}
+				isSaving={isSaving}
 			/>
 		</VStack>
 	);

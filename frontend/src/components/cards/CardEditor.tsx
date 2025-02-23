@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
@@ -9,6 +9,7 @@ export interface CardEditorProps {
 	onChange: (value: string) => void;
 	side: "front" | "back";
 	isFlipped: boolean;
+	isSaving?: boolean;
 }
 
 export default function CardEditor({
@@ -16,6 +17,7 @@ export default function CardEditor({
 	onChange,
 	side,
 	isFlipped,
+	isSaving,
 }: CardEditorProps) {
 	const editor = useEditor({
 		extensions: [StarterKit],
@@ -44,7 +46,6 @@ export default function CardEditor({
 
 	const commonBoxStyles = {
 		onClick: handleContainerClick,
-		padding: "1rem 1rem 0 1rem",
 		position: "absolute" as const,
 		width: "100%",
 		height: "100%",
@@ -68,6 +69,19 @@ export default function CardEditor({
 		>
 			<Box {...commonBoxStyles} bg="bg.100">
 				{side === "front" && <RichTextEditor editor={editor} />}
+				<Text
+					position="absolute"
+					bottom="2"
+					right={{ base: "2", md: "10" }}
+					fontSize="sm"
+					color="fg.muted"
+					fontWeight="normal"
+					opacity={isSaving ? 1 : 0}
+					transition="opacity 0.2s"
+					pointerEvents="none"
+				>
+					Saving...
+				</Text>
 			</Box>
 
 			<Box
@@ -77,6 +91,19 @@ export default function CardEditor({
 				visibility={isFlipped ? "visible" : "hidden"}
 			>
 				{side === "back" && <RichTextEditor editor={editor} />}
+				<Text
+					position="absolute"
+					bottom="2"
+					right={{ base: "2", md: "10" }}
+					fontSize="sm"
+					color="fg.muted"
+					fontWeight="normal"
+					opacity={isSaving ? 1 : 0}
+					transition="opacity 0.2s"
+					pointerEvents="none"
+				>
+					Saving...
+				</Text>
 			</Box>
 		</Box>
 	);

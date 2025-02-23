@@ -19,7 +19,7 @@ function Layout() {
 	// const { isLoading } = useAuth();
 	return (
 		<>
-			<Container pt={{ base: "4.5rem", md: "6rem" }}>
+			<Container pt={{ base: "4rem", md: "6rem" }}>
 				<Navbar />
 				<Outlet />
 			</Container>
