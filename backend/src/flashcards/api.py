@@ -179,13 +179,30 @@ def start_practice_session(
         raise HTTPException(status_code=404, detail="Collection not found")
 
     try:
-        return services.create_practice_session(
+        return services.get_or_create_practice_session(
             session=session,
             collection_id=collection_id,
             user_id=current_user.id,
         )
     except EmptyCollectionError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/practice", response_model=PracticeSessionList)
+def list_practice_sessions(
+    session: SessionDep,
+    current_user: CurrentUser,
+    skip: int = 0,
+    limit: int = 100,
+) -> Any:
+    """List all practice sessions for the current user"""
+    practice_sessions, count = services.get_practice_sessions(
+        session=session,
+        user_id=current_user.id,
+        skip=skip,
+        limit=limit,
+    )
+    return PracticeSessionList(data=practice_sessions, count=count)
 
 
 @router.get("/practice/{practice_session_id}", response_model=PracticeSession)
@@ -283,20 +300,3 @@ def submit_practice_result(
         is_practiced=practice_card.is_practiced,
         is_correct=practice_card.is_correct,
     )
-
-
-@router.get("/practice", response_model=PracticeSessionList)
-def list_practice_sessions(
-    session: SessionDep,
-    current_user: CurrentUser,
-    skip: int = 0,
-    limit: int = 100,
-) -> Any:
-    """List all practice sessions for the current user"""
-    practice_sessions, count = services.get_practice_sessions(
-        session=session,
-        user_id=current_user.id,
-        skip=skip,
-        limit=limit,
-    )
-    return PracticeSessionList(data=practice_sessions, count=count)

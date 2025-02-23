@@ -94,11 +94,33 @@ def get_card_with_collection(
     return session.exec(statement).first()
 
 
+def _add_card_to_ongoing_sessions(session: Session, card: Card) -> None:
+    statement = select(PracticeSession).where(
+        PracticeSession.collection_id == card.collection_id,
+        PracticeSession.is_completed == False,  # noqa: E712
+    )
+    practice_session = session.exec(statement).first()
+
+    if practice_session:
+        practice_card = PracticeCard(
+            session_id=practice_session.id,
+            card_id=card.id,
+        )
+        session.add(practice_card)
+        practice_session.total_cards += 1
+        practice_session.updated_at = datetime.now(timezone.utc)
+        session.add(practice_session)
+
+
 def create_card(
     session: Session, collection_id: uuid.UUID, card_in: CardCreate
 ) -> Card:
     card = Card(collection_id=collection_id, **card_in.model_dump())
     session.add(card)
+    session.flush()
+
+    _add_card_to_ongoing_sessions(session, card)
+
     session.commit()
     session.refresh(card)
     return card
@@ -183,7 +205,7 @@ def _create_practice_cards(
         session.add(practice_card)
 
 
-def create_practice_session(
+def get_or_create_practice_session(
     session: Session, collection_id: uuid.UUID, user_id: uuid.UUID
 ) -> PracticeSession:
     existing_session = _get_uncompleted_session(session, collection_id, user_id)
@@ -206,7 +228,7 @@ def create_practice_session(
         total_cards=len(cards),
     )
     session.add(practice_session)
-    session.flush()  # Get practice_session.id without committing
+    session.flush()
 
     _create_practice_cards(session, practice_session, cards)
 

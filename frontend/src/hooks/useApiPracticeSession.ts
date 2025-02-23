@@ -35,7 +35,7 @@ export function useApiPracticeSession(collectionId: string) {
   const startingRef = useRef(false);
   const startSession = useMutation({
     mutationFn: async () => {
-      if (startingRef.current || state.sessionId)  return null;
+      if (startingRef.current || state.sessionId) return null;
       startingRef.current = true;
       try {
         const session = await FlashcardsService.startPracticeSession({ collectionId });
@@ -50,18 +50,20 @@ export function useApiPracticeSession(collectionId: string) {
       setState(prev => ({
         ...prev,
         sessionId: session.id,
-        isComplete: false,
+        isComplete: session.is_completed,
         progress: {
-          correct: 0,
-          incorrect: 0,
+          correct: session.correct_answers,
+          incorrect: session.cards_practiced - session.correct_answers,
           total: session.total_cards,
         }
       }));
+
+      if (!session.is_completed) {
         getNextCard.mutate(session.id);
+      }
     },
   });
 
-  // Get the next card
   const getNextCard = useMutation({
     mutationFn: async (sessionId: string) => {
       const response = await FlashcardsService.getNextPracticeCard({ practiceSessionId: sessionId });
@@ -76,7 +78,6 @@ export function useApiPracticeSession(collectionId: string) {
     },
   });
 
-  // Submit card result
   const submitResult = useMutation({
     mutationFn: async ({ sessionId, cardId, isCorrect }: { sessionId: string; cardId: string; isCorrect: boolean }) => {
       const response = await FlashcardsService.submitPracticeResult({
@@ -86,46 +87,27 @@ export function useApiPracticeSession(collectionId: string) {
       });
       return response;
     },
-    onSuccess: (response, variables) => {
-      setState(prev => ({
-        ...prev,
-        progress: {
+    onSuccess: (response) => {
+      setState(prev => {
+        const newProgress = {
           ...prev.progress,
-          correct: prev.progress.correct + (variables.isCorrect ? 1 : 0),
-          incorrect: prev.progress.incorrect + (variables.isCorrect ? 0 : 1),
+          correct: prev.progress.correct + (response.is_correct ? 1 : 0),
+          incorrect: prev.progress.incorrect + (response.is_correct ? 0 : 1),
+        };
+        const isComplete = newProgress.correct + newProgress.incorrect >= prev.progress.total;
+
+        if (state.sessionId && !isComplete) {
+          getNextCard.mutate(state.sessionId);
         }
-      }));
-      
-      // Fetch next card
-      if (state.sessionId) {
-        getNextCard.mutate(state.sessionId);
-      }
+
+        return {
+          ...prev,
+          progress: newProgress,
+          isComplete
+        };
+      });
     },
   });
-
-  // // Get current session status
-  // const { data: sessionStatus } = useQuery({
-  //   queryKey: ["practice-session", state.sessionId],
-  //   queryFn: () => {
-  //     if (!state.sessionId) return null;
-  //     return FlashcardsService.getPracticeSessionStatus({ practiceSessionId: state.sessionId });
-  //   },
-  //   enabled: !!state.sessionId,
-  //   refetchInterval: 5000, // Refetch every 5 seconds
-  // });
-
-  // useEffect(() => {
-  //   if (sessionStatus) {
-  //     setState(prev => ({
-  //       ...prev,
-  //       isComplete: sessionStatus.is_completed,
-  //       progress: {
-  //         ...prev.progress,
-  //         total: sessionStatus.total_cards,
-  //       }
-  //     }));
-  //   }
-  // }, [sessionStatus]);
 
   const handleFlip = useCallback(() => {
     setState(prev => ({ ...prev, isFlipped: !prev.isFlipped }));
