@@ -21,7 +21,7 @@ function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 	return (
 		<Center h="60dvh">
 			<VStack gap={6} p={8}>
-				<DotLottieReact src="/src/assets/animation_starts.json" autoplay />
+				<DotLottieReact src="/src/assets/animation_stars.json" autoplay />
 				<Text fontSize="2xl">Practice Complete!</Text>
 				<Text fontSize="lg">
 					You got {stats.correct} out of {total} cards correct

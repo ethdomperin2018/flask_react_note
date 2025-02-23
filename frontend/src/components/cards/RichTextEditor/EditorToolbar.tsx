@@ -11,7 +11,6 @@ import {
 	RiListOrdered,
 	RiListUnordered,
 	RiStrikethrough,
-	RiUnderline,
 } from "react-icons/ri";
 
 interface EditorToolbarProps {
@@ -25,13 +24,11 @@ interface ToolbarButton {
 }
 
 const toolbarButtons: ToolbarButton[] = [
+	{ icon: <RiH1 size={20} />, command: "heading-1", tooltip: "Heading 1" },
+	{ icon: <RiH2 size={20} />, command: "heading-2", tooltip: "Heading 2" },
+	{ icon: <RiH3 size={20} />, command: "heading-3", tooltip: "Heading 3" },
 	{ icon: <RiBold size={20} />, command: "bold", tooltip: "Bold" },
 	{ icon: <RiItalic size={20} />, command: "italic", tooltip: "Italic" },
-	{
-		icon: <RiUnderline size={20} />,
-		command: "underline",
-		tooltip: "Underline",
-	},
 	{
 		icon: <RiStrikethrough size={20} />,
 		command: "strike",
@@ -47,9 +44,6 @@ const toolbarButtons: ToolbarButton[] = [
 		command: "orderedList",
 		tooltip: "Numbered List",
 	},
-	{ icon: <RiH1 size={20} />, command: "heading-1", tooltip: "Heading 1" },
-	{ icon: <RiH2 size={20} />, command: "heading-2", tooltip: "Heading 2" },
-	{ icon: <RiH3 size={20} />, command: "heading-3", tooltip: "Heading 3" },
 	{ icon: <RiCodeBoxLine size={20} />, command: "code", tooltip: "Code" },
 	{
 		icon: <RiDoubleQuotesL size={20} />,
@@ -105,18 +99,18 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 	return (
 		<HStack
 			gap={1}
-			p={2}
+			p={1}
 			bg="bg.50"
 			borderRadius="md"
 			borderWidth="1px"
 			borderColor="bg.200"
-			mb={2}
+			mb={1}
 			overflowX="auto"
 			flexWrap="nowrap"
 			overflowY="hidden"
 		>
 			{toolbarButtons.map((button) => (
-				<Box key={button.command} position="relative" title={button.tooltip}>
+				<Box key={button.command} title={button.tooltip}>
 					<IconButton
 						aria-label={button.tooltip}
 						as="button"

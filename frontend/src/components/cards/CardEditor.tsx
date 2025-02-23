@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-// import Underline from "@tiptap/extension-underline";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
@@ -45,7 +44,7 @@ export default function CardEditor({
 
 	const commonBoxStyles = {
 		onClick: handleContainerClick,
-		padding: "1rem",
+		padding: "1rem 1rem 0 1rem",
 		position: "absolute" as const,
 		width: "100%",
 		height: "100%",
