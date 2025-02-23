@@ -6,7 +6,7 @@ import PracticeCard from "@/components/practice/PracticeCard";
 import PracticeComplete from "@/components/practice/PracticeComplete";
 import PracticeControls from "@/components/practice/PracticeControls";
 import PracticeHeader from "@/components/practice/PracticeHeader";
-import { useApiPracticeSession } from "@/hooks/useApiPracticeSession";
+import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -44,7 +44,7 @@ function PracticeComponent() {
 		handleAnswer,
 		reset,
 		start,
-	} = useApiPracticeSession(collectionId);
+	} = usePracticeSession(collectionId);
 
 	useEffect(() => {
 		start();

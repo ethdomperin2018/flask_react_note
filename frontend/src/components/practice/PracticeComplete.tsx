@@ -4,6 +4,7 @@ import { BlueButton } from "../commonUI/Button";
 interface PracticeStats {
 	correct: number;
 	incorrect: number;
+	total: number;
 }
 
 interface PracticeCompleteProps {
@@ -13,7 +14,7 @@ interface PracticeCompleteProps {
 
 function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 	const router = useRouter();
-	const total = stats.correct + stats.incorrect;
+	const total = stats.total;
 	const percentage = Math.round((stats.correct / total) * 100);
 
 	return (

@@ -5,6 +5,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 interface Progress {
 	correct: number;
 	incorrect: number;
+	total: number;
 }
 
 interface PracticeHeaderProps {
@@ -19,7 +20,7 @@ function PracticeHeader({
 	collectionId,
 }: PracticeHeaderProps) {
 	const navigate = useNavigate();
-	const total = progress.correct + progress.incorrect;
+	const total = progress.total;
 
 	return (
 		<HStack w="100%" justifyContent="space-between" alignItems="center">
