@@ -24,6 +24,16 @@ import type {
   FlashcardsUpdateCardResponse,
   FlashcardsDeleteCardData,
   FlashcardsDeleteCardResponse,
+  FlashcardsStartPracticeSessionData,
+  FlashcardsStartPracticeSessionResponse,
+  FlashcardsGetPracticeSessionStatusData,
+  FlashcardsGetPracticeSessionStatusResponse,
+  FlashcardsGetNextPracticeCardData,
+  FlashcardsGetNextPracticeCardResponse,
+  FlashcardsSubmitPracticeResultData,
+  FlashcardsSubmitPracticeResultResponse,
+  FlashcardsListPracticeSessionsData,
+  FlashcardsListPracticeSessionsResponse,
   LoginLoginAccessTokenData,
   LoginLoginAccessTokenResponse,
   UsersReadUserMeResponse,
@@ -31,6 +41,7 @@ import type {
   UsersRegisterUserResponse,
 } from "./types.gen"
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class FlashcardsService {
   /**
    * Read Collections
@@ -273,8 +284,132 @@ export class FlashcardsService {
       },
     })
   }
+
+  /**
+   * Start Practice Session
+   * Start a new practice session for a collection
+   * @param data The data for the request.
+   * @param data.collectionId
+   * @returns PracticeSession Successful Response
+   * @throws ApiError
+   */
+  public static startPracticeSession(
+    data: FlashcardsStartPracticeSessionData,
+  ): CancelablePromise<FlashcardsStartPracticeSessionResponse> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/v1/flashcards/collections/{collection_id}/practice",
+      path: {
+        collection_id: data.collectionId,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Get Practice Session Status
+   * Get practice session status and statistics
+   * @param data The data for the request.
+   * @param data.practiceSessionId
+   * @returns PracticeSession Successful Response
+   * @throws ApiError
+   */
+  public static getPracticeSessionStatus(
+    data: FlashcardsGetPracticeSessionStatusData,
+  ): CancelablePromise<FlashcardsGetPracticeSessionStatusResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/flashcards/practice/{practice_session_id}",
+      path: {
+        practice_session_id: data.practiceSessionId,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Get Next Practice Card
+   * Get the next card to practice
+   * @param data The data for the request.
+   * @param data.practiceSessionId
+   * @returns PracticeCardResponse Successful Response
+   * @throws ApiError
+   */
+  public static getNextPracticeCard(
+    data: FlashcardsGetNextPracticeCardData,
+  ): CancelablePromise<FlashcardsGetNextPracticeCardResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/flashcards/practice/{practice_session_id}/next",
+      path: {
+        practice_session_id: data.practiceSessionId,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Submit Practice Result
+   * Submit the result for a practiced card
+   * @param data The data for the request.
+   * @param data.practiceSessionId
+   * @param data.cardId
+   * @param data.isCorrect
+   * @returns PracticeCardResponse Successful Response
+   * @throws ApiError
+   */
+  public static submitPracticeResult(
+    data: FlashcardsSubmitPracticeResultData,
+  ): CancelablePromise<FlashcardsSubmitPracticeResultResponse> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/v1/flashcards/practice/{practice_session_id}/cards/{card_id}/submit",
+      path: {
+        practice_session_id: data.practiceSessionId,
+        card_id: data.cardId,
+      },
+      query: {
+        is_correct: data.isCorrect,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * List Practice Sessions
+   * List all practice sessions for the current user
+   * @param data The data for the request.
+   * @param data.skip
+   * @param data.limit
+   * @returns PracticeSessionList Successful Response
+   * @throws ApiError
+   */
+  public static listPracticeSessions(
+    data: FlashcardsListPracticeSessionsData = {},
+  ): CancelablePromise<FlashcardsListPracticeSessionsResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/flashcards/practice",
+      query: {
+        skip: data.skip,
+        limit: data.limit,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class LoginService {
   /**
    * Login Access Token
@@ -298,6 +433,7 @@ export class LoginService {
   }
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class UsersService {
   /**
    * Read User Me

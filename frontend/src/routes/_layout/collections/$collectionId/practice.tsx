@@ -10,7 +10,7 @@ import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useEffect } from "react";
 
 function getCardsQueryOptions(collectionId: string) {
 	return {
@@ -29,39 +29,38 @@ function PracticeComponent() {
 	const { collectionId } = Route.useParams();
 	const {
 		data: cardsResponse,
-		error,
-		isLoading,
-	} = useQuery({
-		...getCardsQueryOptions(collectionId),
-		placeholderData: (prevData) => prevData,
-	});
-
-	const cards = cardsResponse?.data ?? [];
-
-	const shuffledCards = useMemo(
-		() => [...cards].sort(() => Math.random() - 0.5),
-		[cards],
-	);
+		error: cardsError,
+		isLoading: isLoadingCards,
+	} = useQuery(getCardsQueryOptions(collectionId));
 
 	const {
-		currentIndex,
+		currentCard,
 		isFlipped,
 		progress,
 		isComplete,
+		isLoading: isLoadingSession,
+		error: sessionError,
 		handleFlip,
 		handleAnswer,
 		reset,
-	} = usePracticeSession(shuffledCards.length);
+		start,
+	} = usePracticeSession(collectionId);
 
-	const currentCard = shuffledCards[currentIndex];
+	useEffect(() => {
+		start();
+	}, [start]);
+
+	const isLoading = isLoadingCards || isLoadingSession;
+	const error = cardsError || sessionError;
 
 	if (isLoading) return <LoadingState />;
 	if (error) return <ErrorState error={error} />;
-	if (!cards.length)
+	if (!cardsResponse?.data.length)
 		return (
 			<EmptyState title="No Cards" message="No cards available for practice" />
 		);
 	if (isComplete) return <PracticeComplete stats={progress} onReset={reset} />;
+	if (!currentCard) return <LoadingState />;
 
 	return (
 		<VStack gap={4} h="calc(100dvh - 8rem)" width="100%">
@@ -71,7 +70,6 @@ function PracticeComponent() {
 				collectionId={collectionId}
 			/>
 			<PracticeCard
-				key={currentCard.id}
 				card={currentCard}
 				isFlipped={isFlipped}
 				onFlip={handleFlip}

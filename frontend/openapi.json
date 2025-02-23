@@ -1,6 +1,6 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "FlashCards", "version": "0.1.0" },
+  "info": { "title": "FlashNotes", "version": "0.1.0" },
   "paths": {
     "/api/v1/login/access-token": {
       "post": {
@@ -495,6 +495,219 @@
           }
         }
       }
+    },
+    "/api/v1/flashcards/collections/{collection_id}/practice": {
+      "post": {
+        "tags": ["flashcards"],
+        "summary": "Start Practice Session",
+        "description": "Start a new practice session for a collection",
+        "operationId": "flashcards-start_practice_session",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PracticeSession" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/practice/{practice_session_id}": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Get Practice Session Status",
+        "description": "Get practice session status and statistics",
+        "operationId": "flashcards-get_practice_session_status",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "practice_session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Practice Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PracticeSession" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/practice/{practice_session_id}/next": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "Get Next Practice Card",
+        "description": "Get the next card to practice",
+        "operationId": "flashcards-get_next_practice_card",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "practice_session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Practice Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PracticeCardResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/practice/{practice_session_id}/cards/{card_id}/submit": {
+      "post": {
+        "tags": ["flashcards"],
+        "summary": "Submit Practice Result",
+        "description": "Submit the result for a practiced card",
+        "operationId": "flashcards-submit_practice_result",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "practice_session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Practice Session Id"
+            }
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid", "title": "Card Id" }
+          },
+          {
+            "name": "is_correct",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "boolean", "title": "Is Correct" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PracticeCardResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/flashcards/practice": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "List Practice Sessions",
+        "description": "List all practice sessions for the current user",
+        "operationId": "flashcards-list_practice_sessions",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Skip" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100, "title": "Limit" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PracticeSessionList" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -629,6 +842,113 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "PracticeCard": {
+        "properties": {
+          "card_id": { "type": "string", "format": "uuid", "title": "Card Id" },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "is_correct": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Correct"
+          },
+          "is_practiced": { "type": "boolean", "title": "Is Practiced" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "card_id",
+          "id",
+          "session_id",
+          "is_correct",
+          "is_practiced",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "PracticeCard"
+      },
+      "PracticeCardResponse": {
+        "properties": {
+          "card": { "$ref": "#/components/schemas/Card" },
+          "is_practiced": { "type": "boolean", "title": "Is Practiced" },
+          "is_correct": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Correct"
+          }
+        },
+        "type": "object",
+        "required": ["card", "is_practiced", "is_correct"],
+        "title": "PracticeCardResponse"
+      },
+      "PracticeSession": {
+        "properties": {
+          "collection_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Collection Id"
+          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
+          "is_completed": { "type": "boolean", "title": "Is Completed" },
+          "total_cards": { "type": "integer", "title": "Total Cards" },
+          "cards_practiced": { "type": "integer", "title": "Cards Practiced" },
+          "correct_answers": { "type": "integer", "title": "Correct Answers" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "practice_cards": {
+            "items": { "$ref": "#/components/schemas/PracticeCard" },
+            "type": "array",
+            "title": "Practice Cards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "collection_id",
+          "id",
+          "user_id",
+          "is_completed",
+          "total_cards",
+          "cards_practiced",
+          "correct_answers",
+          "created_at",
+          "updated_at",
+          "practice_cards"
+        ],
+        "title": "PracticeSession"
+      },
+      "PracticeSessionList": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/PracticeSession" },
+            "type": "array",
+            "title": "Data"
+          },
+          "count": { "type": "integer", "title": "Count" }
+        },
+        "type": "object",
+        "required": ["data", "count"],
+        "title": "PracticeSessionList"
       },
       "Token": {
         "properties": {

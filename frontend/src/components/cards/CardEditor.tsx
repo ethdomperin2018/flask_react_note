@@ -54,7 +54,7 @@ export default function CardEditor({
 		borderWidth: "1px",
 		boxShadow: "sm",
 		borderColor: "bg.200",
-		cursor: "pointer",
+		cursor: "text",
 	};
 
 	return (
