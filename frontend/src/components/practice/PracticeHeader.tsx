@@ -1,4 +1,4 @@
-import { HStack, IconButton, Text } from "@chakra-ui/react";
+import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { RiEdit2Fill } from "react-icons/ri";
 
@@ -23,29 +23,42 @@ function PracticeHeader({
 	const total = progress.total;
 
 	return (
-		<HStack w="100%" justifyContent="space-between" alignItems="center">
-			<Text fontSize="sm" color="fg.muted">
-				{total === 0
-					? "Start practicing!"
-					: `Correct: ${progress.correct} | Incorrect: ${progress.incorrect}`}
-			</Text>
-			<IconButton
-				aria-label="Edit card"
-				size="sm"
-				variant="ghost"
-				onClick={() =>
-					navigate({
-						to: `/collections/${collectionId}/cards/${cardId}`,
-					})
-				}
-				_hover={{
-					transform: "scale(1.05)",
-					bg: "bg.50",
-				}}
-			>
-				<RiEdit2Fill />
-			</IconButton>
-		</HStack>
+		<VStack w="100%" gap={2} align="stretch">
+			<HStack w="100%" justifyContent="space-between" alignItems="center">
+				<Text fontSize="sm" color="fg.muted">
+					{total === 0
+						? "Start practicing!"
+						: `Correct: ${progress.correct} | Incorrect: ${progress.incorrect}`}
+				</Text>
+				<IconButton
+					aria-label="Edit card"
+					size="sm"
+					variant="ghost"
+					onClick={() =>
+						navigate({
+							to: `/collections/${collectionId}/cards/${cardId}`,
+						})
+					}
+					_hover={{
+						transform: "scale(1.05)",
+						bg: "bg.50",
+					}}
+				>
+					<RiEdit2Fill />
+				</IconButton>
+			</HStack>
+			{total > 0 && (
+				<Box w="100%" h="2" bg="bg.50" borderRadius="full" overflow="hidden">
+					<Box
+						h="100%"
+						w={`${((progress.correct + progress.incorrect) * 100) / total}%`}
+						bg="bg.300"
+						borderRadius="full"
+						transition="width 0.3s ease-in-out"
+					/>
+				</Box>
+			)}
+		</VStack>
 	);
 }
 
