@@ -7,12 +7,15 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
 	plugins: [react(), TanStackRouterVite(), tsconfigPaths()],
 	build: {
+		chunkSizeWarningLimit: 800,
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					chakra: ["@chakra-ui/react"],
+					chakra: ["@chakra-ui/react", "@emotion/react"],
 					tanstack: ["@tanstack/react-query", "@tanstack/react-router"],
 					vendor: ["react", "react-dom", "react-hook-form"],
+					icons: ["react-icons"],
+					editor: ["@tiptap/react", "@tiptap/starter-kit"],
 				},
 			},
 		},
