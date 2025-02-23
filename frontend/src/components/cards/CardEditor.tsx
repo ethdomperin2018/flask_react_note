@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
@@ -17,7 +17,6 @@ export default function CardEditor({
 	onChange,
 	side,
 	isFlipped,
-	isSaving,
 }: CardEditorProps) {
 	const editor = useEditor({
 		extensions: [StarterKit],
