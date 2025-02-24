@@ -1,4 +1,4 @@
-<img src="frontend/public/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
+<img src="frontend/src/assets/Logo.svg" alt="FlashNotes Logo" width="80" height="80"/>
 
 # Learn Better with FlashNotes
 
