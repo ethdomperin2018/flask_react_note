@@ -16,10 +16,6 @@ function NewCard() {
 	const { card, currentSide, isFlipped, updateContent, saveCard, flip } =
 		useCard(collectionId);
 
-	const handleClose = () => {
-		navigate({ to: `/collections/${collectionId}` });
-	};
-
 	const handleSave = () => {
 		saveCard(card).then(() => {
 			navigate({ to: `/collections/${collectionId}` });
@@ -28,12 +24,7 @@ function NewCard() {
 
 	return (
 		<VStack h="calc(100dvh - 10rem)" width="100%" gap={4}>
-			<CardHeader
-				side={currentSide}
-				onFlip={flip}
-				onClose={handleClose}
-				onSave={handleSave}
-			/>
+			<CardHeader side={currentSide} onFlip={flip} onSave={handleSave} />
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}

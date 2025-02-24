@@ -39,7 +39,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 						bg: "bg.50",
 					}}
 				>
-					<MdDelete color="red" />
+					<MdDelete />
 				</IconButton>
 			</Box>
 		</HStack>

@@ -47,7 +47,7 @@ export function useCard(collectionId: string, cardId?: string) {
 				setCard(data);
 				saveToLocalStorage(data);
 			} catch (error) {
-				toaster.create({ title: "Error loading card", type: "error" });
+				toaster.create({ title: "Error loading card", type: "error"});
 			} finally {
 				setIsLoading(false);
 			}

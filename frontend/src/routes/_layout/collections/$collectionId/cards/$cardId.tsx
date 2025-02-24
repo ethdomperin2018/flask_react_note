@@ -58,12 +58,7 @@ function CardComponent() {
 			gap={4}
 			onKeyDown={handleKeyDown}
 		>
-			<CardHeader
-				side={currentSide}
-				onFlip={flip}
-				onClose={handleClose}
-				onSave={handleSave}
-			/>
+			<CardHeader side={currentSide} onFlip={flip} onSave={handleSave} />
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}

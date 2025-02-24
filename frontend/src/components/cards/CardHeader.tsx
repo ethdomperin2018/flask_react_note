@@ -5,19 +5,10 @@ import { IoCheckmark, IoClose } from "react-icons/io5";
 interface CardHeaderProps {
 	side: "front" | "back";
 	onFlip: () => void;
-	onClose: () => void;
-	onSave?: () => void;
+	onSave: () => void;
 }
 
-function CardHeader({ side, onFlip, onClose, onSave }: CardHeaderProps) {
-	const handleActionClick = () => {
-		if (side === "back" && onSave) {
-			onSave();
-		} else {
-			onClose();
-		}
-	};
-
+function CardHeader({ side, onFlip, onSave }: CardHeaderProps) {
 	return (
 		<HStack w="100%" justifyContent="space-between" alignItems="center">
 			<IconButton
@@ -45,9 +36,9 @@ function CardHeader({ side, onFlip, onClose, onSave }: CardHeaderProps) {
 			<IconButton
 				colorPalette="teal"
 				size="sm"
-				aria-label={side === "back" ? "save" : "close"}
+				aria-label="save"
 				variant="ghost"
-				onClick={handleActionClick}
+				onClick={onSave}
 				_hover={{
 					transform: "scale(1.05)",
 					bg: "bg.50",
