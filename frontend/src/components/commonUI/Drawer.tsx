@@ -103,7 +103,7 @@ function Drawer({
 								Logged in as: {currentUser.email}
 							</Text>
 						)}
-						<DefaultButton onClick={handleLogout} width="100%" color="white">
+						<DefaultButton onClick={handleLogout} width="100%">
 							<FiLogOut size={20} />
 							Log out
 						</DefaultButton>

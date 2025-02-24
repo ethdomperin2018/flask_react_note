@@ -17,6 +17,7 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as LayoutCollectionsIndexImport } from './routes/_layout/collections/index'
 import { Route as LayoutCollectionsCollectionIdIndexImport } from './routes/_layout/collections/$collectionId/index'
+import { Route as LayoutCollectionsCollectionIdStatsImport } from './routes/_layout/collections/$collectionId/stats'
 import { Route as LayoutCollectionsCollectionIdPracticeImport } from './routes/_layout/collections/$collectionId/practice'
 import { Route as LayoutCollectionsCollectionIdCardsNewImport } from './routes/_layout/collections/$collectionId/cards/new'
 import { Route as LayoutCollectionsCollectionIdCardsCardIdImport } from './routes/_layout/collections/$collectionId/cards/$cardId'
@@ -56,6 +57,13 @@ const LayoutCollectionsCollectionIdIndexRoute =
   LayoutCollectionsCollectionIdIndexImport.update({
     id: '/collections/$collectionId/',
     path: '/collections/$collectionId/',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCollectionsCollectionIdStatsRoute =
+  LayoutCollectionsCollectionIdStatsImport.update({
+    id: '/collections/$collectionId/stats',
+    path: '/collections/$collectionId/stats',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -126,6 +134,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCollectionsCollectionIdPracticeImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/collections/$collectionId/stats': {
+      id: '/_layout/collections/$collectionId/stats'
+      path: '/collections/$collectionId/stats'
+      fullPath: '/collections/$collectionId/stats'
+      preLoaderRoute: typeof LayoutCollectionsCollectionIdStatsImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/collections/$collectionId/': {
       id: '/_layout/collections/$collectionId/'
       path: '/collections/$collectionId'
@@ -155,6 +170,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutCollectionsIndexRoute: typeof LayoutCollectionsIndexRoute
   LayoutCollectionsCollectionIdPracticeRoute: typeof LayoutCollectionsCollectionIdPracticeRoute
+  LayoutCollectionsCollectionIdStatsRoute: typeof LayoutCollectionsCollectionIdStatsRoute
   LayoutCollectionsCollectionIdIndexRoute: typeof LayoutCollectionsCollectionIdIndexRoute
   LayoutCollectionsCollectionIdCardsCardIdRoute: typeof LayoutCollectionsCollectionIdCardsCardIdRoute
   LayoutCollectionsCollectionIdCardsNewRoute: typeof LayoutCollectionsCollectionIdCardsNewRoute
@@ -164,6 +180,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCollectionsIndexRoute: LayoutCollectionsIndexRoute,
   LayoutCollectionsCollectionIdPracticeRoute:
     LayoutCollectionsCollectionIdPracticeRoute,
+  LayoutCollectionsCollectionIdStatsRoute:
+    LayoutCollectionsCollectionIdStatsRoute,
   LayoutCollectionsCollectionIdIndexRoute:
     LayoutCollectionsCollectionIdIndexRoute,
   LayoutCollectionsCollectionIdCardsCardIdRoute:
@@ -182,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
+  '/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
   '/collections/$collectionId': typeof LayoutCollectionsCollectionIdIndexRoute
   '/collections/$collectionId/cards/$cardId': typeof LayoutCollectionsCollectionIdCardsCardIdRoute
   '/collections/$collectionId/cards/new': typeof LayoutCollectionsCollectionIdCardsNewRoute
@@ -194,6 +213,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
+  '/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
   '/collections/$collectionId': typeof LayoutCollectionsCollectionIdIndexRoute
   '/collections/$collectionId/cards/$cardId': typeof LayoutCollectionsCollectionIdCardsCardIdRoute
   '/collections/$collectionId/cards/new': typeof LayoutCollectionsCollectionIdCardsNewRoute
@@ -207,6 +227,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_layout/collections/': typeof LayoutCollectionsIndexRoute
   '/_layout/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
+  '/_layout/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
   '/_layout/collections/$collectionId/': typeof LayoutCollectionsCollectionIdIndexRoute
   '/_layout/collections/$collectionId/cards/$cardId': typeof LayoutCollectionsCollectionIdCardsCardIdRoute
   '/_layout/collections/$collectionId/cards/new': typeof LayoutCollectionsCollectionIdCardsNewRoute
@@ -221,6 +242,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/collections'
     | '/collections/$collectionId/practice'
+    | '/collections/$collectionId/stats'
     | '/collections/$collectionId'
     | '/collections/$collectionId/cards/$cardId'
     | '/collections/$collectionId/cards/new'
@@ -232,6 +254,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/collections'
     | '/collections/$collectionId/practice'
+    | '/collections/$collectionId/stats'
     | '/collections/$collectionId'
     | '/collections/$collectionId/cards/$cardId'
     | '/collections/$collectionId/cards/new'
@@ -243,6 +266,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_layout/collections/'
     | '/_layout/collections/$collectionId/practice'
+    | '/_layout/collections/$collectionId/stats'
     | '/_layout/collections/$collectionId/'
     | '/_layout/collections/$collectionId/cards/$cardId'
     | '/_layout/collections/$collectionId/cards/new'
@@ -287,6 +311,7 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/collections/",
         "/_layout/collections/$collectionId/practice",
+        "/_layout/collections/$collectionId/stats",
         "/_layout/collections/$collectionId/",
         "/_layout/collections/$collectionId/cards/$cardId",
         "/_layout/collections/$collectionId/cards/new"
@@ -304,6 +329,10 @@ export const routeTree = rootRoute
     },
     "/_layout/collections/$collectionId/practice": {
       "filePath": "_layout/collections/$collectionId/practice.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/collections/$collectionId/stats": {
+      "filePath": "_layout/collections/$collectionId/stats.tsx",
       "parent": "/_layout"
     },
     "/_layout/collections/$collectionId/": {
