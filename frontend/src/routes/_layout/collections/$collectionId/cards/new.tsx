@@ -1,7 +1,7 @@
 import CardEditor from "@/components/cards/CardEditor";
 import CardHeader from "@/components/cards/CardHeader";
 import { useCard } from "@/hooks/useCard";
-import { Text, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
@@ -13,37 +13,33 @@ export const Route = createFileRoute(
 function NewCard() {
 	const navigate = useNavigate();
 	const { collectionId } = Route.useParams();
-	const { card, currentSide, isFlipped, updateContent, flip, isSaving } =
+	const { card, currentSide, isFlipped, updateContent, saveCard, flip } =
 		useCard(collectionId);
 
 	const handleClose = () => {
 		navigate({ to: `/collections/${collectionId}` });
 	};
 
+	const handleSave = () => {
+		saveCard(card).then(() => {
+			navigate({ to: `/collections/${collectionId}` });
+		});
+	};
+
 	return (
 		<VStack h="calc(100dvh - 10rem)" width="100%" gap={4}>
 			<CardHeader
-				label={currentSide === "front" ? "Front" : "Back"}
+				side={currentSide}
 				onFlip={flip}
 				onClose={handleClose}
+				onSave={handleSave}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}
 				side={currentSide}
 				isFlipped={isFlipped}
-				isSaving={isSaving}
 			/>
-			<Text
-				fontSize="sm"
-				color="fg.muted"
-				fontWeight="normal"
-				opacity={isSaving ? 1 : 0}
-				transition="opacity 0.2s"
-				pointerEvents="none"
-			>
-				Saving...
-			</Text>
 		</VStack>
 	);
 }

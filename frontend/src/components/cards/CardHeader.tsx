@@ -1,14 +1,23 @@
 import { HStack, IconButton, Text } from "@chakra-ui/react";
 import { FiRepeat } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
+import { IoCheckmark, IoClose } from "react-icons/io5";
 
 interface CardHeaderProps {
-	label: string;
+	side: "front" | "back";
 	onFlip: () => void;
 	onClose: () => void;
+	onSave?: () => void;
 }
 
-function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
+function CardHeader({ side, onFlip, onClose, onSave }: CardHeaderProps) {
+	const handleActionClick = () => {
+		if (side === "back" && onSave) {
+			onSave();
+		} else {
+			onClose();
+		}
+	};
+
 	return (
 		<HStack w="100%" justifyContent="space-between" alignItems="center">
 			<IconButton
@@ -31,20 +40,20 @@ function CardHeader({ label, onFlip, onClose }: CardHeaderProps) {
 				textTransform="uppercase"
 				letterSpacing="wide"
 			>
-				{label}
+				{side === "front" ? "Front" : "Back"}
 			</Text>
 			<IconButton
 				colorPalette="teal"
 				size="sm"
-				aria-label="close"
+				aria-label={side === "back" ? "save" : "close"}
 				variant="ghost"
-				onClick={onClose}
+				onClick={handleActionClick}
 				_hover={{
 					transform: "scale(1.05)",
 					bg: "bg.50",
 				}}
 			>
-				<IoClose />
+				{side === "back" ? <IoCheckmark size={20} /> : <IoClose />}
 			</IconButton>
 		</HStack>
 	);

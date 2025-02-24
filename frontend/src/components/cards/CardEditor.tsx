@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import CharacterCount from "@tiptap/extension-character-count";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
@@ -9,7 +10,6 @@ export interface CardEditorProps {
 	onChange: (value: string) => void;
 	side: "front" | "back";
 	isFlipped: boolean;
-	isSaving?: boolean;
 }
 
 export default function CardEditor({
@@ -19,7 +19,12 @@ export default function CardEditor({
 	isFlipped,
 }: CardEditorProps) {
 	const editor = useEditor({
-		extensions: [StarterKit],
+		extensions: [
+			StarterKit,
+			CharacterCount.configure({
+				limit: 3000,
+			}),
+		],
 		content: value,
 		onUpdate: ({ editor }) => {
 			onChange(editor.getHTML());

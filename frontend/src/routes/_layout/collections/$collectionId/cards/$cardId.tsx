@@ -22,8 +22,8 @@ function CardComponent() {
 		currentSide,
 		isFlipped,
 		updateContent,
+		saveCard,
 		flip,
-		isSaving,
 	} = useCard(collectionId, cardId);
 
 	if (isLoading) {
@@ -36,6 +36,12 @@ function CardComponent() {
 
 	const handleClose = () => {
 		router.history.back();
+	};
+
+	const handleSave = () => {
+		saveCard(card).then(() => {
+			router.history.back();
+		});
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -53,27 +59,17 @@ function CardComponent() {
 			onKeyDown={handleKeyDown}
 		>
 			<CardHeader
-				label={currentSide === "front" ? "Front" : "Back"}
+				side={currentSide}
 				onFlip={flip}
 				onClose={handleClose}
+				onSave={handleSave}
 			/>
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}
 				side={currentSide}
 				isFlipped={isFlipped}
-				isSaving={isSaving}
 			/>
-			<Text
-				fontSize="sm"
-				color="fg.muted"
-				fontWeight="normal"
-				opacity={isSaving ? 1 : 0}
-				transition="opacity 0.2s"
-				pointerEvents="none"
-			>
-				Saving...
-			</Text>
 		</VStack>
 	);
 }

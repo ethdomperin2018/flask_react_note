@@ -1,7 +1,7 @@
 import { FlashcardsService } from "@/client";
 import { toaster } from "@/components/ui/toaster";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, } from "react";
 import { useDebounce } from "./useDebounce";
 
 interface CardData {
@@ -10,20 +10,42 @@ interface CardData {
 	id?: string;
 }
 
+const STORAGE_KEY_PREFIX = "flashcard_draft_";
+
 export function useCard(collectionId: string, cardId?: string) {
 	const queryClient = useQueryClient();
 	const [card, setCard] = useState<CardData>({ front: "", back: "" });
 	const [currentSide, setCurrentSide] = useState<"front" | "back">("front");
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [isLoading, setIsLoading] = useState(!!cardId);
-	const [isSaving, setIsSaving] = useState(false);
+
+	const saveToLocalStorage = useCallback((cardData: CardData) => {
+		const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
+		localStorage.setItem(storageKey, JSON.stringify(cardData));
+	}, [cardId, collectionId]);
+
+	const debouncedSaveToStorage = useDebounce(saveToLocalStorage, 500);
 
 	useEffect(() => {
-		if (!cardId) return;
+		const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
+		const savedDraft = localStorage.getItem(storageKey);
+
+		if (savedDraft) {
+			setCard(JSON.parse(savedDraft));
+			setIsLoading(false);
+			return;
+		}
+
+		if (!cardId) {
+			setIsLoading(false);
+			return;
+		}
+
 		const fetchCard = async () => {
 			try {
 				const data = await FlashcardsService.readCard({ collectionId, cardId });
 				setCard(data);
+				saveToLocalStorage(data);
 			} catch (error) {
 				toaster.create({ title: "Error loading card", type: "error" });
 			} finally {
@@ -31,53 +53,50 @@ export function useCard(collectionId: string, cardId?: string) {
 			}
 		};
 		fetchCard();
-	}, [cardId, collectionId]);
+	}, [cardId, collectionId, saveToLocalStorage]);
 
 	const saveCard = useCallback(
 		async (cardData: CardData) => {
 			if (!cardData.front.trim() && !cardData.back.trim()) return;
+			
 			try {
+				let savedCard: CardData;
 				if (cardData.id) {
-					await FlashcardsService.updateCard({
+					savedCard = await FlashcardsService.updateCard({
 						collectionId,
 						cardId: cardData.id,
 						requestBody: cardData,
 					});
 				} else {
-					const response = await FlashcardsService.createCard({
+					savedCard = await FlashcardsService.createCard({
 						collectionId,
 						requestBody: cardData,
 					});
-					setCard((prev) => ({ ...prev, id: response.id }));
+					setCard((prev) => ({ ...prev, id: savedCard.id }));
 				}
+				
+				const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
+				localStorage.removeItem(storageKey);
+				
 				queryClient.invalidateQueries({
 					queryKey: ["collections", collectionId, "cards"],
 				});
+				
+				toaster.create({ title: "Card saved successfully", type: "success" });
 			} catch (error) {
 				toaster.create({ title: "Error saving card", type: "error" });
 			}
 		},
-		[collectionId, queryClient],
+		[collectionId, queryClient, cardId],
 	);
-
-	const debouncedSave = useDebounce((cardData: CardData) => {
-		setIsSaving(true);
-		saveCard(cardData).finally(() => {
-			setTimeout(() => {
-				setIsSaving(false);
-			}, 500);
-		});
-	}, 400);
 
 	const updateContent = useCallback(
 		(value: string) => {
-			setCard((prev) => {
-				const updatedCard = { ...prev, [currentSide]: value };
-				return updatedCard;
-			});
-			debouncedSave({ ...card, [currentSide]: value });
+			const updatedCard = { ...card, [currentSide]: value };
+			setCard(updatedCard);
+			debouncedSaveToStorage(updatedCard);
 		},
-		[currentSide, debouncedSave, card],
+		[currentSide, card, debouncedSaveToStorage],
 	);
 
 	const flip = useCallback(() => {
@@ -91,7 +110,7 @@ export function useCard(collectionId: string, cardId?: string) {
 		currentSide,
 		isFlipped,
 		updateContent,
+		saveCard,
 		flip,
-		isSaving,
 	};
 }
