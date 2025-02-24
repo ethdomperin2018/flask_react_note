@@ -34,14 +34,9 @@ function CardComponent() {
 		);
 	}
 
-	const handleClose = () => {
+	const handleClose = async () => {
+		await saveCard(card);
 		router.history.back();
-	};
-
-	const handleSave = () => {
-		saveCard(card).then(() => {
-			router.history.back();
-		});
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -58,7 +53,7 @@ function CardComponent() {
 			gap={4}
 			onKeyDown={handleKeyDown}
 		>
-			<CardHeader side={currentSide} onFlip={flip} onSave={handleSave} />
+			<CardHeader side={currentSide} onFlip={flip} onSave={handleClose} />
 			<CardEditor
 				value={currentSide === "front" ? card.front : card.back}
 				onChange={updateContent}

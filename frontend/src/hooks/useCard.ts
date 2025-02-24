@@ -1,16 +1,13 @@
 import { FlashcardsService } from "@/client";
 import { toaster } from "@/components/ui/toaster";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState, } from "react";
-import { useDebounce } from "./useDebounce";
+import { useCallback, useEffect, useState } from "react";
 
 interface CardData {
 	front: string;
 	back: string;
 	id?: string;
 }
-
-const STORAGE_KEY_PREFIX = "flashcard_draft_";
 
 export function useCard(collectionId: string, cardId?: string) {
 	const queryClient = useQueryClient();
@@ -19,23 +16,7 @@ export function useCard(collectionId: string, cardId?: string) {
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [isLoading, setIsLoading] = useState(!!cardId);
 
-	const saveToLocalStorage = useCallback((cardData: CardData) => {
-		const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
-		localStorage.setItem(storageKey, JSON.stringify(cardData));
-	}, [cardId, collectionId]);
-
-	const debouncedSaveToStorage = useDebounce(saveToLocalStorage, 500);
-
 	useEffect(() => {
-		const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
-		const savedDraft = localStorage.getItem(storageKey);
-
-		if (savedDraft) {
-			setCard(JSON.parse(savedDraft));
-			setIsLoading(false);
-			return;
-		}
-
 		if (!cardId) {
 			setIsLoading(false);
 			return;
@@ -45,15 +26,14 @@ export function useCard(collectionId: string, cardId?: string) {
 			try {
 				const data = await FlashcardsService.readCard({ collectionId, cardId });
 				setCard(data);
-				saveToLocalStorage(data);
 			} catch (error) {
-				toaster.create({ title: "Error loading card", type: "error"});
+				toaster.create({ title: "Error loading card", type: "error" });
 			} finally {
 				setIsLoading(false);
 			}
 		};
 		fetchCard();
-	}, [cardId, collectionId, saveToLocalStorage]);
+	}, [cardId, collectionId]);
 
 	const saveCard = useCallback(
 		async (cardData: CardData) => {
@@ -75,28 +55,21 @@ export function useCard(collectionId: string, cardId?: string) {
 					setCard((prev) => ({ ...prev, id: savedCard.id }));
 				}
 				
-				const storageKey = `${STORAGE_KEY_PREFIX}${cardId || "new"}_${collectionId}`;
-				localStorage.removeItem(storageKey);
-				
 				queryClient.invalidateQueries({
 					queryKey: ["collections", collectionId, "cards"],
 				});
-				
-				toaster.create({ title: "Card saved successfully", type: "success" });
 			} catch (error) {
 				toaster.create({ title: "Error saving card", type: "error" });
 			}
 		},
-		[collectionId, queryClient, cardId],
+		[collectionId, queryClient],
 	);
 
 	const updateContent = useCallback(
 		(value: string) => {
-			const updatedCard = { ...card, [currentSide]: value };
-			setCard(updatedCard);
-			debouncedSaveToStorage(updatedCard);
+			setCard(prev => ({ ...prev, [currentSide]: value }));
 		},
-		[currentSide, card, debouncedSaveToStorage],
+		[currentSide],
 	);
 
 	const flip = useCallback(() => {
