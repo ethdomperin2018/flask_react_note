@@ -137,7 +137,25 @@ def update_card(session: Session, card: Card, card_in: CardUpdate) -> Card:
     return card
 
 
+def _remove_incomplete_practice_sessions(session: Session, card: Card) -> None:
+    statement = (
+        select(PracticeSession)
+        .join(PracticeCard, PracticeCard.session_id == PracticeSession.id)
+        .where(
+            PracticeCard.card_id == card.id,
+            PracticeSession.is_completed == False,  # noqa: E712
+        )
+        .distinct()
+    )
+    affected_sessions = session.exec(statement).all()
+
+    for practice_session in affected_sessions:
+        session.delete(practice_session)
+
+
 def delete_card(session: Session, card: Card) -> None:
+    _remove_incomplete_practice_sessions(session, card)
+
     session.delete(card)
     session.commit()
 
@@ -250,7 +268,8 @@ def get_next_card(
         .limit(1)
     )
     result = session.exec(statement).first()
-    return result[1], result[0] if result else None
+    if result:
+        return result[1], result[0]
 
 
 def get_practice_card(
