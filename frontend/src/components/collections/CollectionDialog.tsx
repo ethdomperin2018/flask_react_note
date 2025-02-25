@@ -9,7 +9,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BlueButton, RedButton } from "../commonUI/Button";
 import { DefaultInput } from "../commonUI/Input";
 
@@ -23,6 +23,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 	children,
 }) => {
 	const [collectionName, setCollectionName] = useState("");
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
 
 	const handleSubmit = async () => {
 		if (!collectionName.trim()) return;
@@ -30,6 +31,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 		try {
 			await onAdd({ name: collectionName });
 			setCollectionName("");
+			closeButtonRef.current?.click();
 		} catch (error) {
 			console.error("Failed to create collection:", error);
 		}
@@ -51,7 +53,12 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 						placeholder="Collection Name"
 						value={collectionName}
 						onChange={(e) => setCollectionName(e.target.value)}
-						onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								handleSubmit();
+							}
+						}}
 					/>
 				</DialogBody>
 				<DialogFooter>
@@ -62,7 +69,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 						<BlueButton onClick={handleSubmit}>Save</BlueButton>
 					</DialogActionTrigger>
 				</DialogFooter>
-				<DialogCloseTrigger />
+				<DialogCloseTrigger ref={closeButtonRef} />
 			</DialogContent>
 		</DialogRoot>
 	);
