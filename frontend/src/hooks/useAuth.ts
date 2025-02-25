@@ -5,13 +5,18 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import {
 	type Body_login_login_access_token as AccessToken,
-	type ApiError,
 	LoginService,
 	type UserPublic,
 	type UserRegister,
 	UsersService,
 } from "../client";
-// import useCustomToast from "./useCustomToast"
+import { toaster } from "@/components/ui/toaster";
+
+interface ErrorResponse {
+	body: {
+		detail?: string;
+	};
+}
 
 const isLoggedIn = () => {
 	return localStorage.getItem("access_token") !== null;
@@ -20,7 +25,6 @@ const isLoggedIn = () => {
 const useAuth = () => {
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
-	// const showToast = useCustomToast()
 	const queryClient = useQueryClient();
 	const { data: user, isLoading } = useQuery<UserPublic | null, Error>({
 		queryKey: ["currentUser"],
@@ -34,21 +38,25 @@ const useAuth = () => {
 
 		onSuccess: () => {
 			navigate({ to: "/login" });
-			// showToast(
-			//   "Account created.",
-			//   "Your account has been created successfully.",
-			//   "success",
-			// )
+			toaster.create({ 
+				title: "Account created",
+				description: "Your account has been created successfully.",
+				type: "success" 
+			});
 		},
-		// onError: (err: ApiError) => {
-		// 	let errDetail = (err.body as any)?.detail;
+		onError: (err: Error | AxiosError | ErrorResponse) => {
+			const errDetail = err instanceof AxiosError 
+				? err.message 
+				: 'body' in err && typeof err.body === 'object' && err.body 
+					? String(err.body.detail) || "Something went wrong"
+					: "Something went wrong";
 
-		// 	if (err instanceof AxiosError) {
-		// 		errDetail = err.message;
-		// 	}
-
-		// 	showToast("Something went wrong.", errDetail, "error")
-		// },
+			toaster.create({ 
+				title: "Error creating account",
+				description: errDetail,
+				type: "error" 
+			});
+		},
 		onSettled: () => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},
@@ -66,18 +74,21 @@ const useAuth = () => {
 		onSuccess: () => {
 			navigate({ to: "/collections" });
 		},
-		onError: (err: ApiError) => {
-			let errDetail = (err.body as any)?.detail;
+		onError: (err: Error | AxiosError | ErrorResponse) => {
+			const errDetail = err instanceof AxiosError 
+				? err.message 
+				: 'body' in err && typeof err.body === 'object' && err.body 
+					? String(err.body.detail) || "Something went wrong"
+					: "Something went wrong";
 
-			if (err instanceof AxiosError) {
-				errDetail = err.message;
-			}
+			const finalError = Array.isArray(errDetail) ? "Invalid credentials" : errDetail;
 
-			if (Array.isArray(errDetail)) {
-				errDetail = "Something went wrong";
-			}
-
-			setError(errDetail);
+			toaster.create({ 
+				title: "Login failed",
+				description: finalError,
+				type: "error" 
+			});
+			setError(finalError);
 		},
 	});
 
