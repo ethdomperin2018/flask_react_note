@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pydantic_ai import Agent
 from pydantic_ai.exceptions import AgentRunError
 from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.usage import UsageLimits
 from sqlmodel import Session, func, select
 
 from src.core.config import settings
@@ -18,6 +19,8 @@ from .schemas import (
     CollectionCreate,
     CollectionUpdate,
 )
+
+gemini_model = GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
 
 
 def get_collections(
@@ -335,10 +338,10 @@ def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
 
 async def _generate_ai_flashcards(prompt: str) -> AIFlashcardCollection:
     try:
-        model = GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
-        agent = Agent(model, result_type=AIFlashcardCollection)
+        agent = Agent(gemini_model, result_type=AIFlashcardCollection, retries=2)
         result = await agent.run(
-            settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt)
+            settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt),
+            usage_limits=UsageLimits(request_limit=2),
         )
         return result.data
     except AgentRunError as e:
