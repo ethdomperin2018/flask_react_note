@@ -106,22 +106,20 @@ function Collections() {
 				</Stack>
 			</ScrollableContainer>
 
-			<Flex gap={4}>
-				<AiCollectionDialog onAddAi={addAiCollection}>
-					<FloatingActionButton
-						position="left"
-						icon={<VscWand color="white" />}
-						aria-label="Create AI Collection"
-						isLoading={isCreatingAiCollection}
-					/>
-				</AiCollectionDialog>
-				<CollectionDialog onAdd={addCollection}>
-					<FloatingActionButton
-						icon={<VscAdd color="white" />}
-						aria-label="Add Collection"
-					/>
-				</CollectionDialog>
-			</Flex>
+			<AiCollectionDialog onAddAi={addAiCollection}>
+				<FloatingActionButton
+					position="left"
+					icon={<VscWand color="white" />}
+					aria-label="Create AI Collection"
+					isLoading={isCreatingAiCollection}
+				/>
+			</AiCollectionDialog>
+			<CollectionDialog onAdd={addCollection}>
+				<FloatingActionButton
+					icon={<VscAdd color="white" />}
+					aria-label="Add Collection"
+				/>
+			</CollectionDialog>
 		</>
 	);
 }
