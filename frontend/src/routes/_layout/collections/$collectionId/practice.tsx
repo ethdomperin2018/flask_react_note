@@ -1,5 +1,5 @@
+import CardSkeleton from "@/components/commonUI/CardSkeleton";
 import ErrorState from "@/components/commonUI/ErrorState";
-import LoadingState from "@/components/commonUI/LoadingState";
 import PracticeCard from "@/components/practice/PracticeCard";
 import PracticeComplete from "@/components/practice/PracticeComplete";
 import PracticeControls from "@/components/practice/PracticeControls";
@@ -34,10 +34,10 @@ function PracticeComponent() {
 		start();
 	}, [start]);
 
-	if (isLoading) return <LoadingState />;
+	if (isLoading) return <CardSkeleton />;
 	if (error) return <ErrorState error={error} />;
 	if (isComplete) return <PracticeComplete stats={progress} onReset={reset} />;
-	if (!currentCard) return <LoadingState />;
+	if (!currentCard) return <CardSkeleton />;
 
 	return (
 		<VStack gap={4} h="calc(100dvh - 8rem)" width="100%">

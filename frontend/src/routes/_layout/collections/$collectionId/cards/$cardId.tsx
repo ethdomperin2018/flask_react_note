@@ -1,7 +1,8 @@
 import CardEditor from "@/components/cards/CardEditor";
 import CardHeader from "@/components/cards/CardHeader";
+import CardSkeleton from "@/components/commonUI/CardSkeleton";
 import { useCard } from "@/hooks/useCard";
-import { Container, Skeleton, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
 
@@ -26,13 +27,7 @@ function CardComponent() {
 		flip,
 	} = useCard(collectionId, cardId);
 
-	if (isLoading) {
-		return (
-			<Container width="100%" mt="2rem">
-				<Skeleton height="80dvh" width="100%" bg="bg.100" />
-			</Container>
-		);
-	}
+	if (isLoading) return <CardSkeleton />;
 
 	const handleClose = async () => {
 		await saveCard(card);
