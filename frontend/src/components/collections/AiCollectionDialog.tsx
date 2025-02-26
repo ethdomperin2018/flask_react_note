@@ -57,6 +57,7 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 				</DialogHeader>
 				<DialogBody>
 					<DefaultInput
+						disabled={isLoading}
 						placeholder="Enter a topic or concept (e.g., 'Quantum Physics', 'Spanish Verbs')"
 						value={prompt}
 						onChange={(e) => setPrompt(e.target.value)}
