@@ -34,9 +34,9 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 
 		try {
 			setIsLoading(true);
+			closeButtonRef.current?.click();
 			await onAddAi(prompt);
 			setPrompt("");
-			closeButtonRef.current?.click();
 		} catch (error) {
 			console.error("Failed to create AI collection:", error);
 		} finally {
