@@ -9,6 +9,7 @@ export const DefaultButton = forwardRef<HTMLButtonElement, ButtonProps>(
 			borderWidth="1px"
 			color="var(--chakra-colors-fg-DEFAULT)"
 			bg="bg.50"
+			color="fg.primary"
 			_hover={{
 				opacity: 0.8,
 			}}

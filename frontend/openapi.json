@@ -162,6 +162,40 @@
         }
       }
     },
+    "/api/v1/flashcards/collections/ai": {
+      "post": {
+        "tags": ["flashcards"],
+        "summary": "Create Ai Collection",
+        "operationId": "flashcards-create_ai_collection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AIFlashcardsRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Collection" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
     "/api/v1/flashcards/collections/{collection_id}": {
       "get": {
         "tags": ["flashcards"],
@@ -535,6 +569,47 @@
         }
       }
     },
+    "/api/v1/flashcards/practice": {
+      "get": {
+        "tags": ["flashcards"],
+        "summary": "List Practice Sessions",
+        "description": "List all practice sessions for the current user",
+        "operationId": "flashcards-list_practice_sessions",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Skip" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100, "title": "Limit" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PracticeSessionList" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/flashcards/practice/{practice_session_id}": {
       "get": {
         "tags": ["flashcards"],
@@ -667,51 +742,18 @@
           }
         }
       }
-    },
-    "/api/v1/flashcards/practice": {
-      "get": {
-        "tags": ["flashcards"],
-        "summary": "List Practice Sessions",
-        "description": "List all practice sessions for the current user",
-        "operationId": "flashcards-list_practice_sessions",
-        "security": [{ "OAuth2PasswordBearer": [] }],
-        "parameters": [
-          {
-            "name": "skip",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "default": 0, "title": "Skip" }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "default": 100, "title": "Limit" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/PracticeSessionList" }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
+      "AIFlashcardsRequest": {
+        "properties": {
+          "prompt": { "type": "string", "maxLength": 100, "title": "Prompt" }
+        },
+        "type": "object",
+        "required": ["prompt"],
+        "title": "AIFlashcardsRequest"
+      },
       "Body_login-login_access_token": {
         "properties": {
           "grant_type": {

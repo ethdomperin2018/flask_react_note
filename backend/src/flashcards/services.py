@@ -2,11 +2,21 @@ import random
 import uuid
 from datetime import datetime, timezone
 
+from pydantic_ai import Agent
+from pydantic_ai.exceptions import AgentRunError
 from sqlmodel import Session, func, select
 
-from .exceptions import EmptyCollectionError
+from src.core.config import settings
+
+from .exceptions import AIGenerationError, EmptyCollectionError
 from .models import Card, Collection, PracticeCard, PracticeSession
-from .schemas import CardCreate, CardUpdate, CollectionCreate, CollectionUpdate
+from .schemas import (
+    AIFlashcardCollection,
+    CardCreate,
+    CardUpdate,
+    CollectionCreate,
+    CollectionUpdate,
+)
 
 
 def get_collections(
@@ -320,3 +330,47 @@ def get_session_statistics(
 def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
     statement = select(Card).where(Card.id == card_id)
     return session.exec(statement).first()
+
+
+async def _generate_ai_flashcards(model, prompt: str) -> AIFlashcardCollection:
+    assert settings.ai_models_enabled, "no provided configuration for ai models"
+    try:
+        agent = Agent(
+            model,
+            result_type=AIFlashcardCollection,
+            system_prompt=settings.COLLECTION_GENERATION_PROMPT,
+        )
+        result = await agent.run(prompt)
+        return result.data
+    except AgentRunError as e:
+        raise AIGenerationError(f"AI generation failed: {str(e)}")
+
+
+def _save_ai_collection(
+    session: Session, user_id: uuid.UUID, flashcard_collection: AIFlashcardCollection
+) -> Collection:
+    collection = Collection(
+        name=flashcard_collection.name,
+        user_id=user_id,
+    )
+    session.add(collection)
+    session.flush()
+
+    for card_data in flashcard_collection.cards:
+        card = Card(
+            front=card_data.front,
+            back=card_data.back,
+            collection_id=collection.id,
+        )
+        session.add(card)
+
+    session.commit()
+    session.refresh(collection)
+    return collection
+
+
+async def generate_ai_collection(
+    session: Session, user_id: uuid.UUID, prompt: str, model=None
+) -> Collection:
+    flashcard_collection = await _generate_ai_flashcards(model, prompt)
+    return _save_ai_collection(session, user_id, flashcard_collection)

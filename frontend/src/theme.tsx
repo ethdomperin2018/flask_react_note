@@ -8,6 +8,9 @@ const config = defineConfig({
 					DEFAULT: {
 						value: { _light: "#FFFFFF", _dark: "#312a37" }, // Pure white as the base
 					},
+					primary: {
+						value: { _light: "#F3F3EE", _dark: "#312a37" },
+					},
 					400: {
 						value: { _light: "#F5F5F5", _dark: "#eae9eb" }, // Slightly off-white
 					},
@@ -36,6 +39,9 @@ const config = defineConfig({
 				fg: {
 					DEFAULT: {
 						value: { _light: "{colors.gray.800}", _dark: "{colors.gray.200}" }, // Base foreground
+					},
+					primary: {
+						value: { _light: "#726051", _dark: "{colors.gray.200}" },
 					},
 					muted: {
 						value: { _light: "{colors.gray.700}", _dark: "{colors.gray.400}" }, // Intermediate soft tone

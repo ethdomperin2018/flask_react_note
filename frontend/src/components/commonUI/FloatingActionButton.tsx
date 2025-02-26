@@ -1,11 +1,12 @@
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, Spinner } from "@chakra-ui/react";
 
-interface FloatingActionButtonProps {
+export interface FloatingActionButtonProps {
 	icon: React.ReactNode;
 	onClick?: () => void;
 	position?: "right" | "left";
 	bgColor?: string;
 	"aria-label": string;
+	isLoading?: boolean;
 }
 
 function FloatingActionButton({
@@ -14,6 +15,7 @@ function FloatingActionButton({
 	position = "right",
 	bgColor = "blue.600",
 	"aria-label": ariaLabel,
+	isLoading = false,
 }: FloatingActionButtonProps) {
 	return (
 		<IconButton
@@ -34,6 +36,8 @@ function FloatingActionButton({
 				bgColor: bgColor.replace("600", "700"),
 			}}
 			onClick={onClick}
+			loading={isLoading}
+			spinner={<Spinner color="white" />}
 		>
 			{icon}
 		</IconButton>

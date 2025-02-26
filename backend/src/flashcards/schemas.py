@@ -1,7 +1,9 @@
 import uuid
 from datetime import datetime
 
-from sqlmodel import SQLModel
+from pydantic import BaseModel
+from pydantic import Field as PydanticField
+from sqlmodel import Field, SQLModel
 
 
 class CollectionBase(SQLModel):
@@ -106,3 +108,17 @@ class PracticeCardResponse(SQLModel):
     card: Card
     is_practiced: bool
     is_correct: bool | None
+
+
+class AIFlashcardsRequest(SQLModel):
+    prompt: str = Field(max_length=100)
+
+
+class AIFlashcard(BaseModel):
+    front: str
+    back: str
+
+
+class AIFlashcardCollection(BaseModel):
+    name: str = PydanticField(description="the simple name of the topic")
+    cards: list[AIFlashcard]

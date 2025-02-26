@@ -54,14 +54,10 @@ function LandingPage() {
 							) : (
 								<>
 									<Link to="/signup">
-										<DefaultButton size="lg" color="gray.200">
-											Get Started
-										</DefaultButton>
+										<DefaultButton size="lg">Get Started</DefaultButton>
 									</Link>
 									<Link to="/login">
-										<DefaultButton size="lg" color="gray.200">
-											Log In
-										</DefaultButton>
+										<DefaultButton size="lg">Log In</DefaultButton>
 									</Link>
 								</>
 							)}
@@ -100,16 +96,16 @@ function LandingPage() {
 							description="A clean interface that helps you focus on learning."
 						/>
 						<Feature
-							title="Practice"
-							description="Review your flashcards and track your progress."
+							title="AI Generation"
+							description="Create flashcards automatically with AI to save time and enhance learning."
 						/>
 						<Feature
-							title="Organization"
-							description="Group your flashcards into collections for easy access."
+							title="Responsive Design"
+							description="Study anywhere on any device with a fully responsive interface."
 						/>
 					</Stack>
 				</VStack>
-				<Footer version="0.0.15" />
+				<Footer version="0.0.16" />
 			</Container>
 		</Center>
 	);

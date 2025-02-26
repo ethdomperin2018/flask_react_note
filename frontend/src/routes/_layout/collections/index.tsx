@@ -1,4 +1,5 @@
 import { type CollectionCreate, FlashcardsService } from "@/client";
+import AiCollectionDialog from "@/components/collections/AiCollectionDialog";
 import CollectionDialog from "@/components/collections/CollectionDialog";
 import CollectionListItem from "@/components/collections/CollectionListItem";
 import EmptyState from "@/components/commonUI/EmptyState";
@@ -9,7 +10,8 @@ import ScrollableContainer from "@/components/commonUI/ScrollableContainer";
 import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { VscAdd } from "react-icons/vsc";
+import { useState } from "react";
+import { VscAdd, VscWand } from "react-icons/vsc";
 
 function getCollectionsQueryOptions() {
 	return {
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/_layout/collections/")({
 
 function Collections() {
 	const queryClient = useQueryClient();
+	const [isCreatingAiCollection, setIsCreatingAiCollection] = useState(false);
 
 	const {
 		data: collections,
@@ -40,6 +43,20 @@ function Collections() {
 			queryClient.invalidateQueries({ queryKey: ["collections"] });
 		} catch (error) {
 			console.error(error);
+		}
+	};
+
+	const addAiCollection = async (prompt: string) => {
+		try {
+			setIsCreatingAiCollection(true);
+			await FlashcardsService.createAiCollection({
+				requestBody: { prompt },
+			});
+			queryClient.invalidateQueries({ queryKey: ["collections"] });
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setIsCreatingAiCollection(false);
 		}
 	};
 
@@ -88,6 +105,15 @@ function Collections() {
 					)}
 				</Stack>
 			</ScrollableContainer>
+
+			<AiCollectionDialog onAddAi={addAiCollection}>
+				<FloatingActionButton
+					position="left"
+					icon={<VscWand color="white" />}
+					aria-label="Create AI Collection"
+					isLoading={isCreatingAiCollection}
+				/>
+			</AiCollectionDialog>
 			<CollectionDialog onAdd={addCollection}>
 				<FloatingActionButton
 					icon={<VscAdd color="white" />}
