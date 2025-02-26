@@ -54,14 +54,10 @@ function LandingPage() {
 							) : (
 								<>
 									<Link to="/signup">
-										<DefaultButton size="lg" color="gray.200">
-											Get Started
-										</DefaultButton>
+										<DefaultButton size="lg">Get Started</DefaultButton>
 									</Link>
 									<Link to="/login">
-										<DefaultButton size="lg" color="gray.200">
-											Log In
-										</DefaultButton>
+										<DefaultButton size="lg">Log In</DefaultButton>
 									</Link>
 								</>
 							)}
