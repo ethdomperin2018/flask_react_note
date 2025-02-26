@@ -335,10 +335,12 @@ def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
 async def _generate_ai_flashcards(model, prompt: str) -> AIFlashcardCollection:
     assert settings.ai_models_enabled, "no provided configuration for ai models"
     try:
-        agent = Agent(model, result_type=AIFlashcardCollection)
-        result = await agent.run(
-            settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt),
+        agent = Agent(
+            model,
+            result_type=AIFlashcardCollection,
+            system_prompt=settings.COLLECTION_GENERATION_PROMPT,
         )
+        result = await agent.run(prompt)
         return result.data
     except AgentRunError as e:
         raise AIGenerationError(f"AI generation failed: {str(e)}")

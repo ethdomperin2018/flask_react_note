@@ -1,11 +1,11 @@
+import useAuth from "@/hooks/useAuth";
 import { Button, Text, VStack } from "@chakra-ui/react";
-import { useNavigate } from "@tanstack/react-router";
 
 function ErrorState({
 	error,
 	onRetry,
 }: { error?: Error; onRetry?: () => void }) {
-	const navigate = useNavigate();
+	const { logout } = useAuth();
 
 	return (
 		<VStack gap={4} p={8} textAlign="center">
@@ -15,7 +15,7 @@ function ErrorState({
 			{onRetry ? (
 				<Button onClick={onRetry}>Try Again</Button>
 			) : (
-				<Button onClick={() => navigate({ to: "/login" })}>Go Home</Button>
+				<Button onClick={() => logout()}>Go Home</Button>
 			)}
 		</VStack>
 	);
