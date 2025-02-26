@@ -7,7 +7,7 @@ import ErrorState from "@/components/commonUI/ErrorState";
 import FloatingActionButton from "@/components/commonUI/FloatingActionButton";
 import ListSkeleton from "@/components/commonUI/ListSkeleton";
 import ScrollableContainer from "@/components/commonUI/ScrollableContainer";
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
