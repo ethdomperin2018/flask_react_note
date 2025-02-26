@@ -8,6 +8,9 @@ const config = defineConfig({
 					DEFAULT: {
 						value: { _light: "#F3F3EE", _dark: "#312a37" },
 					},
+					primary: {
+						value: { _light: "#F3F3EE", _dark: "#312a37" },
+					},
 					400: {
 						value: { _light: "#a8a89a", _dark: "#eae9eb" },
 					},
@@ -35,6 +38,9 @@ const config = defineConfig({
 				},
 				fg: {
 					DEFAULT: {
+						value: { _light: "#726051", _dark: "{colors.gray.200}" },
+					},
+					primary: {
 						value: { _light: "#726051", _dark: "{colors.gray.200}" },
 					},
 					muted: {
