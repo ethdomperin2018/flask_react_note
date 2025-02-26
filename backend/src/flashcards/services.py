@@ -2,11 +2,25 @@ import random
 import uuid
 from datetime import datetime, timezone
 
+from pydantic_ai import Agent
+from pydantic_ai.exceptions import AgentRunError
+from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.usage import UsageLimits
 from sqlmodel import Session, func, select
 
-from .exceptions import EmptyCollectionError
+from src.core.config import settings
+
+from .exceptions import AIGenerationError, EmptyCollectionError
 from .models import Card, Collection, PracticeCard, PracticeSession
-from .schemas import CardCreate, CardUpdate, CollectionCreate, CollectionUpdate
+from .schemas import (
+    AIFlashcardCollection,
+    CardCreate,
+    CardUpdate,
+    CollectionCreate,
+    CollectionUpdate,
+)
+
+gemini_model = GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
 
 
 def get_collections(
@@ -320,3 +334,46 @@ def get_session_statistics(
 def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
     statement = select(Card).where(Card.id == card_id)
     return session.exec(statement).first()
+
+
+async def _generate_ai_flashcards(prompt: str, model=None) -> AIFlashcardCollection:
+    try:
+        model_to_use = model or gemini_model
+        agent = Agent(model_to_use, result_type=AIFlashcardCollection, retries=2)
+        result = await agent.run(
+            settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt),
+            usage_limits=UsageLimits(request_limit=2),
+        )
+        return result.data
+    except AgentRunError as e:
+        raise AIGenerationError(f"AI generation failed: {str(e)}")
+
+
+def _save_ai_collection(
+    session: Session, user_id: uuid.UUID, flashcard_collection: AIFlashcardCollection
+) -> Collection:
+    collection = Collection(
+        name=flashcard_collection.name,
+        user_id=user_id,
+    )
+    session.add(collection)
+    session.flush()
+
+    for card_data in flashcard_collection.cards:
+        card = Card(
+            front=card_data.front,
+            back=card_data.back,
+            collection_id=collection.id,
+        )
+        session.add(card)
+
+    session.commit()
+    session.refresh(collection)
+    return collection
+
+
+async def generate_ai_collection(
+    session: Session, user_id: uuid.UUID, prompt: str, model=None
+) -> Collection:
+    flashcard_collection = await _generate_ai_flashcards(prompt, model)
+    return _save_ai_collection(session, user_id, flashcard_collection)

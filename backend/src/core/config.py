@@ -70,6 +70,10 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
 
+    GEMINI_API_KEY: str
+    GEMINI_MODEL: str
+    COLLECTION_GENERATION_PROMPT: str
+
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
             message = (

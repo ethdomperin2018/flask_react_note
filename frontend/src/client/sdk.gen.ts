@@ -8,6 +8,8 @@ import type {
   FlashcardsReadCollectionsResponse,
   FlashcardsCreateCollectionData,
   FlashcardsCreateCollectionResponse,
+  FlashcardsCreateAiCollectionData,
+  FlashcardsCreateAiCollectionResponse,
   FlashcardsReadCollectionData,
   FlashcardsReadCollectionResponse,
   FlashcardsUpdateCollectionData,
@@ -26,14 +28,14 @@ import type {
   FlashcardsDeleteCardResponse,
   FlashcardsStartPracticeSessionData,
   FlashcardsStartPracticeSessionResponse,
+  FlashcardsListPracticeSessionsData,
+  FlashcardsListPracticeSessionsResponse,
   FlashcardsGetPracticeSessionStatusData,
   FlashcardsGetPracticeSessionStatusResponse,
   FlashcardsGetNextPracticeCardData,
   FlashcardsGetNextPracticeCardResponse,
   FlashcardsSubmitPracticeResultData,
   FlashcardsSubmitPracticeResultResponse,
-  FlashcardsListPracticeSessionsData,
-  FlashcardsListPracticeSessionsResponse,
   LoginLoginAccessTokenData,
   LoginLoginAccessTokenResponse,
   UsersReadUserMeResponse,
@@ -41,7 +43,6 @@ import type {
   UsersRegisterUserResponse,
 } from "./types.gen"
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class FlashcardsService {
   /**
    * Read Collections
@@ -80,6 +81,27 @@ export class FlashcardsService {
     return __request(OpenAPI, {
       method: "POST",
       url: "/api/v1/flashcards/collections/",
+      body: data.requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Create Ai Collection
+   * @param data The data for the request.
+   * @param data.requestBody
+   * @returns Collection Successful Response
+   * @throws ApiError
+   */
+  public static createAiCollection(
+    data: FlashcardsCreateAiCollectionData,
+  ): CancelablePromise<FlashcardsCreateAiCollectionResponse> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/v1/flashcards/collections/ai",
       body: data.requestBody,
       mediaType: "application/json",
       errors: {
@@ -309,6 +331,31 @@ export class FlashcardsService {
   }
 
   /**
+   * List Practice Sessions
+   * List all practice sessions for the current user
+   * @param data The data for the request.
+   * @param data.skip
+   * @param data.limit
+   * @returns PracticeSessionList Successful Response
+   * @throws ApiError
+   */
+  public static listPracticeSessions(
+    data: FlashcardsListPracticeSessionsData = {},
+  ): CancelablePromise<FlashcardsListPracticeSessionsResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/flashcards/practice",
+      query: {
+        skip: data.skip,
+        limit: data.limit,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
    * Get Practice Session Status
    * Get practice session status and statistics
    * @param data The data for the request.
@@ -382,34 +429,8 @@ export class FlashcardsService {
       },
     })
   }
-
-  /**
-   * List Practice Sessions
-   * List all practice sessions for the current user
-   * @param data The data for the request.
-   * @param data.skip
-   * @param data.limit
-   * @returns PracticeSessionList Successful Response
-   * @throws ApiError
-   */
-  public static listPracticeSessions(
-    data: FlashcardsListPracticeSessionsData = {},
-  ): CancelablePromise<FlashcardsListPracticeSessionsResponse> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/v1/flashcards/practice",
-      query: {
-        skip: data.skip,
-        limit: data.limit,
-      },
-      errors: {
-        422: "Validation Error",
-      },
-    })
-  }
 }
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class LoginService {
   /**
    * Login Access Token
@@ -433,7 +454,6 @@ export class LoginService {
   }
 }
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class UsersService {
   /**
    * Read User Me

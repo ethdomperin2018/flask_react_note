@@ -96,16 +96,16 @@ function LandingPage() {
 							description="A clean interface that helps you focus on learning."
 						/>
 						<Feature
-							title="Practice"
-							description="Review your flashcards and track your progress."
+							title="AI Generation"
+							description="Create flashcards automatically with AI to save time and enhance learning."
 						/>
 						<Feature
-							title="Organization"
-							description="Group your flashcards into collections for easy access."
+							title="Responsive Design"
+							description="Study anywhere on any device with a fully responsive interface."
 						/>
 					</Stack>
 				</VStack>
-				<Footer version="0.0.15" />
+				<Footer version="0.0.16" />
 			</Container>
 		</Center>
 	);
