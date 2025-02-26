@@ -59,6 +59,8 @@ async def create_ai_collection(
     request: AIFlashcardsRequest,
     model: GeminiModelDep,
 ) -> Any:
+    if not settings.ai_models_enabled:
+        return
     try:
         collection = await services.generate_ai_collection(
             session=session,
@@ -68,10 +70,7 @@ async def create_ai_collection(
         )
         return collection
     except AIGenerationError as e:
-        raise HTTPException(
-            status_code=500,
-            detail=str(e),
-        )
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/collections/{collection_id}", response_model=Collection)

@@ -4,8 +4,6 @@ from datetime import datetime, timezone
 
 from pydantic_ai import Agent
 from pydantic_ai.exceptions import AgentRunError
-from pydantic_ai.models.gemini import GeminiModel
-from pydantic_ai.usage import UsageLimits
 from sqlmodel import Session, func, select
 
 from src.core.config import settings
@@ -19,8 +17,6 @@ from .schemas import (
     CollectionCreate,
     CollectionUpdate,
 )
-
-gemini_model = GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
 
 
 def get_collections(
@@ -336,13 +332,12 @@ def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
     return session.exec(statement).first()
 
 
-async def _generate_ai_flashcards(prompt: str, model=None) -> AIFlashcardCollection:
+async def _generate_ai_flashcards(model, prompt: str) -> AIFlashcardCollection:
+    assert settings.ai_models_enabled, "no provided configuration for ai models"
     try:
-        model_to_use = model or gemini_model
-        agent = Agent(model_to_use, result_type=AIFlashcardCollection, retries=2)
+        agent = Agent(model, result_type=AIFlashcardCollection)
         result = await agent.run(
             settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt),
-            usage_limits=UsageLimits(request_limit=2),
         )
         return result.data
     except AgentRunError as e:
@@ -375,5 +370,5 @@ def _save_ai_collection(
 async def generate_ai_collection(
     session: Session, user_id: uuid.UUID, prompt: str, model=None
 ) -> Collection:
-    flashcard_collection = await _generate_ai_flashcards(prompt, model)
+    flashcard_collection = await _generate_ai_flashcards(model, prompt)
     return _save_ai_collection(session, user_id, flashcard_collection)
