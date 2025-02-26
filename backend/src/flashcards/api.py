@@ -6,8 +6,9 @@ from fastapi import APIRouter, HTTPException
 from src.auth.services import CurrentUser, SessionDep
 
 from . import services
-from .exceptions import EmptyCollectionError
+from .exceptions import AIGenerationError, EmptyCollectionError
 from .schemas import (
+    AIFlashcardsRequest,
     Card,
     CardCreate,
     CardList,
@@ -41,6 +42,26 @@ def create_collection(
     return services.create_collection(
         session=session, collection_in=collection_in, user_id=current_user.id
     )
+
+
+@router.post("/collections/ai", response_model=Collection)
+async def create_ai_collection(
+    session: SessionDep,
+    current_user: CurrentUser,
+    request: AIFlashcardsRequest,
+) -> Any:
+    try:
+        collection = await services.generate_ai_collection(
+            session=session,
+            user_id=current_user.id,
+            prompt=request.prompt,
+        )
+        return collection
+    except AIGenerationError as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )
 
 
 @router.get("/collections/{collection_id}", response_model=Collection)
