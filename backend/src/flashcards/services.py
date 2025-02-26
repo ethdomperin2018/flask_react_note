@@ -336,9 +336,10 @@ def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
     return session.exec(statement).first()
 
 
-async def _generate_ai_flashcards(prompt: str) -> AIFlashcardCollection:
+async def _generate_ai_flashcards(prompt: str, model=None) -> AIFlashcardCollection:
     try:
-        agent = Agent(gemini_model, result_type=AIFlashcardCollection, retries=2)
+        model_to_use = model or gemini_model
+        agent = Agent(model_to_use, result_type=AIFlashcardCollection, retries=2)
         result = await agent.run(
             settings.COLLECTION_GENERATION_PROMPT.format(topic=prompt),
             usage_limits=UsageLimits(request_limit=2),
@@ -372,7 +373,7 @@ def _save_ai_collection(
 
 
 async def generate_ai_collection(
-    session: Session, user_id: uuid.UUID, prompt: str
+    session: Session, user_id: uuid.UUID, prompt: str, model=None
 ) -> Collection:
-    flashcard_collection = await _generate_ai_flashcards(prompt)
+    flashcard_collection = await _generate_ai_flashcards(prompt, model)
     return _save_ai_collection(session, user_id, flashcard_collection)

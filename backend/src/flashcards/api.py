@@ -1,9 +1,11 @@
 import uuid
-from typing import Any
+from typing import Annotated, Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic_ai.models.gemini import GeminiModel
 
 from src.auth.services import CurrentUser, SessionDep
+from src.core.config import settings
 
 from . import services
 from .exceptions import AIGenerationError, EmptyCollectionError
@@ -22,6 +24,12 @@ from .schemas import (
     PracticeSessionList,
 )
 
+
+def get_gemini_model():
+    return GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
+
+
+GeminiModelDep = Annotated[GeminiModel, Depends(get_gemini_model)]
 router = APIRouter()
 
 
@@ -49,12 +57,14 @@ async def create_ai_collection(
     session: SessionDep,
     current_user: CurrentUser,
     request: AIFlashcardsRequest,
+    model: GeminiModelDep,
 ) -> Any:
     try:
         collection = await services.generate_ai_collection(
             session=session,
             user_id=current_user.id,
             prompt=request.prompt,
+            model=model,
         )
         return collection
     except AIGenerationError as e:

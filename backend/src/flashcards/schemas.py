@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from pydantic import BaseModel
+from pydantic import Field as PydanticField
 from sqlmodel import Field, SQLModel
 
 
@@ -119,5 +120,5 @@ class AIFlashcard(BaseModel):
 
 
 class AIFlashcardCollection(BaseModel):
-    name: str
+    name: str = PydanticField(description="the simple name of the topic")
     cards: list[AIFlashcard]
