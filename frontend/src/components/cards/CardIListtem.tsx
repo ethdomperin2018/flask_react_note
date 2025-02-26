@@ -13,11 +13,11 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 	return (
 		<HStack
 			justifyContent="space-between"
-			borderRadius="sm"
+			borderRadius="lg"
 			borderWidth="1px"
 			boxShadow="sm"
-			borderColor="bg.50"
-			_hover={{ bg: "bg.100" }}
+			borderColor="bg.100"
+			_hover={{ bg: "bg.50" }}
 		>
 			<Box p="1rem" flex="1" overflow="hidden" asChild>
 				<Link
@@ -36,7 +36,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 					size="sm"
 					onClick={() => onDelete(card.id)}
 					_hover={{
-						bg: "bg.50",
+						bg: "bg.100",
 					}}
 				>
 					<MdDelete />

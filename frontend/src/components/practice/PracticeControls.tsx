@@ -29,20 +29,16 @@ function PracticeControls({
 				rounded="full"
 				size="2xl"
 				bg="bg.100"
-				borderWidth="1px"
-				borderColor="bg.50"
 				_hover={{
-					bg: "accent.red.dark",
+					bg: "rgba(205, 32, 32, 0.25)",
 					borderColor: "red",
-					borderWidth: "1px",
 				}}
 				_active={{
-					bg: "accent.red.dark",
+					bg: "rgba(205, 32, 32, 0.35)",
 					borderColor: "red",
-					borderWidth: "1px",
 				}}
 			>
-				<FaTimes color="#eae9eb" />
+				<FaTimes color="white" />
 			</IconButton>
 			<IconButton
 				aria-label="Know"
@@ -50,20 +46,16 @@ function PracticeControls({
 				rounded="full"
 				size="2xl"
 				bg="bg.100"
-				borderWidth="1px"
-				borderColor="bg.50"
 				_hover={{
-					bg: "accent.green.dark",
+					bg: "rgba(46, 160, 67, 0.25)",
 					borderColor: "green",
-					borderWidth: "1px",
 				}}
 				_active={{
-					bg: "accent.green.dark",
+					bg: "rgba(46, 160, 67, 0.35)",
 					borderColor: "green",
-					borderWidth: "1px",
 				}}
 			>
-				<FaCheck color="#eae9eb" />
+				<FaCheck color="white" />
 			</IconButton>
 		</HStack>
 	);

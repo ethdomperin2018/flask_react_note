@@ -1,5 +1,6 @@
 import Logo from "@/assets/Logo.svg";
 import { FlashcardsService } from "@/client";
+import { useColorMode } from "@/components/ui/color-mode";
 import {
 	DrawerBackdrop,
 	DrawerBody,
@@ -10,11 +11,20 @@ import {
 	DrawerRoot,
 } from "@/components/ui/drawer";
 import useAuth from "@/hooks/useAuth";
-import { Image, List, Spinner, Text, VStack } from "@chakra-ui/react";
+import {
+	HStack,
+	IconButton,
+	Image,
+	List,
+	Spinner,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiMoon, FiSun } from "react-icons/fi";
 import { DefaultButton } from "./Button";
+
 function getCollectionsQueryOptions() {
 	return {
 		queryFn: () => FlashcardsService.readCollections(),
@@ -30,6 +40,7 @@ function Drawer({
 	setIsOpen: (open: boolean) => void;
 }) {
 	const { logout } = useAuth();
+	const { colorMode, toggleColorMode } = useColorMode();
 	const queryClient = useQueryClient();
 	const currentUser = queryClient.getQueryData<{ email: string }>([
 		"currentUser",
@@ -103,10 +114,21 @@ function Drawer({
 								Logged in as: {currentUser.email}
 							</Text>
 						)}
-						<DefaultButton onClick={handleLogout} width="100%">
-							<FiLogOut size={20} />
-							Log out
-						</DefaultButton>
+						<HStack width="100%" justifyContent="space-between">
+							<DefaultButton onClick={handleLogout} flex="1">
+								<FiLogOut size={20} />
+								Log out
+							</DefaultButton>
+							<IconButton
+								aria-label="Toggle color mode"
+								onClick={toggleColorMode}
+								size="md"
+								variant="outline"
+								borderRadius="md"
+							>
+								{colorMode === "light" ? <FiMoon /> : <FiSun />}
+							</IconButton>
+						</HStack>
 					</VStack>
 				</DrawerFooter>
 				<DrawerCloseTrigger />

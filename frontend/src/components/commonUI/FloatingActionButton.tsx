@@ -13,7 +13,7 @@ function FloatingActionButton({
 	icon,
 	onClick,
 	position = "right",
-	bgColor = "blue.600",
+	bgColor = "fbuttons.blue",
 	"aria-label": ariaLabel,
 	isLoading = false,
 }: FloatingActionButtonProps) {
@@ -29,11 +29,9 @@ function FloatingActionButton({
 			transition="all 0.4s"
 			_hover={{
 				transform: "scale(1.1)",
-				bgColor: bgColor.replace("600", "500"),
 			}}
 			_active={{
 				transform: "scale(0.95)",
-				bgColor: bgColor.replace("600", "700"),
 			}}
 			onClick={onClick}
 			loading={isLoading}

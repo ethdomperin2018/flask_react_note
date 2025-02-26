@@ -33,11 +33,11 @@ function PracticeCard({ card, isFlipped, onFlip }: PracticeCardProps) {
 			transformStyle="preserve-3d"
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
-			<Box {...commonCardStyles} bg="bg.100">
+			<Box {...commonCardStyles} bg="bg.50">
 				<RichTextContent content={card.front} isVisible={!isFlipped} />
 			</Box>
 
-			<Box {...commonCardStyles} bg="bg.box" transform="rotateY(180deg)">
+			<Box {...commonCardStyles} bg="bg.100" transform="rotateY(180deg)">
 				<RichTextContent content={card.back} isVisible={isFlipped} />
 			</Box>
 		</Box>

@@ -51,7 +51,7 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 			motionPreset="slide-in-bottom"
 		>
 			<DialogTrigger asChild>{children}</DialogTrigger>
-			<DialogContent bg="bg.100">
+			<DialogContent bg="bg.50">
 				<DialogHeader>
 					<DialogTitle color="fg.DEFAULT">Create AI Collection</DialogTitle>
 				</DialogHeader>

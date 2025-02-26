@@ -124,7 +124,7 @@ function Feature({
 			flex={1}
 			align="flex-start"
 			borderWidth="1px"
-			borderColor="bg.50"
+			borderColor="bg.100"
 		>
 			<Heading as="h3" size="md">
 				{title}

@@ -105,7 +105,7 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 		<HStack
 			gap={{ base: 0.5, md: 1 }}
 			p={{ base: 0.5, md: 1 }}
-			bg="bg.50"
+			bg="bg.100"
 			borderTopRadius="md"
 			mb={1}
 			overflowX="auto"
@@ -136,13 +136,13 @@ export default function EditorToolbar({ editor }: EditorToolbarProps) {
 						variant="ghost"
 						colorScheme={isActive(button.command) ? "teal" : "gray"}
 						onClick={() => toggleFormat(button.command)}
-						_hover={{ bg: "bg.100" }}
+						_hover={{ bg: "bg.50" }}
 						minW={{ base: "40px", md: "32px" }}
 						h={{ base: "40px", md: "32px" }}
-						bg={isActive(button.command) ? "bg.100" : "transparent"}
+						bg={isActive(button.command) ? "bg.50" : "transparent"}
 						borderWidth={isActive(button.command) ? "1px" : "0"}
 						_active={{
-							bg: "bg.100",
+							bg: "bg.50",
 							transform: "scale(0.95)",
 						}}
 					>

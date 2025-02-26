@@ -98,7 +98,11 @@ function Login() {
 							</Field.Root>
 						</Field.Root>
 					</Fieldset.Content>
-					<DefaultButton type="submit" loading={isSubmitting} color="white">
+					<DefaultButton
+						type="submit"
+						loading={isSubmitting}
+						color="fg.primary"
+					>
 						Log In
 					</DefaultButton>
 				</Fieldset.Root>

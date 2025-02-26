@@ -43,11 +43,11 @@ function CollectionListItem({
 	return (
 		<HStack
 			justifyContent="space-between"
-			borderRadius="sm"
+			borderRadius="lg"
 			borderWidth="1px"
 			boxShadow="sm"
-			borderColor="bg.50"
-			_hover={{ bg: "bg.100" }}
+			borderColor="bg.100"
+			_hover={{ bg: "bg.50" }}
 		>
 			<Box
 				as={isEditing ? "div" : Link}

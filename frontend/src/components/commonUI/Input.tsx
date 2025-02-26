@@ -12,6 +12,7 @@ export const DefaultInput = forwardRef<HTMLInputElement, InputProps>(
 				"&:focus": {
 					outline: "none",
 					borderColor: "bg.50",
+					bg: "bg.100",
 				},
 				"&::selection": {
 					backgroundColor: "bg.50",

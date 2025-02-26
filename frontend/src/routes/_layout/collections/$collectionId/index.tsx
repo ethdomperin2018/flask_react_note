@@ -68,7 +68,7 @@ function CollectionComponent() {
 				<FloatingActionButton
 					icon={<MdSchool color="white" />}
 					position="left"
-					bgColor="green.600"
+					bgColor="fbuttons.green"
 					aria-label="Practice Cards"
 					onClick={() =>
 						navigate({ to: `/collections/${collectionId}/practice` })

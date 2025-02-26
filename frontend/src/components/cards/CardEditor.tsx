@@ -71,7 +71,7 @@ export default function CardEditor({
 			transformStyle="preserve-3d"
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
-			<Box {...commonBoxStyles} bg="bg.100">
+			<Box {...commonBoxStyles} bg="bg.50">
 				{side === "front" && <RichTextEditor editor={editor} />}
 			</Box>
 

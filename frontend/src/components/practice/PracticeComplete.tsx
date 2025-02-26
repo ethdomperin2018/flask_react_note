@@ -1,8 +1,9 @@
 import starsAnimation from "@/assets/stars.json?url";
-import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useRouter } from "@tanstack/react-router";
 import { BlueButton } from "../commonUI/Button";
+import { DefaultButton } from "../commonUI/Button";
 
 interface PracticeStats {
 	correct: number;
@@ -30,23 +31,9 @@ function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 					You got {stats.correct} out of {total} cards correct
 				</Text>
 				<HStack gap={4}>
-					<Button
-						onClick={() => router.history.back()}
-						borderRadius="sm"
-						borderWidth="1px"
-						borderColor="bg.50"
-						color="#eae9eb"
-						boxShadow="sm"
-						bg="bg.50"
-						_hover={{
-							bg: "bg.100",
-						}}
-						_active={{
-							bg: "bg.100",
-						}}
-					>
+					<DefaultButton onClick={() => router.history.back()}>
 						Back to Collection
-					</Button>
+					</DefaultButton>
 					<BlueButton onClick={onReset}>Practice Again</BlueButton>
 				</HStack>
 			</VStack>

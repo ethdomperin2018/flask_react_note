@@ -31,17 +31,17 @@ function CollectionKebabMenu({
 					display="flex"
 					alignItems="center"
 					justifyContent="center"
-					_hover={{ bg: "bg.50" }}
+					_hover={{ bg: "bg.100" }}
 				>
 					<HiDotsVertical size={20} />
 				</Box>
 			</MenuTrigger>
-			<MenuContent bg="bg.100">
+			<MenuContent bg="bg.50">
 				<MenuItem
 					value="Rename"
 					onClick={onRename}
 					borderRadius="md"
-					_hover={{ bg: "bg.50" }}
+					_hover={{ bg: "bg.100" }}
 				>
 					<RiEdit2Fill />
 					<Box flex="1">Rename</Box>
@@ -50,7 +50,7 @@ function CollectionKebabMenu({
 					value="delete"
 					onClick={() => onDelete(collectionId)}
 					borderRadius="md"
-					_hover={{ bg: "bg.50" }}
+					_hover={{ bg: "bg.100" }}
 				>
 					<MdDelete />
 					<Box flex="1">Delete</Box>

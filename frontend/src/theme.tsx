@@ -1,61 +1,73 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
-
 const config = defineConfig({
 	theme: {
 		semanticTokens: {
 			colors: {
 				bg: {
 					DEFAULT: {
-						value: { _light: "#FFFFFF", _dark: "#312a37" }, // Pure white as the base
+						value: { _light: "#FFFFFF", _dark: "#312a37" },
 					},
 					primary: {
-						value: { _light: "#F3F3EE", _dark: "#312a37" },
-					},
-					400: {
-						value: { _light: "#F5F5F5", _dark: "#eae9eb" }, // Slightly off-white
-					},
-					300: {
-						value: { _light: "#EAEAEA", _dark: "#c1bfc3" }, // Light gray
-					},
-					200: {
-						value: { _light: "#E0E0E0", _dark: "#78727c" }, // Medium light gray
-					},
-					100: {
-						value: { _light: "{colors.gray.100}", _dark: "#2F363D" }, // Slightly darker gray
+						value: { _light: "#FFFFFF", _dark: "#312a37" },
 					},
 					50: {
-						value: { _light: "{colors.gray.200}", _dark: "#453f4b" }, // Darker gray
+						value: { _light: "{colors.gray.100}", _dark: "#2F363D" },
+					},
+					100: {
+						value: { _light: "#E4E4E7", _dark: "#453f4b" },
+					},
+					200: {
+						value: { _light: "#CDCED6", _dark: "#78727c" },
 					},
 					input: {
-						value: { _light: "{colors.gray.400}", _dark: "#2c2531" }, // Reference to 400
+						value: { _light: "#F0F0F3", _dark: "#2c2531" },
 					},
 					box: {
-						value: { _light: "#FFFFFF", _dark: "#24292E" }, // Pure white
+						value: { _light: "#F4F4F5", _dark: "#24292E" },
 					},
 					code: {
-						value: { _light: "#F9F9F9", _dark: "#202429" }, // Very light gray for code background
+						value: { _light: "#f0f0f3", _dark: "#202429" },
 					},
 				},
 				fg: {
 					DEFAULT: {
-						value: { _light: "{colors.gray.800}", _dark: "{colors.gray.200}" }, // Base foreground
+						value: { _light: "{colors.gray.700}", _dark: "{colors.gray.300}" },
 					},
 					primary: {
-						value: { _light: "#726051", _dark: "{colors.gray.200}" },
+						value: { _light: "{colors.gray.700}", _dark: "{colors.gray.300}" },
 					},
 					muted: {
-						value: { _light: "{colors.gray.700}", _dark: "{colors.gray.400}" }, // Intermediate soft tone
+						value: { _light: "{colors.gray.600}", _dark: "{colors.gray.400}" },
 					},
-					subtle: {
-						value: { _light: "{colors.gray.600}", _dark: "{colors.gray.500}" }, // More muted (secondary text)
+				},
+				fbuttons: {
+					blue: {
+						value: { _light: "#C1C2F5", _dark: "{colors.blue.600}" },
+					},
+					green: {
+						value: {
+							_light: "{colors.green.400}",
+							_dark: "{colors.green.600}",
+						},
+					},
+				},
+				bd: {
+					blue: {
+						value: { _light: "#89c3ca", _dark: "#78727c" },
+					},
+					red: {
+						value: { _light: "#ddbebe", _dark: "#78727c" },
 					},
 				},
 				accent: {
 					blue: {
 						value: "#20B8CD",
 					},
+					"blue.light": {
+						value: "#0588F0",
+					},
 					"blue.dark": {
-						value: "#204044",
+						value: "#047AD8",
 					},
 					"red.dark": {
 						value: "#57303A",
