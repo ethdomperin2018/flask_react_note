@@ -42,13 +42,10 @@ const config = defineConfig({
 				},
 				fbuttons: {
 					blue: {
-						value: { _light: "#C1C2F5", _dark: "{colors.blue.600}" },
+						value: "{colors.blue.600}",
 					},
 					green: {
-						value: {
-							_light: "{colors.green.400}",
-							_dark: "{colors.green.600}",
-						},
+						value: "{colors.green.600}",
 					},
 				},
 				bd: {
