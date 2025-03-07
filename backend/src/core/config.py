@@ -70,15 +70,15 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
 
-    GEMINI_API_KEY: str | None = None
-    GEMINI_MODEL: str | None = None
+    AI_API_KEY: str | None = None
+    AI_MODEL: str | None = None
 
     COLLECTION_GENERATION_PROMPT: str | None = None
 
     @computed_field  # type: ignore[prop-decorator]
     @property
     def ai_models_enabled(self) -> bool:
-        return bool(self.GEMINI_API_KEY and self.GEMINI_MODEL)
+        return bool(self.AI_API_KEY and self.AI_MODEL)
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":

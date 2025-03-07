@@ -26,7 +26,7 @@ from .schemas import (
 
 
 def get_gemini_model():
-    return GeminiModel(settings.GEMINI_MODEL, api_key=settings.GEMINI_API_KEY)
+    return GeminiModel(settings.AI_MODEL, api_key=settings.AI_API_KEY)
 
 
 GeminiModelDep = Annotated[GeminiModel, Depends(get_gemini_model)]
