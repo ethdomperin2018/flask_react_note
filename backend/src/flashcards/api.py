@@ -1,14 +1,14 @@
 import uuid
-from typing import Annotated, Any
+from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic_ai.models.gemini import GeminiModel
+from fastapi import APIRouter, HTTPException
 
+from src.ai_models.gemini import GeminiProviderDep
+from src.ai_models.gemini.exceptions import AIGenerationError
 from src.auth.services import CurrentUser, SessionDep
-from src.core.config import settings
 
 from . import services
-from .exceptions import AIGenerationError, EmptyCollectionError
+from .exceptions import EmptyCollectionError
 from .schemas import (
     AIFlashcardsRequest,
     Card,
@@ -24,12 +24,6 @@ from .schemas import (
     PracticeSessionList,
 )
 
-
-def get_gemini_model():
-    return GeminiModel(settings.AI_MODEL, api_key=settings.AI_API_KEY)
-
-
-GeminiModelDep = Annotated[GeminiModel, Depends(get_gemini_model)]
 router = APIRouter()
 
 
@@ -57,18 +51,20 @@ async def create_ai_collection(
     session: SessionDep,
     current_user: CurrentUser,
     request: AIFlashcardsRequest,
-    model: GeminiModelDep,
+    provider: GeminiProviderDep,
 ) -> Any:
-    if not settings.ai_models_enabled:
-        return
     try:
         collection = await services.generate_ai_collection(
             session=session,
             user_id=current_user.id,
             prompt=request.prompt,
-            model=model,
+            provider=provider,
         )
         return collection
+    except EmptyCollectionError:
+        raise HTTPException(
+            status_code=400, detail="Failed to generate flashcards from the prompt"
+        )
     except AIGenerationError as e:
         raise HTTPException(status_code=500, detail=str(e))
 

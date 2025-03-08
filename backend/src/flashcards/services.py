@@ -1,14 +1,16 @@
+import json
 import random
 import uuid
 from datetime import datetime, timezone
 
-from pydantic_ai import Agent
-from pydantic_ai.exceptions import AgentRunError
+from google import genai
+from pydantic import ValidationError
 from sqlmodel import Session, func, select
 
-from src.core.config import settings
+from src.ai_models.gemini.exceptions import AIGenerationError
 
-from .exceptions import AIGenerationError, EmptyCollectionError
+from .ai_config import get_flashcard_config
+from .exceptions import EmptyCollectionError
 from .models import Card, Collection, PracticeCard, PracticeSession
 from .schemas import (
     AIFlashcardCollection,
@@ -107,7 +109,7 @@ def get_card_with_collection(
 def _add_card_to_ongoing_sessions(session: Session, card: Card) -> None:
     statement = select(PracticeSession).where(
         PracticeSession.collection_id == card.collection_id,
-        PracticeSession.is_completed == False,  # noqa: E712
+        PracticeSession.is_completed == False,
     )
     practice_session = session.exec(statement).first()
 
@@ -153,7 +155,7 @@ def _remove_incomplete_practice_sessions(session: Session, card: Card) -> None:
         .join(PracticeCard, PracticeCard.session_id == PracticeSession.id)
         .where(
             PracticeCard.card_id == card.id,
-            PracticeSession.is_completed == False,  # noqa: E712
+            PracticeSession.is_completed == False,
         )
         .distinct()
     )
@@ -211,7 +213,7 @@ def _get_uncompleted_session(
     statement = select(PracticeSession).where(
         PracticeSession.collection_id == collection_id,
         PracticeSession.user_id == user_id,
-        PracticeSession.is_completed == False,  # noqa: E712
+        PracticeSession.is_completed == False,
     )
     return session.exec(statement).first()
 
@@ -273,7 +275,7 @@ def get_next_card(
         .join(Card, PracticeCard.card_id == Card.id)
         .where(
             PracticeCard.session_id == practice_session_id,
-            PracticeCard.is_practiced == False,  # noqa: E712
+            PracticeCard.is_practiced == False,
         )
         .limit(1)
     )
@@ -332,18 +334,25 @@ def get_card_by_id(session: Session, card_id: uuid.UUID) -> Card | None:
     return session.exec(statement).first()
 
 
-async def _generate_ai_flashcards(model, prompt: str) -> AIFlashcardCollection:
-    assert settings.ai_models_enabled, "no provided configuration for ai models"
+async def _generate_ai_flashcards(provider, prompt: str) -> AIFlashcardCollection:
+    content_config = get_flashcard_config(genai.types)
+    raw_response = await provider.run_model(content_config, prompt)
+
     try:
-        agent = Agent(
-            model,
-            result_type=AIFlashcardCollection,
-            system_prompt=settings.COLLECTION_GENERATION_PROMPT,
-        )
-        result = await agent.run(prompt)
-        return result.data
-    except AgentRunError as e:
-        raise AIGenerationError(f"AI generation failed: {str(e)}")
+        json_data = json.loads(raw_response)
+        if "collection" not in json_data:
+            raise AIGenerationError("AI response missing 'collection' field")
+        collection = AIFlashcardCollection.model_validate(json_data["collection"])
+        if not collection.cards:
+            raise AIGenerationError("AI generated an empty collection with no cards")
+
+        return collection
+    except json.JSONDecodeError:
+        raise AIGenerationError("Failed to parse AI response as JSON")
+    except ValidationError as e:
+        raise AIGenerationError(f"Invalid AI response format: {str(e)}")
+    except Exception as e:
+        raise AIGenerationError(f"Error processing AI response: {str(e)}")
 
 
 def _save_ai_collection(
@@ -354,7 +363,8 @@ def _save_ai_collection(
         user_id=user_id,
     )
     session.add(collection)
-    session.flush()
+    session.commit()
+    session.refresh(collection)
 
     for card_data in flashcard_collection.cards:
         card = Card(
@@ -370,7 +380,8 @@ def _save_ai_collection(
 
 
 async def generate_ai_collection(
-    session: Session, user_id: uuid.UUID, prompt: str, model=None
+    session: Session, user_id: uuid.UUID, prompt: str, provider
 ) -> Collection:
-    flashcard_collection = await _generate_ai_flashcards(model, prompt)
+    """Generate a collection of flashcards using AI and save it to the database."""
+    flashcard_collection = await _generate_ai_flashcards(provider, prompt)
     return _save_ai_collection(session, user_id, flashcard_collection)
