@@ -42,8 +42,8 @@ function CardComponent() {
 	const handleClose = async () => {
 		await saveCard({
 			...card,
-			front: frontEditor?.storage.markdown.getMarkdown() || "",
-			back: backEditor?.storage.markdown.getMarkdown() || "",
+			front: frontEditor?.getHTML() || "",
+			back: backEditor?.getHTML() || "",
 		});
 		router.history.back();
 	};

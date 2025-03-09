@@ -26,10 +26,9 @@ export function useRichTextEditor({
 		extensions: [
 			StarterKit,
 			Markdown.configure({
-				html: false,
+				html: true,
 				transformPastedText: true,
 				transformCopiedText: false,
-				breaks: false,
 			}),
 			CharacterCount.configure({
 				limit: characterLimit,
