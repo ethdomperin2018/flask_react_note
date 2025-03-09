@@ -2,7 +2,8 @@ import { Box } from "@chakra-ui/react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useRef, useState } from "react";
-import "@/components/shared/RichText.styles.css";
+import "./RichText.styles.css";
+import { Markdown } from "tiptap-markdown";
 
 interface RichTextContentProps {
 	content: string;
@@ -18,7 +19,12 @@ export default function RichTextContent({
 	const [shouldCenter, setShouldCenter] = useState(true);
 
 	const editor = useEditor({
-		extensions: [StarterKit],
+		extensions: [
+			StarterKit,
+			Markdown.configure({
+				html: false,
+			}),
+		],
 		content,
 		editable: false,
 	});
@@ -36,7 +42,7 @@ export default function RichTextContent({
 		const containerHeight = container.clientHeight;
 		const contentHeight = content.scrollHeight;
 
-		if (contentHeight <= containerHeight * 0.25) {
+		if (contentHeight <= containerHeight * 0.1) {
 			const multiplier = containerHeight / contentHeight;
 			if (multiplier > 1) {
 				const newMultiplier = Math.min(multiplier, 1.5);

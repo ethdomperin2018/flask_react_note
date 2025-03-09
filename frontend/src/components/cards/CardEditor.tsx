@@ -1,10 +1,5 @@
+import RichTextEditor from "@/components/commonUI/RichText/RichTextEditor";
 import { Box } from "@chakra-ui/react";
-import CharacterCount from "@tiptap/extension-character-count";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useEffect } from "react";
-import { Markdown } from "tiptap-markdown";
-import RichTextEditor from "./RichTextEditor/RichTextEditor";
 
 export interface CardEditorProps {
 	value: string;
@@ -19,45 +14,7 @@ export default function CardEditor({
 	side,
 	isFlipped,
 }: CardEditorProps) {
-	const editor = useEditor({
-		shouldRerenderOnTransaction: false,
-		extensions: [
-			StarterKit,
-			Markdown.configure({
-				html: false,
-				transformPastedText: true,
-				transformCopiedText: false,
-			}),
-			CharacterCount.configure({
-				limit: 3000,
-			}),
-		],
-		content: value,
-		editorProps: {
-			attributes: {
-				class: "tiptap-editor",
-			},
-			handleDOMEvents: {
-				blur: () => {
-					if (editor) onChange(editor.storage.markdown.getMarkdown() || "");
-					return false;
-				},
-			},
-		},
-	});
-
-	useEffect(() => {
-		if (editor) editor.commands.setContent(value);
-	}, [editor, value]);
-
-	const handleContainerClick = () => {
-		if (editor && !editor.isFocused) {
-			editor.commands.focus();
-		}
-	};
-
 	const commonBoxStyles = {
-		onClick: handleContainerClick,
 		position: "absolute" as const,
 		width: "100%",
 		height: "100%",
@@ -80,7 +37,9 @@ export default function CardEditor({
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
 			<Box {...commonBoxStyles} bg="bg.50">
-				{side === "front" && <RichTextEditor editor={editor} />}
+				{side === "front" && (
+					<RichTextEditor value={value} onChange={onChange} />
+				)}
 			</Box>
 
 			<Box
@@ -89,7 +48,9 @@ export default function CardEditor({
 				transform="rotateY(180deg)"
 				visibility={isFlipped ? "visible" : "hidden"}
 			>
-				{side === "back" && <RichTextEditor editor={editor} />}
+				{side === "back" && (
+					<RichTextEditor value={value} onChange={onChange} />
+				)}
 			</Box>
 		</Box>
 	);
