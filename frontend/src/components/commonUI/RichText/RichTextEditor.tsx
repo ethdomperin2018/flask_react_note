@@ -2,7 +2,7 @@ import { Box, VStack } from "@chakra-ui/react";
 import { type Editor, EditorContent } from "@tiptap/react";
 import EditorToolbar from "./EditorToolbar";
 
-import "@/components/commonUI/RichText/RichText.styles.css";
+import "./RichText.styles.css";
 
 interface RichTextEditorProps {
 	editor: Editor | null;

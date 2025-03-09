@@ -22,11 +22,16 @@ export default function RichTextContent({
 		extensions: [
 			StarterKit,
 			Markdown.configure({
-				html: false,
+				html: true,
 			}),
 		],
 		content,
 		editable: false,
+		editorProps: {
+			attributes: {
+				class: "tiptap-content",
+			},
+		},
 	});
 
 	useEffect(() => {
