@@ -1,18 +1,19 @@
 import RichTextEditor from "@/components/commonUI/RichText/RichTextEditor";
 import { Box } from "@chakra-ui/react";
+import type { Editor } from "@tiptap/react";
 
 export interface CardEditorProps {
-	value: string;
-	onChange: (value: string) => void;
 	side: "front" | "back";
 	isFlipped: boolean;
+	frontEditor: Editor | null;
+	backEditor: Editor | null;
 }
 
 export default function CardEditor({
-	value,
-	onChange,
 	side,
 	isFlipped,
+	frontEditor,
+	backEditor,
 }: CardEditorProps) {
 	const commonBoxStyles = {
 		position: "absolute" as const,
@@ -37,8 +38,8 @@ export default function CardEditor({
 			transform={isFlipped ? "rotateY(180deg)" : "rotateY(0)"}
 		>
 			<Box {...commonBoxStyles} bg="bg.50">
-				{side === "front" && (
-					<RichTextEditor value={value} onChange={onChange} />
+				{side === "front" && frontEditor && (
+					<RichTextEditor editor={frontEditor} />
 				)}
 			</Box>
 
@@ -48,8 +49,8 @@ export default function CardEditor({
 				transform="rotateY(180deg)"
 				visibility={isFlipped ? "visible" : "hidden"}
 			>
-				{side === "back" && (
-					<RichTextEditor value={value} onChange={onChange} />
+				{side === "back" && backEditor && (
+					<RichTextEditor editor={backEditor} />
 				)}
 			</Box>
 		</Box>

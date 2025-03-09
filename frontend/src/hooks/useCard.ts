@@ -87,13 +87,6 @@ export function useCard(collectionId: string, cardId?: string) {
 		[originalCard, collectionId, queryClient],
 	);
 
-	const updateContent = useCallback(
-		(value: string) => {
-			setCard((prev) => ({ ...prev, [currentSide]: value }));
-		},
-		[currentSide],
-	);
-
 	const flip = useCallback(() => {
 		setIsFlipped((prev) => !prev);
 		setCurrentSide((side) => (side === "front" ? "back" : "front"));
@@ -104,7 +97,6 @@ export function useCard(collectionId: string, cardId?: string) {
 		isLoading,
 		currentSide,
 		isFlipped,
-		updateContent,
 		saveCard,
 		flip,
 	};
