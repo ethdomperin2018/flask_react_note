@@ -14,8 +14,8 @@ const hasCardContentChanged = (
 	modifiedCard: CardData,
 ): boolean => {
 	return (
-		modifiedCard.front.trim() !== originalCard.front.trim() ||
-		modifiedCard.back.trim() !== originalCard.back.trim()
+		modifiedCard.front !== originalCard.front ||
+		modifiedCard.back !== originalCard.back
 	);
 };
 
@@ -53,7 +53,7 @@ export function useCard(collectionId: string, cardId?: string) {
 
 	const saveCard = useCallback(
 		async (cardData: CardData) => {
-			if (!cardData.front.trim() && !cardData.back.trim()) return;
+			if (cardData.front === "" && cardData.back === "") return;
 
 			const hasChanged = hasCardContentChanged(originalCard, cardData);
 
