@@ -9,9 +9,24 @@ interface CardData {
 	id?: string;
 }
 
+const hasCardContentChanged = (
+	originalCard: CardData,
+	modifiedCard: CardData,
+): boolean => {
+	return (
+		modifiedCard.front.trim() !== originalCard.front.trim() ||
+		modifiedCard.back.trim() !== originalCard.back.trim()
+	);
+};
+
 export function useCard(collectionId: string, cardId?: string) {
 	const queryClient = useQueryClient();
 	const [card, setCard] = useState<CardData>({ front: "", back: "" });
+	const [originalCard, setOriginalCard] = useState<CardData>({
+		front: "",
+		back: "",
+	});
+
 	const [currentSide, setCurrentSide] = useState<"front" | "back">("front");
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [isLoading, setIsLoading] = useState(!!cardId);
@@ -26,6 +41,7 @@ export function useCard(collectionId: string, cardId?: string) {
 			try {
 				const data = await FlashcardsService.readCard({ collectionId, cardId });
 				setCard(data);
+				setOriginalCard(data);
 			} catch (error) {
 				toaster.create({ title: "Error loading card", type: "error" });
 			} finally {
@@ -38,42 +54,48 @@ export function useCard(collectionId: string, cardId?: string) {
 	const saveCard = useCallback(
 		async (cardData: CardData) => {
 			if (!cardData.front.trim() && !cardData.back.trim()) return;
-			
-			try {
-				let savedCard: CardData;
-				if (cardData.id) {
-					savedCard = await FlashcardsService.updateCard({
-						collectionId,
-						cardId: cardData.id,
-						requestBody: cardData,
+
+			const hasChanged = hasCardContentChanged(originalCard, cardData);
+
+			if (!cardData.id || hasChanged) {
+				try {
+					let savedCard: CardData;
+					if (cardData.id) {
+						savedCard = await FlashcardsService.updateCard({
+							collectionId,
+							cardId: cardData.id,
+							requestBody: cardData,
+						});
+						setOriginalCard(cardData);
+					} else {
+						savedCard = await FlashcardsService.createCard({
+							collectionId,
+							requestBody: cardData,
+						});
+						setCard((prev) => ({ ...prev, id: savedCard.id }));
+						setOriginalCard({ ...cardData, id: savedCard.id });
+					}
+
+					queryClient.invalidateQueries({
+						queryKey: ["collections", collectionId, "cards"],
 					});
-				} else {
-					savedCard = await FlashcardsService.createCard({
-						collectionId,
-						requestBody: cardData,
-					});
-					setCard((prev) => ({ ...prev, id: savedCard.id }));
+				} catch (error) {
+					toaster.create({ title: "Error saving card", type: "error" });
 				}
-				
-				queryClient.invalidateQueries({
-					queryKey: ["collections", collectionId, "cards"],
-				});
-			} catch (error) {
-				toaster.create({ title: "Error saving card", type: "error" });
 			}
 		},
-		[collectionId, queryClient],
+		[originalCard, collectionId, queryClient],
 	);
 
 	const updateContent = useCallback(
 		(value: string) => {
-			setCard(prev => ({ ...prev, [currentSide]: value }));
+			setCard((prev) => ({ ...prev, [currentSide]: value }));
 		},
 		[currentSide],
 	);
 
 	const flip = useCallback(() => {
-		setIsFlipped(prev => !prev);
+		setIsFlipped((prev) => !prev);
 		setCurrentSide((side) => (side === "front" ? "back" : "front"));
 	}, []);
 
