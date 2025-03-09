@@ -3,6 +3,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
+import { Markdown } from "tiptap-markdown";
 import RichTextEditor from "./RichTextEditor/RichTextEditor";
 
 export interface CardEditorProps {
@@ -19,27 +20,34 @@ export default function CardEditor({
 	isFlipped,
 }: CardEditorProps) {
 	const editor = useEditor({
+		shouldRerenderOnTransaction: false,
 		extensions: [
 			StarterKit,
+			Markdown.configure({
+				html: false,
+				transformPastedText: true,
+				transformCopiedText: false,
+			}),
 			CharacterCount.configure({
 				limit: 3000,
 			}),
 		],
 		content: value,
-		onUpdate: ({ editor }) => {
-			onChange(editor.getHTML());
-		},
 		editorProps: {
 			attributes: {
 				class: "tiptap-editor",
+			},
+			handleDOMEvents: {
+				blur: () => {
+					if (editor) onChange(editor.storage.markdown.getMarkdown() || "");
+					return false;
+				},
 			},
 		},
 	});
 
 	useEffect(() => {
-		if (editor && editor.getHTML() !== value) {
-			editor.commands.setContent(value);
-		}
+		if (editor) editor.commands.setContent(value);
 	}, [editor, value]);
 
 	const handleContainerClick = () => {
