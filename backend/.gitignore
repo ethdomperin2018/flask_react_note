@@ -6,4 +6,4 @@ htmlcov
 .cache
 .venv
 .vscode
-.env.*
+.env
