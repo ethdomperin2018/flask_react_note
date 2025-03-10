@@ -24,9 +24,9 @@ function CardComponent() {
 		cardId,
 	);
 
-	const frontEditor = useRichTextEditor({ content: card.front || "" });
+	const frontEditor = useRichTextEditor();
 
-	const backEditor = useRichTextEditor({ content: card.back || "" });
+	const backEditor = useRichTextEditor();
 
 	useEffect(() => {
 		if (frontEditor) {
