@@ -1,3 +1,4 @@
+import "./i18n";
 import { ColorModeProvider } from "@/components/ui/color-mode";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -7,6 +8,7 @@ import ReactDOM from "react-dom/client";
 import { OpenAPI } from "./client";
 import { routeTree } from "./routeTree.gen";
 import { system } from "./theme";
+
 OpenAPI.BASE = import.meta.env.VITE_API_URL;
 OpenAPI.TOKEN = async () => {
 	return localStorage.getItem("access_token") || "";
