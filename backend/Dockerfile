@@ -27,7 +27,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-install-project
 
-COPY ./alembic /code/alembic
 COPY ./pyproject.toml /code/pyproject.toml
 COPY ./uv.lock /code/uv.lock
 COPY ./alembic.ini /code/alembic.ini
