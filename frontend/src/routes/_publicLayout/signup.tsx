@@ -9,12 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import type { UserRegister } from "../client";
-import { DefaultInput } from "../components/commonUI/Input";
-import useAuth, { isLoggedIn } from "../hooks/useAuth";
-import { confirmPasswordRules, emailPattern, passwordRules } from "../utils";
+import { useTranslation } from "react-i18next";
+import type { UserRegister } from "../../client";
+import { DefaultInput } from "../../components/commonUI/Input";
+import useAuth, { isLoggedIn } from "../../hooks/useAuth";
+import { confirmPasswordRules, emailPattern, passwordRules } from "../../utils";
 
-export const Route = createFileRoute("/signup")({
+export const Route = createFileRoute("/_publicLayout/signup")({
 	component: SignUp,
 	beforeLoad: async () => {
 		if (isLoggedIn()) {
@@ -30,6 +31,7 @@ interface UserRegisterForm extends UserRegister {
 }
 
 function SignUp() {
+	const { t } = useTranslation();
 	const { signUpMutation } = useAuth();
 	const {
 		register,
@@ -53,7 +55,7 @@ function SignUp() {
 
 	return (
 		<Container
-			h="100dvh"
+			h="100%"
 			maxW="sm"
 			alignItems="stretch"
 			justifyContent="center"
@@ -72,13 +74,13 @@ function SignUp() {
 				<Fieldset.Root maxW="sm">
 					<Fieldset.Content>
 						<Field.Root>
-							<Field.Label>Full Name</Field.Label>
+							<Field.Label>{t("general.words.fullName")}</Field.Label>
 							<DefaultInput
-								placeholder="Full Name"
+								placeholder={t("general.words.fullName")}
 								type="text"
 								minLength={3}
 								{...register("full_name", {
-									required: "Full Name is required",
+									required: t("general.errors.fullNameIsRequired"),
 								})}
 							/>
 							{errors.full_name && (
@@ -89,12 +91,12 @@ function SignUp() {
 						</Field.Root>
 
 						<Field.Root>
-							<Field.Label>Email</Field.Label>
+							<Field.Label>{t("general.words.email")}</Field.Label>
 							<DefaultInput
-								placeholder="Email"
+								placeholder={t("general.words.email")}
 								type="email"
 								{...register("email", {
-									required: "Email is required",
+									required: t("general.errors.emailIsRequired"),
 									pattern: emailPattern,
 								})}
 							/>
@@ -106,9 +108,9 @@ function SignUp() {
 						</Field.Root>
 
 						<Field.Root>
-							<Field.Label>Password</Field.Label>
+							<Field.Label>{t("general.words.password")}</Field.Label>
 							<DefaultInput
-								placeholder="Password"
+								placeholder={t("general.words.password")}
 								type="password"
 								{...register("password", passwordRules())}
 							/>
@@ -120,9 +122,9 @@ function SignUp() {
 						</Field.Root>
 
 						<Field.Root>
-							<Field.Label>Confirm Password</Field.Label>
+							<Field.Label>{t("general.actions.confirmPassword")}</Field.Label>
 							<DefaultInput
-								placeholder="Repeat Password"
+								placeholder={t("general.actions.repeatPassword")}
 								type="password"
 								{...register(
 									"confirm_password",
@@ -137,15 +139,15 @@ function SignUp() {
 						</Field.Root>
 					</Fieldset.Content>
 					<Button type="submit" loading={isSubmitting}>
-						Sign Up
+						{t("general.actions.signUp")}
 					</Button>
 				</Fieldset.Root>
 			</form>
 			<Text>
-				Already have an account?{" "}
+				{t("routes.publicLayout.signUp.alreadyHaveAccount")}{" "}
 				<Link to="/login">
 					<Text as="span" color="blue.500">
-						Log In
+						{t("general.actions.login")}!
 					</Text>
 				</Link>
 			</Text>

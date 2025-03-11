@@ -10,17 +10,19 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { isLoggedIn } from "../hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { isLoggedIn } from "../../hooks/useAuth";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_publicLayout/")({
 	component: LandingPage,
 });
 
 function LandingPage() {
+	const { t } = useTranslation();
 	const isAuthenticated = isLoggedIn();
 
 	return (
-		<Center minH="100vh">
+		<Center minH="100%">
 			<Container maxW="container.xl" py={20}>
 				<Stack
 					direction={{ base: "column", lg: "row" }}
@@ -36,28 +38,33 @@ function LandingPage() {
 							fontWeight="bold"
 							textAlign={{ base: "center", lg: "left" }}
 						>
-							Learn Better with FlashNotes
+							{t("routes.publicLayout.index.title")}
 						</Heading>
 						<Text
 							fontSize="xl"
 							color="gray.500"
 							textAlign={{ base: "center", lg: "left" }}
 						>
-							A simple flashcard app that helps you learn. Create cards,
-							practice regularly, and remember what matters.
+							{t("routes.publicLayout.index.description")}
 						</Text>
 						<Stack direction="row" gap={4}>
 							{isAuthenticated ? (
 								<Link to="/collections">
-									<BlueButton size="lg">Let's Study!</BlueButton>
+									<BlueButton size="lg">
+										{t("general.actions.letsStudy")}!
+									</BlueButton>
 								</Link>
 							) : (
 								<>
 									<Link to="/signup">
-										<DefaultButton size="lg">Get Started</DefaultButton>
+										<DefaultButton size="lg">
+											{t("general.actions.getStarted")}
+										</DefaultButton>
 									</Link>
 									<Link to="/login">
-										<DefaultButton size="lg">Log In</DefaultButton>
+										<DefaultButton size="lg">
+											{t("general.actions.login")}
+										</DefaultButton>
 									</Link>
 								</>
 							)}
@@ -84,7 +91,7 @@ function LandingPage() {
 
 				<VStack gap={16} mt={20}>
 					<Heading as="h2" size="xl" textAlign="center">
-						Features
+						{t("general.words.features")}
 					</Heading>
 					<Stack
 						direction={{ base: "column", md: "row" }}
@@ -92,16 +99,22 @@ function LandingPage() {
 						align="stretch"
 					>
 						<Feature
-							title="Simple Design"
-							description="A clean interface that helps you focus on learning."
+							title={t("routes.publicLayout.index.simpleDesign")}
+							description={t(
+								"routes.publicLayout.index.simpleDesignDescription",
+							)}
 						/>
 						<Feature
-							title="AI Generation"
-							description="Create flashcards automatically with AI to save time and enhance learning."
+							title={t("routes.publicLayout.index.aiGeneration")}
+							description={t(
+								"routes.publicLayout.index.aiGenerationDescription",
+							)}
 						/>
 						<Feature
-							title="Responsive Design"
-							description="Study anywhere on any device with a fully responsive interface."
+							title={t("routes.publicLayout.index.responsiveDesign")}
+							description={t(
+								"routes.publicLayout.index.responsiveDesignDescription",
+							)}
 						/>
 					</Stack>
 				</VStack>
@@ -114,7 +127,10 @@ function LandingPage() {
 function Feature({
 	title,
 	description,
-}: { title: string; description: string }) {
+}: {
+	title: string;
+	description: string;
+}) {
 	return (
 		<VStack
 			p={8}

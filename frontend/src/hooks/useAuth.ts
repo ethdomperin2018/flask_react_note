@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import { toaster } from "@/components/ui/toaster";
 import { AxiosError } from "axios";
 import {
 	type Body_login_login_access_token as AccessToken,
@@ -10,7 +12,6 @@ import {
 	type UserRegister,
 	UsersService,
 } from "../client";
-import { toaster } from "@/components/ui/toaster";
 
 interface ErrorResponse {
 	body: {
@@ -23,6 +24,7 @@ const isLoggedIn = () => {
 };
 
 const useAuth = () => {
+	const { t } = useTranslation();
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -38,23 +40,24 @@ const useAuth = () => {
 
 		onSuccess: () => {
 			navigate({ to: "/login" });
-			toaster.create({ 
-				title: "Account created",
-				description: "Your account has been created successfully.",
-				type: "success" 
+			toaster.create({
+				title: t("hooks.auth.accountCreated"),
+				description: t("hooks.auth.accountCreatedDescription"),
+				type: "success",
 			});
 		},
 		onError: (err: Error | AxiosError | ErrorResponse) => {
-			const errDetail = err instanceof AxiosError 
-				? err.message 
-				: 'body' in err && typeof err.body === 'object' && err.body 
-					? String(err.body.detail) || "Something went wrong"
-					: "Something went wrong";
+			const errDetail =
+				err instanceof AxiosError
+					? err.message
+					: "body" in err && typeof err.body === "object" && err.body
+						? String(err.body.detail) || t("general.errors.somethingWentWrong")
+						: t("general.errors.somethingWentWrong");
 
-			toaster.create({ 
-				title: "Error creating account",
+			toaster.create({
+				title: t("general.errors.errorCreatingAccount"),
 				description: errDetail,
-				type: "error" 
+				type: "error",
 			});
 		},
 		onSettled: () => {
@@ -75,18 +78,21 @@ const useAuth = () => {
 			navigate({ to: "/collections" });
 		},
 		onError: (err: Error | AxiosError | ErrorResponse) => {
-			const errDetail = err instanceof AxiosError 
-				? err.message 
-				: 'body' in err && typeof err.body === 'object' && err.body 
-					? String(err.body.detail) || "Something went wrong"
-					: "Something went wrong";
+			const errDetail =
+				err instanceof AxiosError
+					? err.message
+					: "body" in err && typeof err.body === "object" && err.body
+						? String(err.body.detail) || t("general.errors.somethingWentWrong")
+						: t("general.errors.somethingWentWrong");
 
-			const finalError = Array.isArray(errDetail) ? "Invalid credentials" : errDetail;
+			const finalError = Array.isArray(errDetail)
+				? t("general.errors.invalidCredentials")
+				: errDetail;
 
-			toaster.create({ 
-				title: "Login failed",
+			toaster.create({
+				title: t("general.errors.loginFailed"),
 				description: finalError,
-				type: "error" 
+				type: "error",
 			});
 			setError(finalError);
 		},

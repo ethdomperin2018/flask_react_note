@@ -2,6 +2,7 @@ import starsAnimation from "@/assets/stars.json?url";
 import { Box, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { BlueButton } from "../commonUI/Button";
 import { DefaultButton } from "../commonUI/Button";
 
@@ -17,6 +18,7 @@ interface PracticeCompleteProps {
 }
 
 function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
+	const { t } = useTranslation();
 	const router = useRouter();
 	const total = stats.total;
 
@@ -26,15 +28,20 @@ function PracticeComplete({ stats, onReset }: PracticeCompleteProps) {
 				<Box w="15rem">
 					<DotLottieReact src={starsAnimation} autoplay />
 				</Box>
-				<Text fontSize="2xl">Practice Complete!</Text>
+				<Text fontSize="2xl">{t("components.practiceComplete.title")}!</Text>
 				<Text fontSize="lg">
-					You got {stats.correct} out of {total} cards correct
+					{t("components.practiceComplete.cardsCorrect", {
+						correct: stats.correct,
+						total,
+					})}
 				</Text>
 				<HStack gap={4}>
 					<DefaultButton onClick={() => router.history.back()}>
-						Back to Collection
+						{t("general.actions.backToCollection")}
 					</DefaultButton>
-					<BlueButton onClick={onReset}>Practice Again</BlueButton>
+					<BlueButton onClick={onReset}>
+						{t("general.actions.practiceAgain")}
+					</BlueButton>
 				</HStack>
 			</VStack>
 		</Center>

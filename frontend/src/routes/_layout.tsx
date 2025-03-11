@@ -16,7 +16,6 @@ export const Route = createFileRoute("/_layout")({
 });
 
 function Layout() {
-	// const { isLoading } = useAuth();
 	return (
 		<>
 			<Container pt={{ base: "4rem", md: "6rem" }}>

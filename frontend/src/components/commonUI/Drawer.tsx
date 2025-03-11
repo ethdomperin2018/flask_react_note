@@ -22,8 +22,10 @@ import {
 } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { FiLogOut, FiMoon, FiSun } from "react-icons/fi";
 import { DefaultButton } from "./Button";
+import LanguageSelector from "./LanguageSelector";
 
 function getCollectionsQueryOptions() {
 	return {
@@ -39,6 +41,7 @@ function Drawer({
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
 }) {
+	const { t } = useTranslation();
 	const { logout } = useAuth();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const queryClient = useQueryClient();
@@ -109,18 +112,31 @@ function Drawer({
 				</DrawerBody>
 				<DrawerFooter>
 					<VStack width="100%" gap={2}>
-						{currentUser?.email && (
-							<Text fontSize="sm" color="fg.muted">
-								Logged in as: {currentUser.email}
-							</Text>
-						)}
+						<HStack justifyContent={"center"}>
+							{currentUser?.email && (
+								<VStack alignItems={"start"} gap={0}>
+									<Text fontSize="sm" color="fg.muted">
+										{t("components.drawer.loggedInAs")}:
+									</Text>
+									<Text
+										fontSize="sm"
+										color="fg.muted"
+										maxWidth="11.5rem"
+										truncate
+									>
+										{currentUser.email}
+									</Text>
+								</VStack>
+							)}
+							<LanguageSelector placement="top" />
+						</HStack>
 						<HStack width="100%" justifyContent="space-between">
 							<DefaultButton onClick={handleLogout} flex="1">
 								<FiLogOut size={20} />
-								Log out
+								{t("general.actions.logout")}
 							</DefaultButton>
 							<IconButton
-								aria-label="Toggle color mode"
+								aria-label={t("general.actions.toggleColorMode")}
 								onClick={toggleColorMode}
 								size="md"
 								variant="outline"

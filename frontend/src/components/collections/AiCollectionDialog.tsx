@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Text } from "@chakra-ui/react";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BlueButton, RedButton } from "../commonUI/Button";
 import { DefaultInput } from "../commonUI/Input";
 
@@ -25,6 +26,7 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 	onAddAi,
 	children,
 }) => {
+	const { t } = useTranslation();
 	const [prompt, setPrompt] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -53,12 +55,14 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent bg="bg.50">
 				<DialogHeader>
-					<DialogTitle color="fg.DEFAULT">Create AI Collection</DialogTitle>
+					<DialogTitle color="fg.DEFAULT">
+						{t("components.AiCollectionDialog.title")}
+					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
 					<DefaultInput
 						disabled={isLoading}
-						placeholder="Enter a topic or concept (e.g., 'Quantum Physics', 'Spanish Verbs')"
+						placeholder={t("components.AiCollectionDialog.placeholder")}
 						value={prompt}
 						onChange={(e) => setPrompt(e.target.value)}
 						maxLength={MAX_CHARS}
@@ -76,12 +80,14 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
 				<DialogFooter>
 					<DialogActionTrigger asChild>
 						<RedButton onClick={() => setPrompt("")} disabled={isLoading}>
-							Cancel
+							{t("general.actions.cancel")}
 						</RedButton>
 					</DialogActionTrigger>
 					<DialogActionTrigger asChild>
 						<BlueButton onClick={handleSubmit} disabled={isLoading}>
-							{isLoading ? "Creating..." : "Create"}
+							{isLoading
+								? `${t("general.actions.creating")}...`
+								: t("general.actions.create")}
 						</BlueButton>
 					</DialogActionTrigger>
 				</DialogFooter>

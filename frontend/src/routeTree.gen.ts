@@ -11,10 +11,11 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as LoginImport } from './routes/login'
+import { Route as PublicLayoutImport } from './routes/_publicLayout'
 import { Route as LayoutImport } from './routes/_layout'
-import { Route as IndexImport } from './routes/index'
+import { Route as PublicLayoutIndexImport } from './routes/_publicLayout/index'
+import { Route as PublicLayoutSignupImport } from './routes/_publicLayout/signup'
+import { Route as PublicLayoutLoginImport } from './routes/_publicLayout/login'
 import { Route as LayoutCollectionsIndexImport } from './routes/_layout/collections/index'
 import { Route as LayoutCollectionsCollectionIdIndexImport } from './routes/_layout/collections/$collectionId/index'
 import { Route as LayoutCollectionsCollectionIdStatsImport } from './routes/_layout/collections/$collectionId/stats'
@@ -24,15 +25,8 @@ import { Route as LayoutCollectionsCollectionIdCardsCardIdImport } from './route
 
 // Create/Update Routes
 
-const SignupRoute = SignupImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
+const PublicLayoutRoute = PublicLayoutImport.update({
+  id: '/_publicLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -41,10 +35,22 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const PublicLayoutIndexRoute = PublicLayoutIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => PublicLayoutRoute,
+} as any)
+
+const PublicLayoutSignupRoute = PublicLayoutSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => PublicLayoutRoute,
+} as any)
+
+const PublicLayoutLoginRoute = PublicLayoutLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PublicLayoutRoute,
 } as any)
 
 const LayoutCollectionsIndexRoute = LayoutCollectionsIndexImport.update({
@@ -92,13 +98,6 @@ const LayoutCollectionsCollectionIdCardsCardIdRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_layout': {
       id: '/_layout'
       path: ''
@@ -106,19 +105,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
+    '/_publicLayout': {
+      id: '/_publicLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/signup': {
-      id: '/signup'
+    '/_publicLayout/login': {
+      id: '/_publicLayout/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLayoutLoginImport
+      parentRoute: typeof PublicLayoutImport
+    }
+    '/_publicLayout/signup': {
+      id: '/_publicLayout/signup'
       path: '/signup'
       fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicLayoutSignupImport
+      parentRoute: typeof PublicLayoutImport
+    }
+    '/_publicLayout/': {
+      id: '/_publicLayout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PublicLayoutIndexImport
+      parentRoute: typeof PublicLayoutImport
     }
     '/_layout/collections/': {
       id: '/_layout/collections/'
@@ -193,11 +206,27 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
+interface PublicLayoutRouteChildren {
+  PublicLayoutLoginRoute: typeof PublicLayoutLoginRoute
+  PublicLayoutSignupRoute: typeof PublicLayoutSignupRoute
+  PublicLayoutIndexRoute: typeof PublicLayoutIndexRoute
+}
+
+const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
+  PublicLayoutLoginRoute: PublicLayoutLoginRoute,
+  PublicLayoutSignupRoute: PublicLayoutSignupRoute,
+  PublicLayoutIndexRoute: PublicLayoutIndexRoute,
+}
+
+const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
+  PublicLayoutRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '': typeof LayoutRouteWithChildren
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
+  '': typeof PublicLayoutRouteWithChildren
+  '/login': typeof PublicLayoutLoginRoute
+  '/signup': typeof PublicLayoutSignupRoute
+  '/': typeof PublicLayoutIndexRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
@@ -207,10 +236,10 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '': typeof LayoutRouteWithChildren
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
+  '/login': typeof PublicLayoutLoginRoute
+  '/signup': typeof PublicLayoutSignupRoute
+  '/': typeof PublicLayoutIndexRoute
   '/collections': typeof LayoutCollectionsIndexRoute
   '/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
@@ -221,10 +250,11 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
   '/_layout': typeof LayoutRouteWithChildren
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
+  '/_publicLayout': typeof PublicLayoutRouteWithChildren
+  '/_publicLayout/login': typeof PublicLayoutLoginRoute
+  '/_publicLayout/signup': typeof PublicLayoutSignupRoute
+  '/_publicLayout/': typeof PublicLayoutIndexRoute
   '/_layout/collections/': typeof LayoutCollectionsIndexRoute
   '/_layout/collections/$collectionId/practice': typeof LayoutCollectionsCollectionIdPracticeRoute
   '/_layout/collections/$collectionId/stats': typeof LayoutCollectionsCollectionIdStatsRoute
@@ -236,10 +266,10 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | ''
     | '/login'
     | '/signup'
+    | '/'
     | '/collections'
     | '/collections/$collectionId/practice'
     | '/collections/$collectionId/stats'
@@ -248,10 +278,10 @@ export interface FileRouteTypes {
     | '/collections/$collectionId/cards/new'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | ''
     | '/login'
     | '/signup'
+    | '/'
     | '/collections'
     | '/collections/$collectionId/practice'
     | '/collections/$collectionId/stats'
@@ -260,10 +290,11 @@ export interface FileRouteTypes {
     | '/collections/$collectionId/cards/new'
   id:
     | '__root__'
-    | '/'
     | '/_layout'
-    | '/login'
-    | '/signup'
+    | '/_publicLayout'
+    | '/_publicLayout/login'
+    | '/_publicLayout/signup'
+    | '/_publicLayout/'
     | '/_layout/collections/'
     | '/_layout/collections/$collectionId/practice'
     | '/_layout/collections/$collectionId/stats'
@@ -274,17 +305,13 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   LayoutRoute: typeof LayoutRouteWithChildren
-  LoginRoute: typeof LoginRoute
-  SignupRoute: typeof SignupRoute
+  PublicLayoutRoute: typeof PublicLayoutRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   LayoutRoute: LayoutRouteWithChildren,
-  LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
+  PublicLayoutRoute: PublicLayoutRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -297,14 +324,9 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
         "/_layout",
-        "/login",
-        "/signup"
+        "/_publicLayout"
       ]
-    },
-    "/": {
-      "filePath": "index.tsx"
     },
     "/_layout": {
       "filePath": "_layout.tsx",
@@ -317,11 +339,25 @@ export const routeTree = rootRoute
         "/_layout/collections/$collectionId/cards/new"
       ]
     },
-    "/login": {
-      "filePath": "login.tsx"
+    "/_publicLayout": {
+      "filePath": "_publicLayout.tsx",
+      "children": [
+        "/_publicLayout/login",
+        "/_publicLayout/signup",
+        "/_publicLayout/"
+      ]
     },
-    "/signup": {
-      "filePath": "signup.tsx"
+    "/_publicLayout/login": {
+      "filePath": "_publicLayout/login.tsx",
+      "parent": "/_publicLayout"
+    },
+    "/_publicLayout/signup": {
+      "filePath": "_publicLayout/signup.tsx",
+      "parent": "/_publicLayout"
+    },
+    "/_publicLayout/": {
+      "filePath": "_publicLayout/index.tsx",
+      "parent": "/_publicLayout"
     },
     "/_layout/collections/": {
       "filePath": "_layout/collections/index.tsx",
