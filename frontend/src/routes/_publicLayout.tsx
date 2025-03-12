@@ -1,5 +1,5 @@
 import LanguageSelector from "@/components/commonUI/LanguageSelector";
-import { VStack } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_publicLayout")({
@@ -8,12 +8,19 @@ export const Route = createFileRoute("/_publicLayout")({
 
 function PublicLayout() {
 	return (
-		<VStack h="100dvh">
-			<VStack alignItems="end" marginTop="1em" marginRight="1em" w={"100%"}>
+		<Container>
+			<Flex
+				position="absolute"
+				top="0"
+				left="0"
+				right="0"
+				px="4"
+				py="4"
+				justifyContent="flex-end"
+			>
 				<LanguageSelector />
-			</VStack>
-
+			</Flex>
 			<Outlet />
-		</VStack>
+		</Container>
 	);
 }
