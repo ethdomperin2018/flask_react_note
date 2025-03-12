@@ -5,74 +5,98 @@ import {
 	MenuTrigger,
 } from "@/components/ui/menu";
 import { Avatar, Flex, HStack } from "@chakra-ui/react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { LOCALE_KEYS } from "@/i18n";
-import { useState } from "react";
+
+type Language = (typeof LOCALE_KEYS)[number];
+type Placement = "top" | "bottom" | "left" | "right";
+
+interface LanguageSelectorProps {
+	placement?: Placement;
+	className?: string;
+}
+
+const useLanguageSelection = () => {
+	const { i18n } = useTranslation();
+	const [selectedLanguage, setSelectedLanguage] = useState<Language>(
+		LOCALE_KEYS.find(({ key }) => key === i18n.language) || LOCALE_KEYS[0],
+	);
+
+	const selectLanguage = useCallback(
+		(language: Language) => {
+			setSelectedLanguage(language);
+			i18n.changeLanguage(language.key);
+		},
+		[i18n],
+	);
+
+	return { selectedLanguage, selectLanguage };
+};
+
+const LanguageAvatar = ({
+	language,
+	onClick,
+}: { language: Language; onClick?: () => void }) => (
+	<Avatar.Root
+		size="2xs"
+		onClick={onClick}
+		aria-label={`Select ${language.name} language`}
+		cursor="pointer"
+	>
+		<Avatar.Fallback name={language.name} />
+		<Avatar.Image
+			src={`https://flagcdn.com/${language.flag}.svg`}
+			alt={`${language.name} flag`}
+		/>
+	</Avatar.Root>
+);
 
 export default function LanguageSelector({
 	placement = "bottom",
-}: { placement?: "top" | "bottom" | "left" | "right" }) {
-	const { i18n } = useTranslation();
-	const [selectedLanguage, setSelectedLanguage] = useState(
-		LOCALE_KEYS.find(({ key }: { key: string }) => key === i18n.language) ||
-			LOCALE_KEYS[0],
-	);
-
-	const selectLanguage = (language: (typeof LOCALE_KEYS)[0]) => {
-		setSelectedLanguage(language);
-		i18n.changeLanguage(language.key);
-	};
+	className,
+}: LanguageSelectorProps) {
+	const { selectedLanguage, selectLanguage } = useLanguageSelection();
 
 	return (
-		<Flex>
+		<Flex className={className}>
 			<MenuRoot positioning={{ placement }}>
-				<MenuTrigger zIndex={"tooltip"} asChild padding={"0 8px"}>
+				<MenuTrigger asChild padding="0 8px">
 					<HStack>
-						<Avatar.Root
-							size="2xs"
-							_hover={{ opacity: 0.8 }}
-							cursor={"pointer"}
-						>
-							<Avatar.Fallback name={selectedLanguage.name} />
-							<Avatar.Image
-								src={`https://flagcdn.com/${selectedLanguage.flag}.svg`}
-							/>
-						</Avatar.Root>
+						<LanguageAvatar language={selectedLanguage} onClick={() => {}} />
 					</HStack>
 				</MenuTrigger>
 				<MenuContent
-					minWidth={"0"}
-					background={"transparent"}
-					boxShadow={"none"}
-					zIndex={"tooltip"}
+					minWidth="0"
+					background="transparent"
+					boxShadow="none"
 					portalled={false}
+					role="menu"
+					aria-label="Language selection menu"
 				>
-					{LOCALE_KEYS.map((language: (typeof LOCALE_KEYS)[0]) => (
+					{LOCALE_KEYS.filter(
+						(language) => language.key !== selectedLanguage.key,
+					).map((language) => (
 						<MenuItem
 							paddingInline={0}
 							key={language.key}
-							background={"transparent"}
+							background="transparent"
 							value={language.key}
+							role="menuitem"
 						>
 							<HStack
-								cursor={"pointer"}
+								cursor="pointer"
 								_active={{ opacity: 0.8 }}
 								_hover={{
 									transform: "scale(1.15)",
 									transition: "all 0.3s ease",
 								}}
-								zIndex={"tooltip"}
 							>
-								<Avatar.Root
-									size="2xs"
+								<LanguageAvatar
+									language={language}
 									onClick={() => selectLanguage(language)}
-								>
-									<Avatar.Fallback name={language.name} />
-									<Avatar.Image
-										src={`https://flagcdn.com/${language.flag}.svg`}
-									/>
-								</Avatar.Root>
+								/>
 							</HStack>
 						</MenuItem>
 					))}
