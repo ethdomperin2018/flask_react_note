@@ -22,9 +22,6 @@
 			"numberedList": "Numbered List",
 			"bulletList": "Bullet List"
 		},
-		"drawer": {
-			"loggedInAs": "Logged in as"
-		},
 		"practiceComplete": {
 			"cardsCorrect": "You got {{correct}} out of {{total}} cards correct",
 			"title": "Practice Complete"

@@ -22,9 +22,6 @@
 			"numberedList": "Genummerde Lijst",
 			"bulletList": "Lijst met Opsommingstekens"
 		},
-		"drawer": {
-			"loggedInAs": "Ingelogd als"
-		},
 		"practiceComplete": {
 			"cardsCorrect": "Je hebt {{correct}} van de {{total}} kaarten goed",
 			"title": "Oefening Voltooid"
