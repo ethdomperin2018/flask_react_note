@@ -33,6 +33,8 @@ function PracticeControls({
 				rounded="full"
 				size="2xl"
 				bg="bg.100"
+				borderWidth="1px"
+				borderColor="bg.200"
 				_hover={{
 					bg: "rgba(205, 32, 32, 0.25)",
 					borderColor: "red",
@@ -50,6 +52,8 @@ function PracticeControls({
 				rounded="full"
 				size="2xl"
 				bg="bg.100"
+				borderWidth="1px"
+				borderColor="bg.200"
 				_hover={{
 					bg: "rgba(46, 160, 67, 0.25)",
 					borderColor: "green",

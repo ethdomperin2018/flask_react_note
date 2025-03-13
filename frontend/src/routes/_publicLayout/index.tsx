@@ -1,5 +1,6 @@
 import { BlueButton, DefaultButton } from "@/components/commonUI/Button";
 import { Footer } from "@/components/commonUI/Footer";
+import { useColorMode } from "@/components/ui/color-mode";
 import {
 	Container,
 	Heading,
@@ -19,6 +20,10 @@ export const Route = createFileRoute("/_publicLayout/")({
 function LandingPage() {
 	const { t } = useTranslation();
 	const isAuthenticated = isLoggedIn();
+	const { colorMode } = useColorMode();
+
+	const videoSrc =
+		colorMode === "dark" ? "/preview_dark.mp4" : "/preview_light.mp4";
 
 	return (
 		<Container
@@ -77,17 +82,16 @@ function LandingPage() {
 
 				<VStack flex={1} gap={8}>
 					<video
-						src="/preview.mp4"
+						src={videoSrc}
 						autoPlay
 						loop
 						muted
 						style={{
 							width: "100%",
-							maxWidth: "18rem",
+							maxWidth: "20rem",
 							borderRadius: "12px",
-							border: "1px solid #565158",
-							boxShadow:
-								" 0px 2px 4px color-mix(in srgb, black 64%, transparent), 0px 0px 1px inset color-mix(in srgb, #d4d4d8 30%, transparent)",
+							borderWidth: "2px",
+							borderColor: "var(--chakra-colors-bg-100)",
 						}}
 					/>
 				</VStack>
@@ -118,7 +122,7 @@ function LandingPage() {
 					/>
 				</Stack>
 			</VStack>
-			<Footer version="0.0.16" />
+			<Footer version="0.0.17" />
 		</Container>
 	);
 }
