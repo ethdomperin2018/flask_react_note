@@ -8,6 +8,7 @@ import ScrollableContainer from "@/components/commonUI/ScrollableContainer";
 import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { MdSchool } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
 
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/_layout/collections/$collectionId/")({
 });
 
 function CollectionComponent() {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { collectionId } = Route.useParams();
@@ -53,8 +55,8 @@ function CollectionComponent() {
 				<Stack gap="4">
 					{cards.length === 0 ? (
 						<EmptyState
-							title="This collection is empty"
-							message="Add your first flashcard using the blue button below and start mastering new concepts!"
+							title={t("routes.layout.collectionIndex.collectionEmpty")}
+							message={t("routes.layout.collectionIndex.addFirstCard")}
 						/>
 					) : (
 						cards.map((card) => (
@@ -69,7 +71,7 @@ function CollectionComponent() {
 					icon={<MdSchool color="white" />}
 					position="left"
 					bgColor="fbuttons.green"
-					aria-label="Practice Cards"
+					aria-label={t("general.actions.practiceCards")}
 					onClick={() =>
 						navigate({ to: `/collections/${collectionId}/practice` })
 					}
@@ -78,7 +80,7 @@ function CollectionComponent() {
 
 			<FloatingActionButton
 				icon={<VscAdd color="white" />}
-				aria-label="Add Card"
+				aria-label={t("general.actions.addCard")}
 				onClick={() =>
 					navigate({ to: `/collections/${collectionId}/cards/new` })
 				}

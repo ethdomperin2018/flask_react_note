@@ -1,5 +1,6 @@
 import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { RiEdit2Fill } from "react-icons/ri";
 
 interface Progress {
@@ -19,6 +20,7 @@ function PracticeHeader({
 	progress,
 	collectionId,
 }: PracticeHeaderProps) {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const total = progress.total;
 
@@ -27,8 +29,8 @@ function PracticeHeader({
 			<HStack w="100%" justifyContent="space-between" alignItems="center">
 				<Text fontSize="sm" color="fg.muted">
 					{total === 0
-						? "Start practicing!"
-						: `Correct: ${progress.correct} | Incorrect: ${progress.incorrect}`}
+						? `${t("general.actions.startPracticing")}!`
+						: `${t("general.words.correct")}: ${progress.correct} | ${t("general.words.incorrect")}: ${progress.incorrect}`}
 				</Text>
 				<IconButton
 					aria-label="Edit card"

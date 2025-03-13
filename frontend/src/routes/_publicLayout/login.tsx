@@ -2,13 +2,14 @@ import Logo from "@/assets/Logo.svg";
 import { Container, Field, Fieldset, Image, Text } from "@chakra-ui/react";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import type { Body_login_login_access_token as AccessToken } from "../client";
-import { DefaultButton } from "../components/commonUI/Button";
-import { DefaultInput } from "../components/commonUI/Input";
-import useAuth, { isLoggedIn } from "../hooks/useAuth";
-import { emailPattern } from "../utils";
+import { useTranslation } from "react-i18next";
+import type { Body_login_login_access_token as AccessToken } from "../../client";
+import { DefaultButton } from "../../components/commonUI/Button";
+import { DefaultInput } from "../../components/commonUI/Input";
+import useAuth, { isLoggedIn } from "../../hooks/useAuth";
+import { emailPattern } from "../../utils";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/_publicLayout/login")({
 	component: Login,
 	beforeLoad: async () => {
 		if (isLoggedIn()) {
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function Login() {
+	const { t } = useTranslation();
 	const { loginMutation, error, resetError } = useAuth();
 	const {
 		register,
@@ -67,12 +69,12 @@ function Login() {
 				<Fieldset.Root maxW="sm">
 					<Fieldset.Content>
 						<Field.Root>
-							<Field.Label>Email</Field.Label>
+							<Field.Label>{t("general.words.email")}</Field.Label>
 							<DefaultInput
-								placeholder="Email"
 								type="email"
+								placeholder={t("general.words.email")}
 								{...register("username", {
-									required: "Username is required",
+									required: t("general.errors.usernameIsRequired"),
 									pattern: emailPattern,
 								})}
 							/>
@@ -82,12 +84,12 @@ function Login() {
 								</Text>
 							)}
 							<Field.Root>
-								<Field.Label>Password</Field.Label>
+								<Field.Label>{t("general.words.password")}</Field.Label>
 								<DefaultInput
 									type="password"
-									placeholder="Password"
+									placeholder={t("general.words.password")}
 									{...register("password", {
-										required: "Password is required",
+										required: t("general.errors.passwordIsRequired"),
 									})}
 								/>
 								{error && (
@@ -103,15 +105,15 @@ function Login() {
 						loading={isSubmitting}
 						color="fg.primary"
 					>
-						Log In
+						{t("general.actions.login")}
 					</DefaultButton>
 				</Fieldset.Root>
 			</form>
 			<Text>
-				Don't have an account?{" "}
+				{t("routes.publicLayout.login.dontHaveAccount")}{" "}
 				<Link to="/signup">
 					<Text as="span" color="blue.500">
-						Sign up
+						{t("general.actions.signUp")}
 					</Text>
 				</Link>
 			</Text>

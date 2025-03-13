@@ -1,4 +1,5 @@
 import { HStack, IconButton, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { FiRepeat } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
@@ -9,13 +10,14 @@ interface CardHeaderProps {
 }
 
 function CardHeader({ side, onFlip, onSave }: CardHeaderProps) {
+	const { t } = useTranslation();
 	return (
 		<HStack w="100%" justifyContent="space-between" alignItems="center">
 			<IconButton
 				colorPalette="teal"
 				size="sm"
 				onClick={onFlip}
-				aria-label="Switch card side"
+				aria-label={t("components.cardHeader.switchCard")}
 				variant="ghost"
 				_hover={{
 					transform: "scale(1.05)",
@@ -31,12 +33,12 @@ function CardHeader({ side, onFlip, onSave }: CardHeaderProps) {
 				textTransform="uppercase"
 				letterSpacing="wide"
 			>
-				{side === "front" ? "Front" : "Back"}
+				{t(`general.words.${side}`)}
 			</Text>
 			<IconButton
 				colorPalette="teal"
 				size="sm"
-				aria-label="save"
+				aria-label={t("general.actions.save")}
 				variant="ghost"
 				onClick={onSave}
 				_hover={{

@@ -1,4 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { ImGithub } from "react-icons/im";
 
 interface FooterProps {
@@ -12,6 +13,7 @@ export function Footer({
 	githubUrl = "https://github.com/ZorroGuadaPavos/FlashNotes",
 	copyrightYear = new Date().getFullYear().toString(),
 }: FooterProps) {
+	const { t } = useTranslation();
 	return (
 		<Stack
 			direction={{ base: "column", md: "row" }}
@@ -32,13 +34,17 @@ export function Footer({
 				<Stack direction="row" align="center" gap={2}>
 					<ImGithub />
 
-					<Text>GitHub</Text>
+					<Text>{t("general.words.github")}</Text>
 				</Stack>
 			</a>
 			<Text>•</Text>
-			<Text color="gray.500">Version {version}</Text>
+			<Text color="gray.500">
+				{t("general.words.version")} {version}
+			</Text>
 			<Text>•</Text>
-			<Text>© {copyrightYear} FlashNotes</Text>
+			<Text>
+				© {copyrightYear} {t("general.words.flashNotes")}
+			</Text>
 		</Stack>
 	);
 }

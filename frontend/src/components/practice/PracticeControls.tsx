@@ -1,4 +1,5 @@
 import { Flex, HStack, IconButton } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { BlueButton } from "../commonUI/Button";
 
@@ -13,10 +14,13 @@ function PracticeControls({
 	onFlip,
 	onAnswer,
 }: PracticeControlsProps) {
+	const { t } = useTranslation();
 	if (!isFlipped) {
 		return (
 			<Flex height="5rem" justifyContent="center" alignItems="center">
-				<BlueButton onClick={onFlip}>Show Answer</BlueButton>
+				<BlueButton onClick={onFlip}>
+					{t("general.actions.showAnswer")}
+				</BlueButton>
 			</Flex>
 		);
 	}
@@ -24,7 +28,7 @@ function PracticeControls({
 	return (
 		<HStack gap={20} height="5rem">
 			<IconButton
-				aria-label="Don't Know"
+				aria-label={t("general.actions.doNotKnow")}
 				onClick={() => onAnswer(false)}
 				rounded="full"
 				size="2xl"

@@ -2,6 +2,7 @@ import { FlashcardsService } from "@/client";
 import { toaster } from "@/components/ui/toaster";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface CardData {
 	front: string;
@@ -20,6 +21,7 @@ const hasCardContentChanged = (
 };
 
 export function useCard(collectionId: string, cardId?: string) {
+	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const [card, setCard] = useState<CardData>({ front: "", back: "" });
 	const [originalCard, setOriginalCard] = useState<CardData>({
@@ -43,13 +45,16 @@ export function useCard(collectionId: string, cardId?: string) {
 				setCard(data);
 				setOriginalCard(data);
 			} catch (error) {
-				toaster.create({ title: "Error loading card", type: "error" });
+				toaster.create({
+					title: t("general.errors.errorloadingCard"),
+					type: "error",
+				});
 			} finally {
 				setIsLoading(false);
 			}
 		};
 		fetchCard();
-	}, [cardId, collectionId]);
+	}, [cardId, collectionId, t]);
 
 	const saveCard = useCallback(
 		async (cardData: CardData) => {
@@ -80,11 +85,14 @@ export function useCard(collectionId: string, cardId?: string) {
 						queryKey: ["collections", collectionId, "cards"],
 					});
 				} catch (error) {
-					toaster.create({ title: "Error saving card", type: "error" });
+					toaster.create({
+						title: t("general.errors.errorSavingCard"),
+						type: "error",
+					});
 				}
 			}
 		},
-		[originalCard, collectionId, queryClient],
+		[originalCard, collectionId, queryClient, t],
 	);
 
 	const flip = useCallback(() => {

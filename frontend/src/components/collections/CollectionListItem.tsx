@@ -2,6 +2,7 @@ import type { Collection } from "@/client";
 import { Box, HStack, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { DefaultInput } from "../commonUI/Input";
 import CollectionKebabMenu from "./CollectionKebabMenu";
 
@@ -16,6 +17,7 @@ function CollectionListItem({
 	onDelete,
 	onRename,
 }: CollectionListItemProps) {
+	const { t } = useTranslation();
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedName, setEditedName] = useState(collection.name);
 
@@ -80,8 +82,8 @@ function CollectionListItem({
 				</Box>
 				<Text textStyle="xs" color="fg.muted" marginTop=".5rem">
 					{collection.cards.length > 0
-						? `Total cards: ${collection.cards.length}`
-						: "No cards added yet."}
+						? `${t("general.words.totalCards")}: ${collection.cards.length}`
+						: t("general.words.noCardsAdded")}
 				</Text>
 			</Box>
 			<Box p=".5rem">

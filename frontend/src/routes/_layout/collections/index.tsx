@@ -11,6 +11,7 @@ import { Stack } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { VscAdd, VscWand } from "react-icons/vsc";
 
 function getCollectionsQueryOptions() {
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/_layout/collections/")({
 });
 
 function Collections() {
+	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const [isCreatingAiCollection, setIsCreatingAiCollection] = useState(false);
 
@@ -90,8 +92,8 @@ function Collections() {
 				<Stack gap={4}>
 					{collections?.data.length === 0 ? (
 						<EmptyState
-							title="Ready to start learning?"
-							message="Create your first collection and begin your learning journey!"
+							title={t("routes.layout.index.readyToStartLearning")}
+							message={t("routes.layout.index.createFirstCollection")}
 						/>
 					) : (
 						collections?.data.map((collection) => (
@@ -110,14 +112,14 @@ function Collections() {
 				<FloatingActionButton
 					position="left"
 					icon={<VscWand color="white" />}
-					aria-label="Create AI Collection"
+					aria-label={t("general.actions.createAiCollection")}
 					isLoading={isCreatingAiCollection}
 				/>
 			</AiCollectionDialog>
 			<CollectionDialog onAdd={addCollection}>
 				<FloatingActionButton
 					icon={<VscAdd color="white" />}
-					aria-label="Add Collection"
+					aria-label={t("general.actions.addCollection")}
 				/>
 			</CollectionDialog>
 		</>

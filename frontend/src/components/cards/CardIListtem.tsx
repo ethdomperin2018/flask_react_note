@@ -2,6 +2,7 @@ import type { Card } from "@/client";
 import { stripHtml } from "@/utils/text";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { MdDelete } from "react-icons/md";
 
 interface CardListItemProps {
@@ -10,6 +11,7 @@ interface CardListItemProps {
 }
 
 function CardListItem({ card, onDelete }: CardListItemProps) {
+	const { t } = useTranslation();
 	return (
 		<HStack
 			justifyContent="space-between"
@@ -31,7 +33,7 @@ function CardListItem({ card, onDelete }: CardListItemProps) {
 			</Box>
 			<Box p=".75rem" borderLeft="1px" borderColor="bg.100">
 				<IconButton
-					aria-label="Delete card"
+					aria-label={t("general.actions.deleteCard")}
 					variant="ghost"
 					size="sm"
 					onClick={() => onDelete(card.id)}

@@ -1,6 +1,7 @@
 import { Box, HStack, IconButton } from "@chakra-ui/react";
 import type { Editor } from "@tiptap/react";
 import { memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	RiBold,
 	RiCodeBoxLine,
@@ -24,39 +25,64 @@ interface ToolbarButton {
 	tooltip: string;
 }
 
-const toolbarButtons: ToolbarButton[] = [
-	{ icon: <RiH1 size={20} />, command: "heading-1", tooltip: "Heading 1" },
-	{ icon: <RiH2 size={20} />, command: "heading-2", tooltip: "Heading 2" },
-	{ icon: <RiH3 size={20} />, command: "heading-3", tooltip: "Heading 3" },
-	{ icon: <RiBold size={20} />, command: "bold", tooltip: "Bold" },
-	{ icon: <RiItalic size={20} />, command: "italic", tooltip: "Italic" },
-	{
-		icon: <RiStrikethrough size={20} />,
-		command: "strike",
-		tooltip: "Strikethrough",
-	},
-	{
-		icon: <RiListUnordered size={20} />,
-		command: "bulletList",
-		tooltip: "Bullet List",
-	},
-	{
-		icon: <RiListOrdered size={20} />,
-		command: "orderedList",
-		tooltip: "Numbered List",
-	},
-	{ icon: <RiCodeLine size={20} />, command: "code", tooltip: "Inline Code" },
-	{
-		icon: <RiCodeBoxLine size={20} />,
-		command: "codeBlock",
-		tooltip: "Code Block",
-	},
-];
-
 function EditorToolbar({ editor }: EditorToolbarProps) {
 	if (!editor) {
 		return null;
 	}
+	const { t } = useTranslation();
+
+	const toolbarButtons: ToolbarButton[] = [
+		{
+			icon: <RiH1 size={20} />,
+			command: "heading-1",
+			tooltip: t("components.editorToolbar.heading1"),
+		},
+		{
+			icon: <RiH2 size={20} />,
+			command: "heading-2",
+			tooltip: t("components.editorToolbar.heading2"),
+		},
+		{
+			icon: <RiH3 size={20} />,
+			command: "heading-3",
+			tooltip: t("components.editorToolbar.heading3"),
+		},
+		{
+			icon: <RiBold size={20} />,
+			command: "bold",
+			tooltip: t("components.editorToolbar.bold"),
+		},
+		{
+			icon: <RiItalic size={20} />,
+			command: "italic",
+			tooltip: t("components.editorToolbar.italic"),
+		},
+		{
+			icon: <RiStrikethrough size={20} />,
+			command: "strike",
+			tooltip: t("components.editorToolbar.strikethrough"),
+		},
+		{
+			icon: <RiListUnordered size={20} />,
+			command: "bulletList",
+			tooltip: t("components.editorToolbar.bulletList"),
+		},
+		{
+			icon: <RiListOrdered size={20} />,
+			command: "orderedList",
+			tooltip: t("components.editorToolbar.numberedList"),
+		},
+		{
+			icon: <RiCodeLine size={20} />,
+			command: "code",
+			tooltip: t("components.editorToolbar.inlineCode"),
+		},
+		{
+			icon: <RiCodeBoxLine size={20} />,
+			command: "codeBlock",
+			tooltip: t("components.editorToolbar.codeBlock"),
+		},
+	];
 
 	const toggleFormat = useCallback(
 		(command: string) => {

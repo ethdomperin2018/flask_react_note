@@ -5,6 +5,7 @@ import {
 	MenuTrigger,
 } from "@/components/ui/menu";
 import { Box } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -20,6 +21,7 @@ function CollectionKebabMenu({
 	onDelete,
 	onRename,
 }: CollectionKebabMenuProps) {
+	const { t } = useTranslation();
 	return (
 		<MenuRoot>
 			<MenuTrigger asChild>
@@ -44,7 +46,7 @@ function CollectionKebabMenu({
 					_hover={{ bg: "bg.100" }}
 				>
 					<RiEdit2Fill />
-					<Box flex="1">Rename</Box>
+					<Box flex="1">{t("general.actions.rename")}</Box>
 				</MenuItem>
 				<MenuItem
 					value="delete"
@@ -53,7 +55,7 @@ function CollectionKebabMenu({
 					_hover={{ bg: "bg.100" }}
 				>
 					<MdDelete />
-					<Box flex="1">Delete</Box>
+					<Box flex="1">{t("general.actions.delete")}</Box>
 				</MenuItem>
 			</MenuContent>
 		</MenuRoot>

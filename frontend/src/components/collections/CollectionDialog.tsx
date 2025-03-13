@@ -10,6 +10,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BlueButton, RedButton } from "../commonUI/Button";
 import { DefaultInput } from "../commonUI/Input";
 
@@ -22,6 +23,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 	onAdd,
 	children,
 }) => {
+	const { t } = useTranslation();
 	const [collectionName, setCollectionName] = useState("");
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -46,11 +48,13 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent bg="bg.50">
 				<DialogHeader>
-					<DialogTitle color="fg.DEFAULT">Add New Collection</DialogTitle>
+					<DialogTitle color="fg.DEFAULT">
+						{t("components.collectionDialog.title")}
+					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
 					<DefaultInput
-						placeholder="Collection Name"
+						placeholder={t("general.words.collectionName")}
 						value={collectionName}
 						onChange={(e) => setCollectionName(e.target.value)}
 						onKeyDown={(e) => {
@@ -63,10 +67,14 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 				</DialogBody>
 				<DialogFooter>
 					<DialogActionTrigger asChild>
-						<RedButton onClick={() => setCollectionName("")}>Cancel</RedButton>
+						<RedButton onClick={() => setCollectionName("")}>
+							{t("general.actions.cancel")}
+						</RedButton>
 					</DialogActionTrigger>
 					<DialogActionTrigger asChild>
-						<BlueButton onClick={handleSubmit}>Save</BlueButton>
+						<BlueButton onClick={handleSubmit}>
+							{t("general.actions.save")}
+						</BlueButton>
 					</DialogActionTrigger>
 				</DialogFooter>
 				<DialogCloseTrigger ref={closeButtonRef} />
