@@ -4,6 +4,7 @@ from typing import Annotated, Any
 from fastapi import Depends
 from google import genai
 from google.genai import types
+from google.genai.models import AsyncModels
 
 from src.core.config import settings
 
@@ -17,6 +18,7 @@ class GeminiProvider:
         """Initialize the Gemini provider with the specified model."""
         self.model_name = model_name
         self.client = genai.Client(api_key=settings.AI_API_KEY)
+        self.async_models = AsyncModels(self.client._api_client)
 
     async def run_model(
         self, content_config: types.GenerateContentConfig, prompt: str
@@ -25,7 +27,7 @@ class GeminiProvider:
             content = types.Content(
                 role="user", parts=[types.Part.from_text(text=prompt)]
             )
-            response = self.client.models.generate_content(
+            response = await self.async_models.generate_content(
                 model=self.model_name,
                 contents=[content],
                 config=content_config,
