@@ -3,6 +3,7 @@ import { ColorModeProvider } from "@/components/ui/color-mode";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { PostHogProvider } from "posthog-js/react";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { OpenAPI } from "./client";
@@ -15,6 +16,14 @@ OpenAPI.TOKEN = async () => {
 };
 
 const queryClient = new QueryClient();
+
+const posthogApiKey = import.meta.env.VITE_POSTHOG_API_KEY;
+const posthogConfig = {
+	enabled: import.meta.env.PROD && !!posthogApiKey,
+	options: import.meta.env.VITE_POSTHOG_HOST
+		? { api_host: import.meta.env.VITE_POSTHOG_HOST }
+		: {},
+};
 
 const router = createRouter({ routeTree });
 declare module "@tanstack/react-router" {
@@ -31,7 +40,16 @@ if (rootElement && !rootElement.innerHTML) {
 			<ChakraProvider value={system}>
 				<ColorModeProvider>
 					<QueryClientProvider client={queryClient}>
-						<RouterProvider router={router} />
+						{posthogConfig.enabled ? (
+							<PostHogProvider
+								apiKey={posthogApiKey}
+								options={posthogConfig.options}
+							>
+								<RouterProvider router={router} />
+							</PostHogProvider>
+						) : (
+							<RouterProvider router={router} />
+						)}
 					</QueryClientProvider>
 				</ColorModeProvider>
 			</ChakraProvider>
