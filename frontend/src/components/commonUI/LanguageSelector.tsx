@@ -15,7 +15,6 @@ type Placement = "top" | "bottom" | "left" | "right";
 
 interface LanguageSelectorProps {
 	placement?: Placement;
-	className?: string;
 }
 
 const useLanguageSelection = () => {
@@ -55,53 +54,50 @@ const LanguageAvatar = ({
 
 export default function LanguageSelector({
 	placement = "bottom",
-	className,
 }: LanguageSelectorProps) {
 	const { selectedLanguage, selectLanguage } = useLanguageSelection();
 
 	return (
-		<Flex className={className}>
-			<MenuRoot positioning={{ placement }}>
-				<MenuTrigger asChild padding="0 8px">
-					<HStack>
-						<LanguageAvatar language={selectedLanguage} onClick={() => {}} />
-					</HStack>
-				</MenuTrigger>
-				<MenuContent
-					minWidth="0"
-					background="transparent"
-					boxShadow="none"
-					portalled={false}
-					role="menu"
-					aria-label="Language selection menu"
-				>
-					{LOCALE_KEYS.filter(
-						(language) => language.key !== selectedLanguage.key,
-					).map((language) => (
-						<MenuItem
-							paddingInline={0}
-							key={language.key}
-							background="transparent"
-							value={language.key}
-							role="menuitem"
+		<MenuRoot positioning={{ placement }}>
+			<MenuTrigger asChild>
+				<Flex padding="0 8px" cursor="pointer">
+					<LanguageAvatar language={selectedLanguage} />
+				</Flex>
+			</MenuTrigger>
+			<MenuContent
+				minWidth="0"
+				background="transparent"
+				boxShadow="none"
+				portalled={false}
+				role="menu"
+				aria-label="Language selection menu"
+			>
+				{LOCALE_KEYS.filter(
+					(language) => language.key !== selectedLanguage.key,
+				).map((language) => (
+					<MenuItem
+						paddingInline={0}
+						key={language.key}
+						background="transparent"
+						value={language.key}
+						role="menuitem"
+					>
+						<HStack
+							cursor="pointer"
+							_active={{ opacity: 0.8 }}
+							_hover={{
+								transform: "scale(1.15)",
+								transition: "all 0.3s ease",
+							}}
 						>
-							<HStack
-								cursor="pointer"
-								_active={{ opacity: 0.8 }}
-								_hover={{
-									transform: "scale(1.15)",
-									transition: "all 0.3s ease",
-								}}
-							>
-								<LanguageAvatar
-									language={language}
-									onClick={() => selectLanguage(language)}
-								/>
-							</HStack>
-						</MenuItem>
-					))}
-				</MenuContent>
-			</MenuRoot>
-		</Flex>
+							<LanguageAvatar
+								language={language}
+								onClick={() => selectLanguage(language)}
+							/>
+						</HStack>
+					</MenuItem>
+				))}
+			</MenuContent>
+		</MenuRoot>
 	);
 }

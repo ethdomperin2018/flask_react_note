@@ -16,6 +16,7 @@ function PublicLayout() {
 				right="0"
 				px="4"
 				py="4"
+				zIndex={1}
 				justifyContent="flex-end"
 			>
 				<LanguageSelector />

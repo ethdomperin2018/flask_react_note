@@ -112,7 +112,7 @@ function Drawer({
 				</DrawerBody>
 				<DrawerFooter>
 					<VStack width="100%" gap={2}>
-						<HStack justifyContent="space-between" w="100%" alignItems="normal">
+						<HStack justifyContent="space-between" w="100%" alignItems="center">
 							{currentUser?.email && (
 								<Text
 									fontSize="sm"
