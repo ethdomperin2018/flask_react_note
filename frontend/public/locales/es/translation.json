@@ -22,9 +22,6 @@
 			"numberedList": "Lista Numerada",
 			"bulletList": "Lista con Viñetas"
 		},
-		"drawer": {
-			"loggedInAs": "Conectado como"
-		},
 		"practiceComplete": {
 			"cardsCorrect": "Has acertado {{correct}} de {{total}} tarjetas",
 			"title": "Práctica Completa"
@@ -89,7 +86,7 @@
 			"easy": "Fácil",
 			"features": "Características",
 			"flashNotes": "FlashNotes",
-			"front": "Frontal",
+			"front": "Frente",
 			"fullName": "Nombre Completo",
 			"hard": "Difícil",
 			"incorrect": "Incorrecto",

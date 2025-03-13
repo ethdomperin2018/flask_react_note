@@ -112,21 +112,16 @@ function Drawer({
 				</DrawerBody>
 				<DrawerFooter>
 					<VStack width="100%" gap={2}>
-						<HStack justifyContent={"center"}>
+						<HStack justifyContent="space-between" w="100%" alignItems="normal">
 							{currentUser?.email && (
-								<VStack alignItems={"start"} gap={0}>
-									<Text fontSize="sm" color="fg.muted">
-										{t("components.drawer.loggedInAs")}:
-									</Text>
-									<Text
-										fontSize="sm"
-										color="fg.muted"
-										maxWidth="11.5rem"
-										truncate
-									>
-										{currentUser.email}
-									</Text>
-								</VStack>
+								<Text
+									fontSize="sm"
+									color="fg.muted"
+									maxWidth="11.5rem"
+									truncate
+								>
+									{currentUser.email}
+								</Text>
 							)}
 							<LanguageSelector placement="top" />
 						</HStack>
