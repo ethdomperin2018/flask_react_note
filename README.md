@@ -157,3 +157,10 @@ Once the backend is running, access the interactive API documentation at:
 
 ## License
 This project is licensed under the MIT License.
+
+
+## Related Projects
+
+Check out my other projects:
+
+- [TasteThis!](https://github.com/ZorroGuadaPavos/taste-this-front) - Find the most popular dishes (https://taste-this.com)
