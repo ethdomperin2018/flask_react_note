@@ -1,5 +1,6 @@
 import type { Collection } from '@/client'
 import { Box, HStack, Text } from '@chakra-ui/react'
+import { useNavigate } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +44,6 @@ function CollectionListItem({ collection, onDelete, onRename }: CollectionListIt
       justifyContent="space-between"
       borderRadius="lg"
       borderWidth="1px"
-      boxShadow="sm"
       borderColor="bg.100"
       _hover={{ bg: 'bg.50' }}
     >
@@ -77,13 +77,13 @@ function CollectionListItem({ collection, onDelete, onRename }: CollectionListIt
             : t('general.words.noCardsAdded')}
         </Text>
       </Box>
-      <Box p=".5rem">
+      <HStack p=".5rem" gap={1}>
         <CollectionKebabMenu
           collectionId={collection.id}
           onDelete={onDelete}
           onRename={handleEdit}
         />
-      </Box>
+      </HStack>
     </HStack>
   )
 }
