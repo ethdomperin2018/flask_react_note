@@ -1,6 +1,5 @@
 import type { Collection } from '@/client'
 import { Box, HStack, Text } from '@chakra-ui/react'
-import { useNavigate } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

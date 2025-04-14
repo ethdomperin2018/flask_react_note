@@ -1,4 +1,4 @@
-import { type CollectionCreate, FlashcardsService } from '@/client'
+import { FlashcardsService } from '@/client'
 import AiCollectionDialog from '@/components/collections/AiCollectionDialog'
 import CollectionDialog from '@/components/collections/CollectionDialog'
 import CollectionListItem from '@/components/collections/CollectionListItem'
@@ -10,7 +10,7 @@ import SpeedDial, { type SpeedDialActionItem } from '@/components/commonUI/Speed
 import { Stack, Text } from '@chakra-ui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { VscAdd } from 'react-icons/vsc'
 
