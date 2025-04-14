@@ -12,7 +12,7 @@ from .services import get_collection_stats
 router = APIRouter()
 
 
-@router.get("/collections/{collection_id}", response_model=CollectionStats)
+@router.get("/collections/{collection_id}/stats", response_model=CollectionStats)
 def get_collection_statistics_endpoint(
     session: SessionDep,
     current_user: CurrentUser,

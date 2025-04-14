@@ -10,9 +10,7 @@
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_login-login_access_token"
-              }
+              "schema": { "$ref": "#/components/schemas/Body_login-login_access_token" }
             }
           },
           "required": true
@@ -21,9 +19,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Token" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Token" } }
             }
           },
           "422": {
@@ -47,9 +43,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserPublic" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserPublic" } }
             }
           }
         },
@@ -64,9 +58,7 @@
         "operationId": "users-register_user",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserRegister" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserRegister" } }
           },
           "required": true
         },
@@ -74,9 +66,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserPublic" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserPublic" } }
             }
           },
           "422": {
@@ -90,7 +80,7 @@
         }
       }
     },
-    "/api/v1/flashcards/collections/": {
+    "/api/v1/collections/": {
       "get": {
         "tags": ["flashcards"],
         "summary": "Read Collections",
@@ -114,9 +104,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/CollectionList" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/CollectionList" } }
             }
           },
           "422": {
@@ -137,18 +125,14 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CollectionCreate" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/CollectionCreate" } }
           }
         },
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Collection" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Collection" } }
             }
           },
           "422": {
@@ -162,7 +146,7 @@
         }
       }
     },
-    "/api/v1/flashcards/collections/{collection_id}": {
+    "/api/v1/collections/{collection_id}": {
       "get": {
         "tags": ["flashcards"],
         "summary": "Read Collection",
@@ -173,20 +157,14 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Collection" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Collection" } }
             }
           },
           "422": {
@@ -209,28 +187,20 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CollectionUpdate" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/CollectionUpdate" } }
           }
         },
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Collection" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Collection" } }
             }
           },
           "422": {
@@ -253,11 +223,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           }
         ],
         "responses": {
@@ -273,7 +239,7 @@
         }
       }
     },
-    "/api/v1/flashcards/collections/{collection_id}/cards/": {
+    "/api/v1/collections/{collection_id}/cards/": {
       "get": {
         "tags": ["flashcards"],
         "summary": "Read Cards",
@@ -284,11 +250,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           },
           {
             "name": "skip",
@@ -307,9 +269,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/CardList" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/CardList" } }
             }
           },
           "422": {
@@ -332,29 +292,19 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CardCreate" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/CardCreate" } }
           }
         },
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Card" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Card" } } }
           },
           "422": {
             "description": "Validation Error",
@@ -367,7 +317,7 @@
         }
       }
     },
-    "/api/v1/flashcards/collections/{collection_id}/cards/{card_id}": {
+    "/api/v1/collections/{collection_id}/cards/{card_id}": {
       "get": {
         "tags": ["flashcards"],
         "summary": "Read Card",
@@ -378,11 +328,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           },
           {
             "name": "card_id",
@@ -394,11 +340,7 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Card" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Card" } } }
           },
           "422": {
             "description": "Validation Error",
@@ -420,11 +362,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           },
           {
             "name": "card_id",
@@ -436,19 +374,13 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CardUpdate" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/CardUpdate" } }
           }
         },
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Card" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Card" } } }
           },
           "422": {
             "description": "Validation Error",
@@ -470,11 +402,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           },
           {
             "name": "card_id",
@@ -496,7 +424,7 @@
         }
       }
     },
-    "/api/v1/flashcards/practice-sessions": {
+    "/api/v1/practice-sessions": {
       "post": {
         "tags": ["flashcards"],
         "summary": "Start Practice Session",
@@ -515,9 +443,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/PracticeSession" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/PracticeSession" } }
             }
           },
           "422": {
@@ -570,7 +496,7 @@
         }
       }
     },
-    "/api/v1/flashcards/practice-sessions/{practice_session_id}": {
+    "/api/v1/practice-sessions/{practice_session_id}": {
       "get": {
         "tags": ["flashcards"],
         "summary": "Get Practice Session Status",
@@ -582,20 +508,14 @@
             "name": "practice_session_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Practice Session Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Practice Session Id" }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/PracticeSession" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/PracticeSession" } }
             }
           },
           "422": {
@@ -609,7 +529,7 @@
         }
       }
     },
-    "/api/v1/flashcards/practice-sessions/{practice_session_id}/cards": {
+    "/api/v1/practice-sessions/{practice_session_id}/cards": {
       "get": {
         "tags": ["flashcards"],
         "summary": "List Practice Cards",
@@ -621,11 +541,7 @@
             "name": "practice_session_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Practice Session Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Practice Session Id" }
           },
           {
             "name": "status",
@@ -663,9 +579,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PracticeCardListResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/PracticeCardListResponse" }
               }
             }
           },
@@ -680,7 +594,7 @@
         }
       }
     },
-    "/api/v1/flashcards/practice-sessions/{practice_session_id}/cards/{card_id}": {
+    "/api/v1/practice-sessions/{practice_session_id}/cards/{card_id}": {
       "patch": {
         "tags": ["flashcards"],
         "summary": "Update Practice Card Result",
@@ -692,11 +606,7 @@
             "name": "practice_session_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Practice Session Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Practice Session Id" }
           },
           {
             "name": "card_id",
@@ -709,9 +619,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PracticeCardResultPatch"
-              }
+              "schema": { "$ref": "#/components/schemas/PracticeCardResultPatch" }
             }
           }
         },
@@ -720,9 +628,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PracticeCardResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/PracticeCardResponse" }
               }
             }
           },
@@ -737,7 +643,7 @@
         }
       }
     },
-    "/api/v1/stats/collections/{collection_id}": {
+    "/api/v1/collections/{collection_id}/stats": {
       "get": {
         "tags": ["stats"],
         "summary": "Get Collection Statistics Endpoint",
@@ -748,11 +654,7 @@
             "name": "collection_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Collection Id"
-            }
+            "schema": { "type": "string", "format": "uuid", "title": "Collection Id" }
           },
           {
             "name": "days",
@@ -773,9 +675,7 @@
           "200": {
             "description": "Successful Response",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/CollectionStats" }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/CollectionStats" } }
             }
           },
           "422": {
@@ -795,10 +695,7 @@
       "Body_login-login_access_token": {
         "properties": {
           "grant_type": {
-            "anyOf": [
-              { "type": "string", "pattern": "^password$" },
-              { "type": "null" }
-            ],
+            "anyOf": [{ "type": "string", "pattern": "^password$" }, { "type": "null" }],
             "title": "Grant Type"
           },
           "username": { "type": "string", "title": "Username" },
@@ -822,11 +719,7 @@
           "front": { "type": "string", "title": "Front" },
           "back": { "type": "string", "title": "Back" },
           "id": { "type": "string", "format": "uuid", "title": "Id" },
-          "collection_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Collection Id"
-          }
+          "collection_id": { "type": "string", "format": "uuid", "title": "Collection Id" }
         },
         "type": "object",
         "required": ["front", "back", "id", "collection_id"],
@@ -867,14 +760,8 @@
       },
       "CardUpdate": {
         "properties": {
-          "front": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Front"
-          },
-          "back": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Back"
-          }
+          "front": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Front" },
+          "back": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Back" }
         },
         "type": "object",
         "title": "CardUpdate"
@@ -898,10 +785,7 @@
         "properties": {
           "name": { "type": "string", "title": "Name" },
           "total_cards": { "type": "integer", "title": "Total Cards" },
-          "total_practice_sessions": {
-            "type": "integer",
-            "title": "Total Practice Sessions"
-          }
+          "total_practice_sessions": { "type": "integer", "title": "Total Practice Sessions" }
         },
         "type": "object",
         "required": ["name", "total_cards", "total_practice_sessions"],
@@ -910,10 +794,7 @@
       "CollectionCreate": {
         "properties": {
           "name": { "type": "string", "title": "Name" },
-          "prompt": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Prompt"
-          }
+          "prompt": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Prompt" }
         },
         "type": "object",
         "required": ["name"],
@@ -934,9 +815,7 @@
       },
       "CollectionStats": {
         "properties": {
-          "collection_info": {
-            "$ref": "#/components/schemas/CollectionBasicInfo"
-          },
+          "collection_info": { "$ref": "#/components/schemas/CollectionBasicInfo" },
           "recent_sessions": {
             "items": { "$ref": "#/components/schemas/PracticeSessionStats" },
             "type": "array",
@@ -954,10 +833,7 @@
       },
       "CollectionUpdate": {
         "properties": {
-          "name": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "title": "Name"
-          }
+          "name": { "anyOf": [{ "type": "string" }, { "type": "null" }], "title": "Name" }
         },
         "type": "object",
         "title": "CollectionUpdate"
@@ -977,26 +853,14 @@
         "properties": {
           "card_id": { "type": "string", "format": "uuid", "title": "Card Id" },
           "id": { "type": "string", "format": "uuid", "title": "Id" },
-          "session_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Session Id"
-          },
+          "session_id": { "type": "string", "format": "uuid", "title": "Session Id" },
           "is_correct": {
             "anyOf": [{ "type": "boolean" }, { "type": "null" }],
             "title": "Is Correct"
           },
           "is_practiced": { "type": "boolean", "title": "Is Practiced" },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Updated At"
-          }
+          "created_at": { "type": "string", "format": "date-time", "title": "Created At" },
+          "updated_at": { "type": "string", "format": "date-time", "title": "Updated At" }
         },
         "type": "object",
         "required": [
@@ -1037,36 +901,22 @@
         "title": "PracticeCardResponse"
       },
       "PracticeCardResultPatch": {
-        "properties": {
-          "is_correct": { "type": "boolean", "title": "Is Correct" }
-        },
+        "properties": { "is_correct": { "type": "boolean", "title": "Is Correct" } },
         "type": "object",
         "required": ["is_correct"],
         "title": "PracticeCardResultPatch"
       },
       "PracticeSession": {
         "properties": {
-          "collection_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Collection Id"
-          },
+          "collection_id": { "type": "string", "format": "uuid", "title": "Collection Id" },
           "id": { "type": "string", "format": "uuid", "title": "Id" },
           "user_id": { "type": "string", "format": "uuid", "title": "User Id" },
           "is_completed": { "type": "boolean", "title": "Is Completed" },
           "total_cards": { "type": "integer", "title": "Total Cards" },
           "cards_practiced": { "type": "integer", "title": "Cards Practiced" },
           "correct_answers": { "type": "integer", "title": "Correct Answers" },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Updated At"
-          },
+          "created_at": { "type": "string", "format": "date-time", "title": "Created At" },
+          "updated_at": { "type": "string", "format": "date-time", "title": "Updated At" },
           "practice_cards": {
             "items": { "$ref": "#/components/schemas/PracticeCard" },
             "type": "array",
@@ -1090,11 +940,7 @@
       },
       "PracticeSessionCreate": {
         "properties": {
-          "collection_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Collection Id"
-          }
+          "collection_id": { "type": "string", "format": "uuid", "title": "Collection Id" }
         },
         "type": "object",
         "required": ["collection_id"],
@@ -1116,11 +962,7 @@
       "PracticeSessionStats": {
         "properties": {
           "id": { "type": "string", "format": "uuid", "title": "Id" },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
+          "created_at": { "type": "string", "format": "date-time", "title": "Created At" },
           "cards_practiced": { "type": "integer", "title": "Cards Practiced" },
           "correct_answers": { "type": "integer", "title": "Correct Answers" },
           "total_cards": { "type": "integer", "title": "Total Cards" },
@@ -1140,11 +982,7 @@
       "Token": {
         "properties": {
           "access_token": { "type": "string", "title": "Access Token" },
-          "token_type": {
-            "type": "string",
-            "title": "Token Type",
-            "default": "bearer"
-          }
+          "token_type": { "type": "string", "title": "Token Type", "default": "bearer" }
         },
         "type": "object",
         "required": ["access_token"],
@@ -1152,27 +990,11 @@
       },
       "UserPublic": {
         "properties": {
-          "email": {
-            "type": "string",
-            "maxLength": 255,
-            "format": "email",
-            "title": "Email"
-          },
-          "is_active": {
-            "type": "boolean",
-            "title": "Is Active",
-            "default": true
-          },
-          "is_superuser": {
-            "type": "boolean",
-            "title": "Is Superuser",
-            "default": false
-          },
+          "email": { "type": "string", "maxLength": 255, "format": "email", "title": "Email" },
+          "is_active": { "type": "boolean", "title": "Is Active", "default": true },
+          "is_superuser": { "type": "boolean", "title": "Is Superuser", "default": false },
           "full_name": {
-            "anyOf": [
-              { "type": "string", "maxLength": 255 },
-              { "type": "null" }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 255 }, { "type": "null" }],
             "title": "Full Name"
           },
           "id": { "type": "string", "format": "uuid", "title": "Id" }
@@ -1183,23 +1005,10 @@
       },
       "UserRegister": {
         "properties": {
-          "email": {
-            "type": "string",
-            "maxLength": 255,
-            "format": "email",
-            "title": "Email"
-          },
-          "password": {
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 8,
-            "title": "Password"
-          },
+          "email": { "type": "string", "maxLength": 255, "format": "email", "title": "Email" },
+          "password": { "type": "string", "maxLength": 40, "minLength": 8, "title": "Password" },
           "full_name": {
-            "anyOf": [
-              { "type": "string", "maxLength": 255 },
-              { "type": "null" }
-            ],
+            "anyOf": [{ "type": "string", "maxLength": 255 }, { "type": "null" }],
             "title": "Full Name"
           }
         },

@@ -4,34 +4,34 @@ import type { CancelablePromise } from './core/CancelablePromise'
 import { OpenAPI } from './core/OpenAPI'
 import { request as __request } from './core/request'
 import type {
-  FlashcardsCreateCardData,
-  FlashcardsCreateCardResponse,
+  FlashcardsReadCollectionsData,
+  FlashcardsReadCollectionsResponse,
   FlashcardsCreateCollectionData,
   FlashcardsCreateCollectionResponse,
-  FlashcardsDeleteCardData,
-  FlashcardsDeleteCardResponse,
+  FlashcardsReadCollectionData,
+  FlashcardsReadCollectionResponse,
+  FlashcardsUpdateCollectionData,
+  FlashcardsUpdateCollectionResponse,
   FlashcardsDeleteCollectionData,
   FlashcardsDeleteCollectionResponse,
+  FlashcardsReadCardsData,
+  FlashcardsReadCardsResponse,
+  FlashcardsCreateCardData,
+  FlashcardsCreateCardResponse,
+  FlashcardsReadCardData,
+  FlashcardsReadCardResponse,
+  FlashcardsUpdateCardData,
+  FlashcardsUpdateCardResponse,
+  FlashcardsDeleteCardData,
+  FlashcardsDeleteCardResponse,
+  FlashcardsStartPracticeSessionData,
+  FlashcardsStartPracticeSessionResponse,
+  FlashcardsListPracticeSessionsData,
+  FlashcardsListPracticeSessionsResponse,
   FlashcardsGetPracticeSessionStatusData,
   FlashcardsGetPracticeSessionStatusResponse,
   FlashcardsListPracticeCardsData,
   FlashcardsListPracticeCardsResponse,
-  FlashcardsListPracticeSessionsData,
-  FlashcardsListPracticeSessionsResponse,
-  FlashcardsReadCardData,
-  FlashcardsReadCardResponse,
-  FlashcardsReadCardsData,
-  FlashcardsReadCardsResponse,
-  FlashcardsReadCollectionData,
-  FlashcardsReadCollectionResponse,
-  FlashcardsReadCollectionsData,
-  FlashcardsReadCollectionsResponse,
-  FlashcardsStartPracticeSessionData,
-  FlashcardsStartPracticeSessionResponse,
-  FlashcardsUpdateCardData,
-  FlashcardsUpdateCardResponse,
-  FlashcardsUpdateCollectionData,
-  FlashcardsUpdateCollectionResponse,
   FlashcardsUpdatePracticeCardResultData,
   FlashcardsUpdatePracticeCardResultResponse,
   LoginLoginAccessTokenData,
@@ -57,7 +57,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsReadCollectionsResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/collections/',
+      url: '/api/v1/collections/',
       query: {
         skip: data.skip,
         limit: data.limit,
@@ -80,7 +80,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsCreateCollectionResponse> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/flashcards/collections/',
+      url: '/api/v1/collections/',
       body: data.requestBody,
       mediaType: 'application/json',
       errors: {
@@ -101,7 +101,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsReadCollectionResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/collections/{collection_id}',
+      url: '/api/v1/collections/{collection_id}',
       path: {
         collection_id: data.collectionId,
       },
@@ -124,7 +124,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsUpdateCollectionResponse> {
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/api/v1/flashcards/collections/{collection_id}',
+      url: '/api/v1/collections/{collection_id}',
       path: {
         collection_id: data.collectionId,
       },
@@ -148,7 +148,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsDeleteCollectionResponse> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: '/api/v1/flashcards/collections/{collection_id}',
+      url: '/api/v1/collections/{collection_id}',
       path: {
         collection_id: data.collectionId,
       },
@@ -172,7 +172,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsReadCardsResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/collections/{collection_id}/cards/',
+      url: '/api/v1/collections/{collection_id}/cards/',
       path: {
         collection_id: data.collectionId,
       },
@@ -199,7 +199,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsCreateCardResponse> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/flashcards/collections/{collection_id}/cards/',
+      url: '/api/v1/collections/{collection_id}/cards/',
       path: {
         collection_id: data.collectionId,
       },
@@ -224,7 +224,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsReadCardResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/collections/{collection_id}/cards/{card_id}',
+      url: '/api/v1/collections/{collection_id}/cards/{card_id}',
       path: {
         collection_id: data.collectionId,
         card_id: data.cardId,
@@ -249,7 +249,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsUpdateCardResponse> {
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/api/v1/flashcards/collections/{collection_id}/cards/{card_id}',
+      url: '/api/v1/collections/{collection_id}/cards/{card_id}',
       path: {
         collection_id: data.collectionId,
         card_id: data.cardId,
@@ -275,7 +275,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsDeleteCardResponse> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: '/api/v1/flashcards/collections/{collection_id}/cards/{card_id}',
+      url: '/api/v1/collections/{collection_id}/cards/{card_id}',
       path: {
         collection_id: data.collectionId,
         card_id: data.cardId,
@@ -299,7 +299,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsStartPracticeSessionResponse> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/flashcards/practice-sessions',
+      url: '/api/v1/practice-sessions',
       body: data.requestBody,
       mediaType: 'application/json',
       errors: {
@@ -322,7 +322,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsListPracticeSessionsResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/practice-sessions',
+      url: '/api/v1/practice-sessions',
       query: {
         skip: data.skip,
         limit: data.limit,
@@ -346,7 +346,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsGetPracticeSessionStatusResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/practice-sessions/{practice_session_id}',
+      url: '/api/v1/practice-sessions/{practice_session_id}',
       path: {
         practice_session_id: data.practiceSessionId,
       },
@@ -372,7 +372,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsListPracticeCardsResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/flashcards/practice-sessions/{practice_session_id}/cards',
+      url: '/api/v1/practice-sessions/{practice_session_id}/cards',
       path: {
         practice_session_id: data.practiceSessionId,
       },
@@ -402,7 +402,7 @@ export class FlashcardsService {
   ): CancelablePromise<FlashcardsUpdatePracticeCardResultResponse> {
     return __request(OpenAPI, {
       method: 'PATCH',
-      url: '/api/v1/flashcards/practice-sessions/{practice_session_id}/cards/{card_id}',
+      url: '/api/v1/practice-sessions/{practice_session_id}/cards/{card_id}',
       path: {
         practice_session_id: data.practiceSessionId,
         card_id: data.cardId,
@@ -452,8 +452,8 @@ export class StatsService {
     data: StatsGetCollectionStatisticsEndpointData,
   ): CancelablePromise<StatsGetCollectionStatisticsEndpointResponse> {
     return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/v1/stats/collections/{collection_id}",
+      method: 'GET',
+      url: '/api/v1/collections/{collection_id}/stats',
       path: {
         collection_id: data.collectionId,
       },
@@ -461,7 +461,7 @@ export class StatsService {
         days: data.days,
       },
       errors: {
-        422: "Validation Error",
+        422: 'Validation Error',
       },
     })
   }
