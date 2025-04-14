@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { Text } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
@@ -16,36 +15,46 @@ import { BlueButton, RedButton } from '../commonUI/Button'
 import { DefaultInput } from '../commonUI/Input'
 
 interface AiCollectionDialogProps {
-  onAddAi: (prompt: string) => Promise<void>
-  children: React.ReactNode
+  isOpen: boolean
+  onClose: () => void
+  onSubmit: (prompt: string) => void
+  isLoading: boolean
 }
 
 const MAX_CHARS = 100
 
-const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({ onAddAi, children }) => {
+const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  isLoading,
+}) => {
   const { t } = useTranslation()
   const [prompt, setPrompt] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
 
-  const handleSubmit = async () => {
-    if (!prompt.trim()) return
+  const handleSubmit = () => {
+    if (!prompt.trim() || isLoading) return
+    onSubmit(prompt)
+    setPrompt('')
+  }
 
-    try {
-      setIsLoading(true)
-      closeButtonRef.current?.click()
-      await onAddAi(prompt)
-      setPrompt('')
-    } catch (error) {
-      console.error('Failed to create AI collection:', error)
-    } finally {
-      setIsLoading(false)
-    }
+  if (!isOpen && prompt !== '') {
+    setPrompt('')
   }
 
   return (
-    <DialogRoot key="add-ai-collection-dialog" placement="center" motionPreset="slide-in-bottom">
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <DialogRoot
+      key="add-ai-collection-dialog"
+      placement="center"
+      motionPreset="slide-in-bottom"
+      open={isOpen}
+      onOpenChange={(detail) => {
+        if (!detail.open) {
+          onClose()
+        }
+      }}
+    >
       <DialogContent bg="bg.50">
         <DialogHeader>
           <DialogTitle color="fg.DEFAULT">{t('components.AiCollectionDialog.title')}</DialogTitle>
@@ -70,12 +79,12 @@ const AiCollectionDialog: React.FC<AiCollectionDialogProps> = ({ onAddAi, childr
         </DialogBody>
         <DialogFooter>
           <DialogActionTrigger asChild>
-            <RedButton onClick={() => setPrompt('')} disabled={isLoading}>
+            <RedButton onClick={onClose} disabled={isLoading}>
               {t('general.actions.cancel')}
             </RedButton>
           </DialogActionTrigger>
           <DialogActionTrigger asChild>
-            <BlueButton onClick={handleSubmit} disabled={isLoading}>
+            <BlueButton onClick={handleSubmit} disabled={isLoading || !prompt.trim()}>
               {isLoading ? `${t('general.actions.creating')}...` : t('general.actions.create')}
             </BlueButton>
           </DialogActionTrigger>

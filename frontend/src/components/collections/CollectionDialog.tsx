@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,30 +14,38 @@ import { BlueButton, RedButton } from '../commonUI/Button'
 import { DefaultInput } from '../commonUI/Input'
 
 interface CollectionDialogProps {
-  onAdd: (collectionData: { name: string }) => Promise<void>
-  children: React.ReactNode
+  isOpen: boolean
+  onClose: () => void
+  onSubmit: (name: string) => void
 }
 
-const CollectionDialog: React.FC<CollectionDialogProps> = ({ onAdd, children }) => {
+const CollectionDialog: React.FC<CollectionDialogProps> = ({ isOpen, onClose, onSubmit }) => {
   const { t } = useTranslation()
   const [collectionName, setCollectionName] = useState('')
   const closeButtonRef = useRef<HTMLButtonElement>(null)
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!collectionName.trim()) return
+    onSubmit(collectionName)
+    setCollectionName('')
+  }
 
-    try {
-      await onAdd({ name: collectionName })
-      setCollectionName('')
-      closeButtonRef.current?.click()
-    } catch (error) {
-      console.error('Failed to create collection:', error)
-    }
+  if (!isOpen && collectionName !== '') {
+    setCollectionName('')
   }
 
   return (
-    <DialogRoot key="add-collection-dialog" placement="center" motionPreset="slide-in-bottom">
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <DialogRoot
+      key="add-collection-dialog"
+      placement="center"
+      motionPreset="slide-in-bottom"
+      open={isOpen}
+      onOpenChange={(detail) => {
+        if (!detail.open) {
+          onClose()
+        }
+      }}
+    >
       <DialogContent bg="bg.50">
         <DialogHeader>
           <DialogTitle color="fg.DEFAULT">{t('components.collectionDialog.title')}</DialogTitle>
@@ -58,12 +65,12 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({ onAdd, children }) 
         </DialogBody>
         <DialogFooter>
           <DialogActionTrigger asChild>
-            <RedButton onClick={() => setCollectionName('')}>
-              {t('general.actions.cancel')}
-            </RedButton>
+            <RedButton onClick={onClose}>{t('general.actions.cancel')}</RedButton>
           </DialogActionTrigger>
           <DialogActionTrigger asChild>
-            <BlueButton onClick={handleSubmit}>{t('general.actions.save')}</BlueButton>
+            <BlueButton onClick={handleSubmit} disabled={!collectionName.trim()}>
+              {t('general.actions.save')}
+            </BlueButton>
           </DialogActionTrigger>
         </DialogFooter>
         <DialogCloseTrigger ref={closeButtonRef} />

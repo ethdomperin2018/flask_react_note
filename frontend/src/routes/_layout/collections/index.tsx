@@ -4,15 +4,15 @@ import CollectionDialog from '@/components/collections/CollectionDialog'
 import CollectionListItem from '@/components/collections/CollectionListItem'
 import EmptyState from '@/components/commonUI/EmptyState'
 import ErrorState from '@/components/commonUI/ErrorState'
-import FloatingActionButton from '@/components/commonUI/FloatingActionButton'
 import ListSkeleton from '@/components/commonUI/ListSkeleton'
 import ScrollableContainer from '@/components/commonUI/ScrollableContainer'
-import { Stack } from '@chakra-ui/react'
+import SpeedDial, { type SpeedDialActionItem } from '@/components/commonUI/SpeedDial'
+import { Stack, Text } from '@chakra-ui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { VscAdd, VscWand } from 'react-icons/vsc'
+import { VscAdd } from 'react-icons/vsc'
 
 function getCollectionsQueryOptions() {
   return {
@@ -29,6 +29,9 @@ function Collections() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const [isCreatingAiCollection, setIsCreatingAiCollection] = useState(false)
+  const [isSpeedDialLoading, setIsSpeedDialLoading] = useState(false)
+  const [isAiDialogOpen, setIsAiDialogOpen] = useState(false)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
 
   const {
     data: collections,
@@ -39,9 +42,11 @@ function Collections() {
     placeholderData: (prevData) => prevData,
   })
 
-  const addCollection = async (collectionData: CollectionCreate) => {
+  const addCollection = async (name: string) => {
+    if (!name) return
     try {
-      await FlashcardsService.createCollection({ requestBody: collectionData })
+      setIsAddDialogOpen(false)
+      await FlashcardsService.createCollection({ requestBody: { name: name } })
       queryClient.invalidateQueries({ queryKey: ['collections'] })
     } catch (error) {
       console.error(error)
@@ -49,8 +54,11 @@ function Collections() {
   }
 
   const addAiCollection = async (prompt: string) => {
+    if (!prompt) return
     try {
       setIsCreatingAiCollection(true)
+      setIsSpeedDialLoading(true)
+      setIsAiDialogOpen(false)
       await FlashcardsService.createCollection({
         requestBody: { name: '', prompt: prompt },
       })
@@ -59,6 +67,7 @@ function Collections() {
       console.error(error)
     } finally {
       setIsCreatingAiCollection(false)
+      setIsSpeedDialLoading(false)
     }
   }
 
@@ -86,6 +95,26 @@ function Collections() {
   if (isLoading) return <ListSkeleton count={5} />
   if (error) return <ErrorState error={error} />
 
+  const speedDialActions: SpeedDialActionItem[] = [
+    {
+      id: 'add',
+      icon: <VscAdd />,
+      label: t('general.actions.addCollection'),
+      onClick: () => setIsAddDialogOpen(true),
+    },
+    {
+      id: 'ai',
+      icon: (
+        <Text as="span" fontSize="sm" fontWeight="bold">
+          AI
+        </Text>
+      ),
+      label: t('general.actions.createAiCollection'),
+      onClick: () => setIsAiDialogOpen(true),
+      bgColor: 'fbuttons.orange',
+    },
+  ]
+
   return (
     <>
       <ScrollableContainer>
@@ -108,20 +137,19 @@ function Collections() {
         </Stack>
       </ScrollableContainer>
 
-      <AiCollectionDialog onAddAi={addAiCollection}>
-        <FloatingActionButton
-          position="left"
-          icon={<VscWand color="white" />}
-          aria-label={t('general.actions.createAiCollection')}
-          isLoading={isCreatingAiCollection}
-        />
-      </AiCollectionDialog>
-      <CollectionDialog onAdd={addCollection}>
-        <FloatingActionButton
-          icon={<VscAdd color="white" />}
-          aria-label={t('general.actions.addCollection')}
-        />
-      </CollectionDialog>
+      <SpeedDial actions={speedDialActions} isLoading={isSpeedDialLoading} />
+
+      <CollectionDialog
+        isOpen={isAddDialogOpen}
+        onClose={() => setIsAddDialogOpen(false)}
+        onSubmit={addCollection}
+      />
+      <AiCollectionDialog
+        isOpen={isAiDialogOpen}
+        onClose={() => setIsAiDialogOpen(false)}
+        onSubmit={addAiCollection}
+        isLoading={isCreatingAiCollection}
+      />
     </>
   )
 }
