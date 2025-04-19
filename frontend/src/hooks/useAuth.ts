@@ -52,12 +52,18 @@ const useAuth = () => {
           : 'body' in err && typeof err.body === 'object' && err.body
             ? String(err.body.detail) || t('general.errors.somethingWentWrong')
             : t('general.errors.somethingWentWrong')
-
       toaster.create({
         title: t('general.errors.errorCreatingAccount'),
         description: errDetail,
         type: 'error',
       })
+      if (err.status === 409) {       
+        setError(
+          t('general.errors.emailAlreadyInUse') || t('general.errors.somethingWentWrong')
+        )
+      } else {
+        setError(t('general.errors.somethingWentWrong'))
+      }
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] })
