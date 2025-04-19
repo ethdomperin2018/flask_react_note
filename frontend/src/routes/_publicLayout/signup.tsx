@@ -42,16 +42,10 @@ function SignUp() {
     },
   })
 
-  const onSubmit: SubmitHandler<UserRegisterForm> = async (data) => {
+  const onSubmit: SubmitHandler<UserRegisterForm> = (data) => {
     if (isSubmitting) return
-
     resetError()
-
-    try {
-      await signUpMutation.mutateAsync(data)
-    } catch {
-      // error is handled by useAuth hook
-    }
+    signUpMutation.mutate(data)
   }
 
   return (
