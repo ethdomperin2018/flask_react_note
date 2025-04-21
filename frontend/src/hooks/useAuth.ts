@@ -58,9 +58,7 @@ const useAuth = () => {
         type: 'error',
       })
       if (err.status === 409) {
-        setError(
-          t('general.errors.emailAlreadyInUse') || t('general.errors.somethingWentWrong')
-        )
+        setError(t('general.errors.emailAlreadyInUse') || t('general.errors.somethingWentWrong'))
       } else {
         setError(errDetail)
       }
