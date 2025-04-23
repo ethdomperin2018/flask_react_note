@@ -18,7 +18,7 @@ export class LocalCardRepository implements CardRepository {
     return locals.map(toCard)
   }
 
-  async getById(collectionId: string, id: string): Promise<Card | null> {
+  async getById(_collectionId: string, id: string): Promise<Card | null> {
     try {
       const local = await cards.getLocalCardById(id)
       return toCard(local)
@@ -32,7 +32,7 @@ export class LocalCardRepository implements CardRepository {
     return toCard(local)
   }
 
-  async update(collectionId: string, id: string, data: CardUpdate): Promise<Card> {
+  async update(_collectionId: string, id: string, data: CardUpdate): Promise<Card> {
     await cards.updateLocalCard(id, {
       front: data.front ?? undefined,
       back: data.back ?? undefined,
@@ -41,7 +41,7 @@ export class LocalCardRepository implements CardRepository {
     return toCard(updated)
   }
 
-  async delete(collectionId: string, id: string): Promise<void> {
+  async delete(_collectionId: string, id: string): Promise<void> {
     await cards.deleteLocalCard(id)
   }
 }

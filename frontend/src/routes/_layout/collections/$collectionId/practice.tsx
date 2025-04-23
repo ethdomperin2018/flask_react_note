@@ -33,7 +33,7 @@ function PracticeComponent() {
   }, [start])
 
   if (isLoading) return <CardSkeleton />
-  if (error) return <ErrorState error={error} />
+  if (error) return <ErrorState error={typeof error === 'string' ? new Error(error) : error} />
   if (isComplete) return <PracticeComplete stats={progress} onReset={reset} />
   if (!currentCard) return <CardSkeleton />
 

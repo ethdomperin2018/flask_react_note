@@ -1,4 +1,3 @@
-import { StatsService } from '@/client'
 import type { CollectionStats } from '@/client/types.gen'
 import ErrorState from '@/components/commonUI/ErrorState'
 import LoadingState from '@/components/commonUI/LoadingState'

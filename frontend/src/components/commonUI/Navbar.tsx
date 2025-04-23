@@ -1,6 +1,6 @@
 import Logo from '@/assets/Logo.svg'
 import { useAuthContext } from '@/hooks/useAuthContext'
-import { Box, Flex, IconButton, Image } from '@chakra-ui/react'
+import { Flex, IconButton, Image } from '@chakra-ui/react'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { FiMenu } from 'react-icons/fi'
